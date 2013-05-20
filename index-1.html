@@ -1,0 +1,476 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content="Undetermined"><meta name="author" content="Dave Jones"><title>a mingled cup (old posts page 1) | a mingled cup</title><link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="assets/css/rst.css" rel="stylesheet" type="text/css"><link href="assets/css/code.css" rel="stylesheet" type="text/css"><link href="assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href=".">
+            a mingled cup
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="archive.html">Archives</a>
+            </li><li><a href="categories/index.html">Tags</a>
+            </li><li><a href="rss.xml">RSS</a>
+
+                </li></ul><form action="http://google.com/search" method="get" class="navbar-form pull-left">
+  <fieldset role="search"><input type="hidden" name="q" value="site:http://dave.dkjones.org"><input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search"><input type="submit" value="google search" style="visibility: hidden;"></fieldset></form>
+
+                <ul class="nav pull-right"></ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+        <div class="postbox">
+        <h1><a href="posts/2012/2012-01-05-trying-out-a-static-site.html">Trying out a static web site</a>
+        <small>  
+             Posted: <time class="published" datetime="2012-01-05T08:00:00">2012-01-05 08:00</time></small></h1>
+        <hr><p>I really need to quit thinking about how to put up a site, and worry
+more about writing stuff.  My hope is this is the step to take
+to get away from worrying about stuff.</p>
+<p>Here is what I want to put in my posts:</p>
+<blockquote>
+<ul class="simple"><li>code =for(int ii = 0; ii &lt; 99; ++ii)=</li>
+<li>(LaTeX)</li>
+<li>generated images</li>
+</ul></blockquote>
+<p>Here are the tools I want to use to edit the posts:</p>
+<blockquote>
+<ul class="simple"><li>Emacs</li>
+</ul></blockquote>
+<p>Octopress seems nice, but I don't want all of the ruby dependencies
+for now.  Org-mode seemed like it should do the job.  So, I finally
+did a Google search, and found a <a class="reference external" href="http://justin.abrah.ms/emacs/orgmode_static_site_generator.html">post</a>
+from someone I met at the Strange Loop conference this year.  I have
+shamelessly stolen his layout, and am trying it out here.</p>
+            
+    <p>
+
+        </p></div>
+        <div class="postbox">
+        <h1><a href="posts/2012/2012-01-05-extended-euclids-method.html">Extended Euclid's Method</a>
+        <small>  
+             Posted: <time class="published" datetime="2012-01-05T08:00:00">2012-01-05 08:00</time></small></h1>
+        <hr><p>In "The Art of Computer Programming, Volume 1", Donald Knuth describes
+the algorithm for Euclid's Method.</p>
+<p>Euclid's method find the greatest common divisor for two numbers.  The
+greatest common divisor of two integers <span class="math">\(m\)</span>
+ and <span class="math">\(n\)</span>
+ is the
+largest integer <span class="math">\(d\)</span>
+ such that both <span class="math">\(m\)</span>
+ and <span class="math">\(n\)</span>
+ are
+divisible by <span class="math">\(d\)</span>
+ .</p>
+<p>The extended algorithm goes farther than just finding the gcd.  The
+extended method finds integers <span class="math">\(a\)</span>
+ and <span class="math">\(b\)</span>
+ such that</p>
+<div class="math">
+\begin{equation*}
+am + bn = \gcd(m,n)
+\end{equation*}
+</div>
+<p>This OCaml code is a straightforward translation from the algorithm in
+Knuth's book, and it is written longer than it needs to be to make the
+names clearer.  Also, this is an example of replacing a loop with
+recursion.</p>
+<pre class="code ocaml literal-block">
+<span class="k">let</span> <span class="n">euclid_extended</span> <span class="n">m</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">a</span> <span class="n">b</span> <span class="n">a'</span> <span class="n">b'</span> <span class="n">c</span> <span class="n">d</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="n">d</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">d</span> <span class="k">in</span>
+    <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"| %d | %d | %d | %d | %d | %d|</span><span class="se">\n</span><span class="s2">"</span> <span class="n">a</span> <span class="n">a'</span> <span class="n">b</span> <span class="n">b'</span> <span class="n">c</span> <span class="n">d</span><span class="o">;</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+      <span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span><span class="n">d</span>
+    <span class="k">else</span>
+       <span class="k">let</span> <span class="n">c_new</span> <span class="o">=</span> <span class="n">d</span> <span class="k">in</span>
+       <span class="k">let</span> <span class="n">d_new</span> <span class="o">=</span> <span class="n">r</span> <span class="k">in</span>
+       <span class="k">let</span> <span class="n">a_new</span> <span class="o">=</span> <span class="n">a'</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">a</span> <span class="k">in</span>
+       <span class="k">let</span> <span class="n">a'_new</span> <span class="o">=</span> <span class="n">a</span> <span class="k">in</span>
+       <span class="k">let</span> <span class="n">b_new</span> <span class="o">=</span> <span class="n">b'</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">b</span> <span class="k">in</span>
+       <span class="k">let</span> <span class="n">b'_new</span> <span class="o">=</span> <span class="n">b</span> <span class="k">in</span>
+       <span class="n">loop</span> <span class="n">a_new</span> <span class="n">b_new</span> <span class="n">a'_new</span> <span class="n">b'_new</span> <span class="n">c_new</span> <span class="n">d_new</span>
+  <span class="k">in</span>
+  <span class="n">loop</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="n">m</span> <span class="n">n</span>
+
+<span class="k">let</span> <span class="n">test</span><span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">m</span><span class="o">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1769</span><span class="o">,</span> <span class="mi">551</span> <span class="k">in</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"| a| a' | b | b' | c| d|</span><span class="se">\n</span><span class="s2">|---</span><span class="se">\n</span><span class="s2">"</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">euclid_extended</span> <span class="n">m</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"a %d:  b: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="n">a</span> <span class="n">b</span><span class="o">;</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"test result: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">m</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">n</span><span class="o">);</span>
+</pre>
+<p>Running the code produces the following table.</p>
+<table border="1" class="docutils"><colgroup><col width="12%"><col width="12%"><col width="19%"><col width="15%"><col width="23%"><col width="19%"></colgroup><thead valign="bottom"><tr><th class="head">a</th>
+<th class="head">a'</th>
+<th class="head">b</th>
+<th class="head">b'</th>
+<th class="head">c</th>
+<th class="head">d</th>
+</tr></thead><tbody valign="top"><tr><td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1769</td>
+<td>551</td>
+</tr><tr><td>1</td>
+<td>0</td>
+<td>-3</td>
+<td>1</td>
+<td>551</td>
+<td>116</td>
+</tr><tr><td>-4</td>
+<td>1</td>
+<td>13</td>
+<td>-3</td>
+<td>116</td>
+<td>87</td>
+</tr><tr><td>5</td>
+<td>-4</td>
+<td>-16</td>
+<td>13</td>
+<td>87</td>
+<td>29</td>
+</tr></tbody></table><p>Here we can easily verify that <span class="math">\(5 * 1769 - 16 * 551 = 29\)</span>
+.  The
+table gives us a nice way to see that <span class="math">\(a m + b n = d\)</span>
+ during all
+of the steps of the algorithm.  Of course, Knuth already has the same
+table in his book, but some people, like me, don't really learn
+something until they have done it themselves.</p>
+            
+    <p>
+
+        </p></div>
+        <div class="postbox">
+        <h1><a href="posts/2011/ants-ai-challenge.html">Ants AI Challenge</a>
+        <small>  
+             Posted: <time class="published" datetime="2011-12-18T21:41:00">2011-12-18 21:41</time></small></h1>
+        <hr><p>The <a class="reference external" href="http://aichallenge.org/">AI Challenge</a> is Ants this time
+around.  The goal is make your your ants collect food, explore, raze
+opponent ant hills, and protect their own hill.  New ants are earned
+by harvesting food, and there is a combat system.
+<a class="reference external" href="http://youtu.be/2ddj0CJOPQo">Here</a> is a video of a game.  For a
+better view, go to the main site to watch some games!</p>
+<p>From past contests, I knew I could easily spend too much time
+competing.  I also knew that I didn't want to spend most of my free
+time tweaking weights and settings.  So, I decided to work on this for
+a short while, try to get a respectable bot, then quit.  I succeeded
+at quitting, though maybe not soon enough.</p>
+<p>Unlike the previous contests (<a class="reference external" href="http://tron.aichallenge.org/">Tron</a>
+and <a class="reference external" href="http://planetwars.aichallenge.org/">Planet Wars</a>), in this
+version the bots have imperfect information.  Like the previous
+contests, the game is text based, making it very easy for contestants
+to use their language of choice, subject only to getting the language
+running on the contest server.  This was one of the reasons I entered
+the Tron contest, besides how awesome it looked.  Often these kind of
+games require players to compile or link their bot into the game
+engine.</p>
+<p>My goal was to create a bot that made only local decisions for each
+ant because there were too many possibilities to consider every
+possible set of moves.  With any luck, good behavior could emerge from
+such a bot.  I also hoped to only use very simple features for these
+local decisions, but the features in the bot are lacking in several
+respects.</p>
+<p>So, again, I wanted to treat each ant independently.  That makes
+searching their moves easy, but also makes the bot dumb.  The first
+bot I submitted searched for food, enemy hills, and unknown territory,
+It avoided enemies, but had no combat code.  The bot was pretty dumb.</p>
+<p>The second version had some simple combat code.  I tried making each
+ant move as aggressively as possible, and then backed off any move
+that didn't seem safe enough.  This bot also had some code to push
+ants away from their own hill.  The second version was much stronger
+than the first, but it timed out on some big maps.</p>
+<p>The timeouts occurred because the bot does a few breadth-first
+searches to find out the distances from the various targets.  One BFS
+starts at each known food, one at each known enemy hill, and another
+at all of the grid cells that haven't been seen for a while.  The way
+I wrote the BFS in Python was almost fast enough, but could take too
+long on larger maps.</p>
+<p>The scoring function for ants that are not in combat is just a
+weighted combination of the inverse distance squared from each of the
+interesting targets.  This makes the ants go towards food, but if they
+have a choice between close food and close enemy hill, they charge the
+hill.  They also are attracted to enemy ants, which helps the bot get
+the numbers needed for attacking.</p>
+<p>The third version was a rewrite of the second, but in C++.  This made
+the BFS searches about 50 times faster. I tried making the combat code
+more aggressive, but it went too far, often walking right into an
+attack.</p>
+<p>The third version is my official version.  Some weaknesses it has are</p>
+<blockquote>
+<ul class="simple"><li>no defense of the home base</li>
+<li>no overall global decision making. (it will send every ant to battle at
+one hill, and leave another that is only)</li>
+<li>the combat is pretty bad</li>
+<li>there is no coordination at all between ants</li>
+</ul></blockquote>
+<p>I spend some time on the code after my official entry, but made no
+progress that was worth submitting.  I <a class="reference external" href="http://forums.aichallenge.org/viewtopic.php?f=24&amp;t=2098">wrote code</a> to
+discover the symmetry of the map to predict where other hills would
+be, though it wasn't very helpful.  The math was fun, though.  I tried
+using logistic regression to tune the weights of my evaluation
+function.  That failed, and I think it was because I was trying to
+predict the wrong thing, and my features did not account for any
+global information.</p>
+<p>Some of the other competitors are far beyond the rest of us, and I
+look forward to learning how they did it.  Overall though, I am happy
+with the time I spent, and what I have learned.  With the Stanford
+Online classes, work, and other activities, spending more time on the
+AI contest was just going to happen for me.</p>
+<p>Congratulations to the winners!</p>
+            
+    <p>
+
+        </p></div>
+        <div class="postbox">
+        <h1><a href="posts/2011/2011-12-18-ipython-on-mac-os-x.html">IPython on OS X</a>
+        <small>  
+             Posted: <time class="published" datetime="2011-12-18T21:41:00">2011-12-18 21:41</time></small></h1>
+        <hr><p>What has worked for me:</p>
+<blockquote>
+<ul class="simple"><li>setup a virtualenv</li>
+<li><tt class="docutils literal">easy_install readline</tt></li>
+<li><tt class="docutils literal">easy_install ipython</tt></li>
+</ul></blockquote>
+<p>If python gets updated by MacPorts, remove the old virtualenv, and re-run.</p>
+            
+    <p>
+
+        </p></div>
+        <div class="postbox">
+        <h1><a href="posts/2011/2011-12-18-stanford-online-classes.html">Stanford Online Classes</a>
+        <small>  
+             Posted: <time class="published" datetime="2011-12-18T21:41:00">2011-12-18 21:41</time></small></h1>
+        <hr><p>The <a class="reference external" href="http://www.ml-class.org/">ML Class</a> and <a class="reference external" href="http://www.ai-class.com/">AI Class</a> from Stanford are nearly over, and they
+have been a lot of fun.  I have not had formal classes in either of
+these topics, but have seen similar ideas over the years of doing
+numerical programming and signal processing.</p>
+<p>There were some technical glitches, but I learned a lot.  The pace was
+good... unlike reading a book where I just skim through pretending to
+understand.  The quizzes and homework encouraged active learning is
+more efficient than passive learning.</p>
+<p>Many of the topics were things I had heard of, but never learned
+anything about.  Some of the topics were completely new.  I really
+enjoyed the ML class progression from linear regression to logistic to
+neural networks.  NN are a simple idea, until you start thinking of
+how to train it.  The jump from logistic regression to NN made a big
+difference in understanding.</p>
+<p>In the AI class, much of the material was from Norvig's book, which I
+have been using as a paperweight for a while.  The book is extremely
+dense with information, so it was nice to see explanations of even a
+sample of the material.  (That isn't meant as a slight against the
+book either... just a challenge with reading it.)</p>
+<p>Again, these classes were a lot of fun, and I learned a lot.  Watching
+these world-class lecturers, and getting quick feedback on my
+understand would have been worth paying for.  Getting the classes for
+free was amazing.</p>
+            
+    <p>
+
+        </p></div>
+        <div class="postbox">
+        <h1><a href="posts/2011/a-simple-octave-tip.html">A simple Octave tip</a>
+        <small>  
+             Posted: <time class="published" datetime="2011-11-19T00:00:00">2011-11-19 00:00</time></small></h1>
+        <hr><p>Matlab and <a class="reference external" href="http://www.gnu.org/software/octave/">Octave</a> are both great for quickly trying out numeric code,
+especially using linear algebra.  Many times code can be written to
+use the built in matrix operators instead of using loops.  This makes
+the code clearer and faster.  The following examples all use Octave.</p>
+<p>First, consider this formula</p>
+<div class="math">
+\begin{equation*}
+S = \sum_{i=1}^n x_i  y_i
+\end{equation*}
+</div>
+<p><tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> are one dimensional vectors in Octave, so we can find
+<span class="math">\(S\)</span>
+ with this code:</p>
+<pre class="code octave literal-block">
+<span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="k">end</span>
+</pre>
+<p>That code is straight forward.  Octave can do more, though.  The =.*=
+operator does an element by element multiplication over matrices, and
+=sum= adds up the elements in a matrix.  Since our matrices are
+one-dimensional, we can compose these functions to get our result, at
+the cost of creating a temporary matrix.</p>
+<pre class="code octave literal-block">
+<span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
+</pre>
+<p>Finally, Octave already has a function that does what we want.  The
+formula we are looking at is the dot product of two vectors, so in
+Octave, we can do</p>
+<pre class="code octave literal-block">
+<span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre>
+<p>The first attempt is the clearest when you do not know what <tt class="docutils literal">.*</tt>,
+<tt class="docutils literal">sum</tt>, and <tt class="docutils literal">dot</tt> do.  But, once you know what <tt class="docutils literal">sum</tt> and <tt class="docutils literal">dot</tt>
+do, they are much clearer.  Also, they are much faster in Octave than
+the naive loop.</p>
+<p>The next listing shows a test driver to compare the three methods.</p>
+<pre class="code octave literal-block">
+<span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
+<span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
+    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
+    <span class="nb">tic</span>
+    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
+      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">end</span>
+    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+
+    <span class="nb">tic</span>
+    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
+    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+
+    <span class="nb">tic</span>
+    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+  <span class="k">end</span>
+</pre>
+<p>Running this code gives us the following results.</p>
+<table border="1" class="docutils"><colgroup><col width="19%"><col width="19%"><col width="36%"><col width="25%"></colgroup><thead valign="bottom"><tr><th class="head">method</th>
+<th class="head">size</th>
+<th class="head">result</th>
+<th class="head">time</th>
+</tr></thead><tbody valign="top"><tr><td>for</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000744</td>
+</tr><tr><td>sum</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000055</td>
+</tr><tr><td>dot</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000018</td>
+</tr><tr><td>for</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.007198</td>
+</tr><tr><td>sum</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.000016</td>
+</tr><tr><td>dot</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.000017</td>
+</tr><tr><td>for</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.074163</td>
+</tr><tr><td>sum</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.000083</td>
+</tr><tr><td>dot</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.000029</td>
+</tr><tr><td>for</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.736105</td>
+</tr><tr><td>sum</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.000656</td>
+</tr><tr><td>dot</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.000095</td>
+</tr><tr><td>for</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>7.334975</td>
+</tr><tr><td>sum</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>0.006773</td>
+</tr><tr><td>dot</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>0.001246</td>
+</tr></tbody></table><p>As a general rule, we should always try to use the language and tools,
+instead of doing things ourselves.  Often, this is mostly a matter of
+learning what is available.</p>
+<p>Sometimes, though we want to <em>learn</em> how something works. Then, of
+course, it makes sense to do it ourselves instead of just making a
+call to existing code.</p>
+            
+    <p>
+
+        </p></div>
+        <div class="postbox">
+        <h1><a href="posts/2011/posting-from-emacs-with-org2blog-wp.html">Posting from emacs with org2blog/wp</a>
+        <small>  
+             Posted: <time class="published" datetime="2011-11-03T21:41:00">2011-11-03 21:41</time></small></h1>
+        <hr><p>I don't blog very often for several reasons.  My technical excuse was
+that blogging from emacs to one of the hosted services was too
+painful.  This is an experiment to see if I can get around it.</p>
+<p><a class="reference external" href="https://github.com/punchagan/org2blog">Org2Blog</a> allows you to post
+from an <a class="reference external" href="http://orgmode.org">OrgMode</a> file in emacs, which is
+pretty nice.  The only prerequisites are org mode and
+<a class="reference external" href="https://launchpad.net/xml-rpc-el">xmlrpc.el</a>.  The setup is pretty
+straightforward, as described in the <tt class="docutils literal">README.org</tt> file.</p>
+<p>Speaking of org and github, github appears to render <tt class="docutils literal">README.org</tt>
+files in the main directory when you are viewing a repository.  That
+is pretty awesome.</p>
+<p>Code and latex snippets show up from org2blog too!  I am fine with the
+default formatting, but I imagine this stuff could be tweaked to look
+however I wanted.</p>
+            
+    <p>
+
+        </p></div>
+    
+<div>
+<ul class="pager"><li class="previous">
+        <a href="index.html">← Newer posts</a>
+</li></ul></div>
+
+    
+
+    
+        <script src="assets/js/mathjax.js" type="text/javascript"></script></div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+
+
+            <script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="assets/js/bootstrap.min.js" type="text/javascript"></script><script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Dave Jones"><title>A simple Octave tip | a mingled cup</title><link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../../">
+            a mingled cup
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../../archive.html">Archives</a>
+            </li><li><a href="../../categories/index.html">Tags</a>
+            </li><li><a href="../../rss.xml">RSS</a>
+
+                </li></ul><form action="http://google.com/search" method="get" class="navbar-form pull-left">
+  <fieldset role="search"><input type="hidden" name="q" value="site:http://dave.dkjones.org"><input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search"><input type="submit" value="google search" style="visibility: hidden;"></fieldset></form>
+
+                <ul class="nav pull-right"><li>
+    <a href="a-simple-octave-tip.rst" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>A simple Octave tip</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2011-11-19T00:00:00">2011-11-19 00:00</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../../categories/mathjax.html"><span class="badge badge-info">mathjax</span></a>
+
+    </small>
+    <hr><p>Matlab and <a class="reference external" href="http://www.gnu.org/software/octave/">Octave</a> are both great for quickly trying out numeric code,
+especially using linear algebra.  Many times code can be written to
+use the built in matrix operators instead of using loops.  This makes
+the code clearer and faster.  The following examples all use Octave.</p>
+<p>First, consider this formula</p>
+<div class="math">
+\begin{equation*}
+S = \sum_{i=1}^n x_i  y_i
+\end{equation*}
+</div>
+<p><tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> are one dimensional vectors in Octave, so we can find
+<span class="math">\(S\)</span>
+ with this code:</p>
+<pre class="code octave literal-block">
+<span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="k">end</span>
+</pre>
+<p>That code is straight forward.  Octave can do more, though.  The =.*=
+operator does an element by element multiplication over matrices, and
+=sum= adds up the elements in a matrix.  Since our matrices are
+one-dimensional, we can compose these functions to get our result, at
+the cost of creating a temporary matrix.</p>
+<pre class="code octave literal-block">
+<span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
+</pre>
+<p>Finally, Octave already has a function that does what we want.  The
+formula we are looking at is the dot product of two vectors, so in
+Octave, we can do</p>
+<pre class="code octave literal-block">
+<span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre>
+<p>The first attempt is the clearest when you do not know what <tt class="docutils literal">.*</tt>,
+<tt class="docutils literal">sum</tt>, and <tt class="docutils literal">dot</tt> do.  But, once you know what <tt class="docutils literal">sum</tt> and <tt class="docutils literal">dot</tt>
+do, they are much clearer.  Also, they are much faster in Octave than
+the naive loop.</p>
+<p>The next listing shows a test driver to compare the three methods.</p>
+<pre class="code octave literal-block">
+<span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
+<span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
+    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
+    <span class="nb">tic</span>
+    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
+      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">end</span>
+    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+
+    <span class="nb">tic</span>
+    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
+    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+
+    <span class="nb">tic</span>
+    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+  <span class="k">end</span>
+</pre>
+<p>Running this code gives us the following results.</p>
+<table border="1" class="docutils"><colgroup><col width="19%"><col width="19%"><col width="36%"><col width="25%"></colgroup><thead valign="bottom"><tr><th class="head">method</th>
+<th class="head">size</th>
+<th class="head">result</th>
+<th class="head">time</th>
+</tr></thead><tbody valign="top"><tr><td>for</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000744</td>
+</tr><tr><td>sum</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000055</td>
+</tr><tr><td>dot</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000018</td>
+</tr><tr><td>for</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.007198</td>
+</tr><tr><td>sum</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.000016</td>
+</tr><tr><td>dot</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.000017</td>
+</tr><tr><td>for</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.074163</td>
+</tr><tr><td>sum</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.000083</td>
+</tr><tr><td>dot</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.000029</td>
+</tr><tr><td>for</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.736105</td>
+</tr><tr><td>sum</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.000656</td>
+</tr><tr><td>dot</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.000095</td>
+</tr><tr><td>for</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>7.334975</td>
+</tr><tr><td>sum</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>0.006773</td>
+</tr><tr><td>dot</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>0.001246</td>
+</tr></tbody></table><p>As a general rule, we should always try to use the language and tools,
+instead of doing things ourselves.  Often, this is mostly a matter of
+learning what is available.</p>
+<p>Sometimes, though we want to <em>learn</em> how something works. Then, of
+course, it makes sense to do it ourselves instead of just making a
+call to existing code.</p>
+    
+    <ul class="pager"><li class="previous">
+            <a href="posting-from-emacs-with-org2blog-wp.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="2011-12-18-stanford-online-classes.html">Next post →</a>
+        </li>
+    </ul><script src="../../assets/js/mathjax.js" type="text/javascript"></script></div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+
+
+            <script src="../../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

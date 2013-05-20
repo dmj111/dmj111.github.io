@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Dave Jones"><title>Modified Quicksort in D | a mingled cup</title><link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../../">
+            a mingled cup
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../../archive.html">Archives</a>
+            </li><li><a href="../../categories/index.html">Tags</a>
+            </li><li><a href="../../rss.xml">RSS</a>
+
+                </li></ul><form action="http://google.com/search" method="get" class="navbar-form pull-left">
+  <fieldset role="search"><input type="hidden" name="q" value="site:http://dave.dkjones.org"><input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search"><input type="submit" value="google search" style="visibility: hidden;"></fieldset></form>
+
+                <ul class="nav pull-right"><li>
+    <a href="2012-04-26-modified-quicksort.rst" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Modified Quicksort in D</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2012-04-26T00:00:00">2012-04-26 00:00</time></small>
+    <hr><p><a class="reference external" href="../../blog/2012/04/24/quicksort-in-d/">In this post</a> , we saw a simple
+textbook quicksort.  Here, we add two improvements.  First, we use
+insertion sort for sorting small subfiles instead of making as many
+recursive calls to quicksort.  Second, we select the pivot using the
+"median of three" method instead of picking the middle element as the
+pivot.</p>
+<pre class="code d literal-block">
+<span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">algorithm</span><span class="p">;</span>
+<span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
+</pre>
+<p>For the partioning, we first select the median of the first, last, and
+middle elements of the target array.  The steps of doing this affect
+how the algorithm performs.  First, we move the middle element to the
+next to last location of the array.  Then, we swap the elements if
+needed so that the first is the smallest of the three, the last is the
+largest, and the next to last is the median.</p>
+<p>Then, the partitioning mostly is the same as it was before, except we
+only partition the subarray between the first and last element, since they
+are already in valid positions.</p>
+<p>We can reuse the old partition code, but we have to remember to offset
+the return value by one, since we are sending <tt class="docutils literal">array[1 .. k]</tt> into
+<tt class="docutils literal">partition</tt>, not the full array slice.</p>
+<p>This is a place where the array slicing may be more confusing then
+using explicit indices for the range we want to partition. Trying that
+approach may be an interesting experiment to learn which is easier.</p>
+<pre class="code d literal-block">
+<span class="kt">ulong</span> <span class="n">medianOfThreePartition</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">ulong</span> <span class="n">j</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">ulong</span> <span class="n">k</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span> <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="p">}</span>
+
+  <span class="k">return</span> <span class="mi">1</span> <span class="p">+</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span> <span class="p">..</span> <span class="n">k</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre>
+<!-- .. code:: d
+
+  ulong partition(T)(T[] array) {
+    if(array.length < 2) { return 0; }
+
+    auto pivot = array[$-1];
+
+    // We are going to increment i, and decrement j in each iteration of
+    // the while loop before using them.  So, they must start at the
+    // location before where we really want them to be.
+    //
+    // This seems inconvenient, but it cleans up the possible ending
+    // conditions of the while loop.  The ulong cannot really hold a
+    // negative number, so this -1 requires special care in the while
+    // loop.
+    ulong i = -1;
+    ulong j = array.length-1;
+
+    // If i == -1, it will wrap around to a really big postive number.
+    // So, include a test for it here.  The only time it should be
+    // tested is the first iteration, while i still is -1, and the last
+    // iteration, when i >= j.
+    while(i < j || i == -1) {
+      // Find the next element from the start that is larger or equal to
+      // the pivot element.
+      //
+      // The pivot at the the end of the array is a sentinel, so we
+      // needn't check for overrunning this array in direction.
+      i += 1;
+      while(array[i] < pivot) {
+        i += 1;
+      }
+
+      // Find the next element from the end that is less than or equal
+      // to the pivot.  We must guard against running past the i'th
+      // element, since we could have an array that was all greater than
+      // the pivot.  If j was 0 before this, things would be bad.  That
+      // is why the function asserts that the length be more than 1.
+      j -= 1;
+      while(i < j && array[j] > pivot) {
+        j -= 1;
+      }
+
+      if(i < j && j < array.length) {
+        // Swap the values pointed at by i and j.  Now, array[x] for x
+        // <= i is <= pivot, and array[x] for x >= j is >= pivot.
+        swap(array[i], array[j]);
+      }
+    }
+
+
+    // We know i >= j.
+    // 1) If i was incremented to be equal to j, then
+    //  i = j = array.length - 1, and array[i] is the only element >=
+    //  pivot.
+    // 2) Or, i was incremented to j, and array[j] >= pivot from the
+    //    previous iteration.  In this case, array[j] >= pivot.
+    // 3) Or, i was incremented so that array[i] >= pivot, then j was
+    //    decremented till j == i.  So, array[i] >= pivot.
+    /// So, array[i] is always greater than or equal to the pivot after
+    // the while loop.  And, array[i-1] is less than or equal to pivot,
+    // if i > 0.
+
+    // Swap the pivot into the right place.  Everything to the left is
+    // <= pivot.  Every thing to the right is >= pivot.
+    swap(array[i], array[$-1]);
+    // Return the pivot location
+    return i;
+  }
+
+
+.. code:: d
+
+  ulong partition(T)(T[] array) {
+    if(array.length < 3) { return 0; }
+
+    ulong i = 0;
+    ulong j = array.length - 2;
+    ulong k = array.length - 1;
+
+    swap(array[array.length/2], array[j]);
+
+    if(array[i] > array[j]) { swap(array[i], array[j]); }
+    if(array[j] > array[k]) { swap(array[j], array[k]); }
+    if(array[i] > array[j]) { swap(array[i], array[j]); }
+
+
+    auto pivot = array[j];
+
+
+    // We are going to increment i, and decrement j in each iteration of
+    // the while loop before using them.  So, they must start at the
+    // location before where we really want them to be.
+    //
+    // This seems inconvenient, but it cleans up the possible ending
+    // conditions of the while loop.  The ulong cannot really hold a
+    // negative number, so this -1 requires special care in the while
+    // loop.
+
+
+    // If i == -1, it will wrap around to a really big postive number.
+    // So, include a test for it here.  The only time it should be
+    // tested is the first iteration, while i still is -1, and the last
+    // iteration, when i >= j.
+    i = 0;
+
+    while(i < j) {
+      // Find the next element from the start that is larger or equal to
+      // the pivot element.
+      //
+      // The pivot at the the end of the array is a sentinel, so we
+      // needn't check for overrunning this array in direction.
+      i += 1;
+      while(array[i] < pivot) {
+        i += 1;
+      }
+
+      // Find the next element from the end that is less than or equal
+      // to the pivot.  We must guard against running past the i'th
+      // element, since we could have an array that was all greater than
+      // the pivot.  If j was 0 before this, things would be bad.  That
+      // is why the function asserts that the length be more than 1.
+      j -= 1;
+      while(array[j] > pivot) {
+        j -= 1;
+      }
+
+      if(i < j && j < array.length) {
+        // Swap the values pointed at by i and j.  Now, array[x] for x
+        // <= i is <= pivot, and array[x] for x >= j is >= pivot.
+        swap(array[i], array[j]);
+      }
+    }
+
+    // We know i >= j.
+    // 1) If i was incremented to be equal to j, then
+    //  i = j = array.length - 1, and array[i] is the only element >=
+    //  pivot.
+    // 2) Or, i was incremented to j, and array[j] >= pivot from the
+    //    previous iteration.  In this case, array[j] >= pivot.
+    // 3) Or, i was incremented so that array[i] >= pivot, then j was
+    //    decremented till j == i.  So, array[i] >= pivot.
+    /// So, array[i] is always greater than or equal to the pivot after
+    // the while loop.  And, array[i-1] is less than or equal to pivot,
+    // if i > 0.
+
+    // Swap the pivot into the right place.  Everything to the left is
+    // <= pivot.  Every thing to the right is >= pivot.
+    swap(array[i], array[$-2]);
+    // Return the pivot location
+    return i;
+  }
+
+  ulong medianOfThreePartition(T)(T[] array) {
+    return partition(array);
+  }
+
+
+
+.. code:: sh
+
+  dmd quicksort.d -unittest
+  ./quicksort # runs the tests
+
+
+.. code:: d
+
+  unittest {
+    /// Check that the partitioning is correct.
+    auto check_partition = function(int[] array) {
+
+      auto p = medianOfThreePartition(array);
+      foreach(i; 0 .. p) {
+        assert(array[i] <= array[p]);
+      }
+      foreach(i; p + 1 .. array.length) {
+        assert(array[i] >= array[p]);
+      }
+
+    };
+
+    auto data = [9,2,3,4,5,6,7,8,5];
+    check_partition(data);
+    data = [1,2,3];
+    check_partition(data);
+    data = [3,2,1];
+    check_partition(data);
+    data = [2,3,1];
+    check_partition(data);
+    data = [1,3,2];
+    check_partition(data);
+    data = [2, 1,1,1,1,1];
+    check_partition(data);
+    data = [2, 1, 2, 1, 2, 1, 2];
+    check_partition(data);
+    data[] = 10; // set all values to 10
+    check_partition(data);
+    // writeln("partition tests passed");
+
+  } -->
+<p>Also, we need an insertion sort for the small subfile sorting.  This
+is pretty straightforward, but we are swapping the item to move it
+into place.  If we knew we were sorting something cheap to copy, there
+may be a more efficient way to do that.  Maybe.</p>
+<pre class="code d literal-block">
+<span class="kt">void</span> <span class="n">insertionsort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">foreach</span><span class="p">(</span><span class="n">j</span><span class="p">;</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// array[0..j] is already sorted, so insert array[j] into the
+</span>    <span class="c1">// right place.
+</span>    <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">&amp;&amp;</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+      <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]);</span>
+      <span class="p">--</span><span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+<!-- .. code:: d
+
+  unittest {
+    auto check = function(int[] data) {
+      insertionsort(data);
+      checkSorted(data);
+    };
+
+    auto data = [1,2,3,4,5];
+    check(data);
+    data = [5,4,3,2,1];
+    check(data);
+    data = [];
+    check(data);
+    data = [1];
+    check(data);
+    data = new int[10];
+    foreach(i; 0 .. data.length) {
+      data[i] = cast(int)(data.length - i);
+    }
+    check(data);
+    // writeln("insertion sort tests passed");
+  } -->
+<p>Here is the new quicksort function.  We have a lower limit on the size
+of arrays that we will pass on to the <tt class="docutils literal">medianOfThree</tt> function.  For
+anything smaller, we call <tt class="docutils literal">insertionsort</tt>.</p>
+<pre class="code d literal-block">
+<span class="n">T</span><span class="p">[]</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">ulong</span> <span class="n">RECURSION_LIMIT</span> <span class="p">=</span> <span class="mi">30</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="n">RECURSION_LIMIT</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Move the middle element to the end to act as the pivot.
+</span>    <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[$/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">medianOfThreePartition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+    <span class="c1">// Index p is in position, so now recursively sort the other two
+</span>    <span class="c1">// halves of the array.
+</span>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">]);</span>
+    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="p">$]);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">insertionsort</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+<!--  -->
+<!-- .. code:: d
+
+void checkSorted(T)(T[] data) {
+  assert(isSorted(data));
+}
+
+unittest {
+  auto check = function(int[] data) {
+    quicksort(data);
+    checkSorted(data);
+  };
+
+  auto data = [1,2,3,4,5];
+  check(data);
+  data = [5,4,3,2,1];
+  check(data);
+  data = [];
+  check(data);
+  data = [1];
+  check(data);
+  data = new int[100];
+  foreach(i; 0 .. data.length) {
+    data[i] = cast(int)(data.length - i);
+  }
+  check(data);
+  writeln("quicksort tests passed");
+} -->
+<p>The old test drivers and timing code work well with this code.  The
+only change is renaming the partition function.</p>
+<p>This method is slower than the overly simple method of always
+partitioning about the middle element of the array.  I need to look
+into it more, but I have a few other things to do first.  The biggest
+thing is to implement a fat partitioning function for handling equal
+items efficiently.  Also, making the sort generic on the comparison
+function looks like it should be easy too.</p>
+<!--  -->
+<blockquote>
+<!-- .. code:: d -->
+</blockquote>
+<!-- import std.datetime;
+
+void timeSort(T)(T[] array) {
+  StopWatch sw;
+  sw.start();
+  quicksort(array);
+  // sort(array);
+  sw.stop();
+  writeln(array.length, "  ", sw.peek().msecs);
+
+  // Also, make sure its right!
+  checkSorted(array);
+}
+
+int[] MakeOrderedData(int N) {
+  auto data = new int[N];
+  foreach(i; 0 .. data.length) {
+    data[i] = cast(int)(i); // cast(int)(-i);
+  }
+  return data;
+}
+
+
+int[] MakeReversedData(int N) {
+  auto data = MakeOrderedData(N);
+  data.reverse();
+  return data;
+}
+
+import std.random;
+
+int[] MakeRandomData(int N) {
+  auto data = MakeOrderedData(N);
+  randomShuffle(data);
+  return data;
+}
+
+
+void runTimings() {
+  auto sizes = [1000, 10_000, 100_000,
+                1_000_000, 10_000_000];
+  foreach(s; sizes) {
+    // auto data = MakeReversedData(s);
+    auto data = MakeRandomData(s);
+    data[] = 10;
+    timeSort(data);
+  }
+} -->
+<!--  -->
+<!-- .. code:: d -->
+<!--  -->
+<!-- void main() { -->
+<!-- runTimings(); -->
+<!-- writeln("done"); -->
+<!-- }
+
+
+..  http://comments.gmane.org/gmane.emacs.orgmode/45278
+.. +begin_src sh :var TANGLED=(org-babel-tangle) :tangle no :exports none :results output
+..  wc $tangled > /dev/null
+..  rm -f quicksort1
+..  ~/dmd2/osx/bin/dmd -unittest quicksort1.d
+..  ./quicksort1
+.. #+end_src
+
+.. #+RESULTS:
+.. : quicksort tests passed
+.. : 1000  0
+.. : 10000  0
+.. : 100000  8
+.. : 1000000  112
+.. : 10000000  1420
+.. : done -->
+    
+    <ul class="pager"><li class="previous">
+            <a href="2012-04-24-quicksort-in-d.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="../2013/2013-01-02-blog-process-with-org.html">Next post →</a>
+        </li>
+    </ul></div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+
+
+            <script src="../../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
