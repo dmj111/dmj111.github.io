@@ -10,51 +10,6 @@
   <priority>0.5000</priority>
  </url>
  <url>
-  <loc>http://dave.dkjones.org/.git/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/hooks/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/info/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/objects/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/objects/info/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/objects/pack/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/refs/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/refs/heads/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/.git/refs/tags/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
   <loc>http://dave.dkjones.org/2011/</loc>
   <lastmod>2013-05-19</lastmod>
   <priority>0.5000</priority>
@@ -451,11 +406,6 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/</loc>
-  <lastmod>2013-05-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/posts/2013/git-remote-setup.html</loc>
   <lastmod>2013-05-19</lastmod>
   <priority>0.5000</priority>
  </url>
