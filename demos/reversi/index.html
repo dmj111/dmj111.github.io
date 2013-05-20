@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="author" content="Dave Jones">
+
+        <title>reversi</title>
+
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet"
+              type="text/css">
+        <link href="/assets/css/theme.css" rel="stylesheet" type="text/css">
+        <link href="/assets/css/custom.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="reversi.css" type="text/css">
+
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"
+            type="text/javascript"></script>
+        <![endif]-->
+
+        <title>reversi</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>reversi</h1>
+            <h2 class="status" id="loadStatus">Waiting for files to load</h2>
+            <div id="status"></div>
+            <div id="boarddiv"> <canvas id="board"></canvas> </div>
+            <div class="controls">
+                <button id="control" type="button" class="btn btn-outline-dark" width="15">
+                    Start
+                </button>
+            </div>
+            <div id="players">
+              <div id="p1" class="pchoice">
+                Player 1
+                <div class="choices">
+                  <button type="button"
+                          class="btn btn-outline-dark player selected">
+                    Human
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 1
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 2
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 3
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 4
+                  </button>
+                </div>
+
+              </div>
+
+              <div id="p2" class="pchoice">
+                Player 2
+                <div class="choices">
+                  <button type="button" class="btn btn-outline-dark player ">
+                    Human
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 1
+                  </button>
+                  <button type="button"
+                          class="btn btn-outline-dark player selected">
+                    Level 2
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 3
+                  </button>
+                  <button type="button" class="btn btn-outline-dark player">
+                    Level 4
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="h-space"></div>
+            <div class="h-space"></div>
+            <div id="move_list"> </div>
+        </div>
+
+    </body>
+
+
+    <script type="text/javascript">
+     var _gaq = _gaq || [];
+     _gaq.push(["_setAccount", "UA-28171814-1"]);
+     _gaq.push(["_trackPageview"]);
+
+     (function() {
+         var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+         ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+         var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+     })();
+
+    </script>
+    <script src="weights.js" type="text/javascript"></script>
+    <script src="reversi.js" type="text/javascript"></script>
+    <script src="reversiUi.js" type="text/javascript"></script>
+    </body>
+</html>
