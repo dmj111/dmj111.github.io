@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org</link><description>Undetermined</description><lastBuildDate>Sun, 19 May 2013 22:25:00 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;html&gt;&lt;body&gt;&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
+<rss version="2.0"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org</link><description>Undetermined</description><lastBuildDate>Sun, 26 May 2013 08:03:27 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;html&gt;&lt;body&gt;&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
 eratosthenes is one of the simplest ways to find prime numbers, and it
 is much more efficient than the brute force method.&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/"&gt;Here is a nice description&lt;/a&gt; of
