@@ -1,0 +1,79 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif:b,i|Droid+Serif);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:b,i|Droid+Sans);
+@import url(http://fonts.googleapis.com/css?family=Inconsolata);
+
+/* Choose the font, size and spacing */
+body {
+    font-family: "droid serif", serif;
+    font-size: 17px;
+}
+p,h1,h2,h3,h4,h5,h6 {
+    line-height: 145%;
+}
+
+/* keep the paragraphs narrow enough. */
+li, p {
+    max-width: 740px;
+}
+
+/* Space lists a little closer together */
+li {
+    line-height: 125%;
+}
+
+/* Pick the font for the headings */
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Droid Sans", fantasy, sans-serif;
+    line-height: 150%;
+    }
+
+/* Keep the headers from getting crazy big */
+h1 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+h2,h3,h4,h5,h6 { font-weight: bold }
+
+h2 { font-size: 1.05em; }
+h3 {font-size:  1.02 em; }
+h4,h5,h6 {font-size: 1em; }
+
+/* Pick the fonts for the code stuff */
+tt, kbd, samp, code, pre
+{
+    font-family: Inconsolata, monospace;
+    font-size: 0.9em;
+    line-height: 125%;
+}
+
+/* This isn't working yet...
+
+pre {
+    overflow: scroll;
+    overflow-y: hidden;
+    width: 100%;
+    }
+ */
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+small
+{
+    font-size: 85%;
+}
+
+
+/* For debug... */
+/*
+.span8 {
+     background-color: #f8f8e8;
+}
+
+.span2 {
+     background-color: #444;
+}
+*/
