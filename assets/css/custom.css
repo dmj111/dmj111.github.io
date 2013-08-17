@@ -4,11 +4,11 @@
 
 /* Choose the font, size and spacing */
 body {
-    font-family: "droid serif", serif;
+    font-family: "droid sans", sans-serif;
     font-size: 17px;
 }
 p,h1,h2,h3,h4,h5,h6 {
-    line-height: 145%;
+    line-height: 130%;
 }
 
 /* keep the paragraphs narrow enough. */
@@ -23,7 +23,7 @@ li {
 
 /* Pick the font for the headings */
 h1,h2,h3,h4,h5,h6 {
-    font-family: "Droid Sans", fantasy, sans-serif;
+    font-family: "Droid serif", serif;
     line-height: 150%;
     }
 
