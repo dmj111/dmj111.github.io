@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org</link><description>Undetermined</description><lastBuildDate>Fri, 09 Aug 2013 20:02:13 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org/</link><description>Undetermined</description><atom:link href="http://dave.dkjones.org/categories/mathjax.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 17 Oct 2013 22:14:17 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
 eratosthenes is one of the simplest ways to find prime numbers, and it
 is much more efficient than the brute force method.&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/"&gt;Here is a nice description&lt;/a&gt; of
@@ -153,7 +153,7 @@ indexing correctly, but it isn't too bad.&lt;/p&gt;
 &lt;span class="o"&gt;;;&lt;/span&gt;
 
 &lt;span class="n"&gt;main&lt;/span&gt; &lt;span class="n"&gt;sieve4&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
-&lt;/pre&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</guid><pubDate>Sat, 07 Jan 2012 08:00:00 GMT</pubDate></item><item><title>Extended Euclid's Method</title><link>http://dave.dkjones.org/posts/2012/2012-01-05-extended-euclids-method.html</link><description>&lt;!-- alias : [/posts/2012/2012-01-05-extended-euclids-method.html] --&gt;
+&lt;/pre&gt;</description><author></author><category>mathjax</category><guid>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</guid><pubDate>Sat, 07 Jan 2012 08:00:00 GMT</pubDate></item><item><title>Extended Euclid's Method</title><link>http://dave.dkjones.org/posts/2012/2012-01-05-extended-euclids-method.html</link><description>&lt;!-- alias : [/posts/2012/2012-01-05-extended-euclids-method.html] --&gt;
 &lt;p&gt;In "The Art of Computer Programming, Volume 1", Donald Knuth describes
 the algorithm for Euclid's Method.&lt;/p&gt;
 &lt;p&gt;Euclid's method find the greatest common divisor for two numbers.  The
@@ -261,7 +261,7 @@ table gives us a nice way to see that &lt;span class="math"&gt;\(a m + b n = d\)
  during all
 of the steps of the algorithm.  Of course, Knuth already has the same
 table in his book, but some people, like me, don't really learn
-something until they have done it themselves.&lt;/p&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2012/2012-01-05-extended-euclids-method.html</guid><pubDate>Thu, 05 Jan 2012 08:00:00 GMT</pubDate></item><item><title>Trying out a static web site</title><link>http://dave.dkjones.org/posts/2012/2012-01-05-trying-out-a-static-site.html</link><description>&lt;p&gt;I really need to quit thinking about how to put up a site, and worry
+something until they have done it themselves.&lt;/p&gt;</description><author></author><category>mathjax</category><guid>http://dave.dkjones.org/posts/2012/2012-01-05-extended-euclids-method.html</guid><pubDate>Thu, 05 Jan 2012 08:00:00 GMT</pubDate></item><item><title>Trying out a static web site</title><link>http://dave.dkjones.org/posts/2012/2012-01-05-trying-out-a-static-site.html</link><description>&lt;p&gt;I really need to quit thinking about how to put up a site, and worry
 more about writing stuff.  My hope is this is the step to take
 to get away from worrying about stuff.&lt;/p&gt;
 &lt;p&gt;Here is what I want to put in my posts:&lt;/p&gt;
@@ -283,7 +283,7 @@ to get away from worrying about stuff.&lt;/p&gt;
 for now.  Org-mode seemed like it should do the job.  So, I finally
 did a Google search, and found a &lt;a class="reference external" href="http://justin.abrah.ms/emacs/orgmode_static_site_generator.html"&gt;post&lt;/a&gt;
 from someone I met at the Strange Loop conference this year.  I have
-shamelessly stolen his layout, and am trying it out here.&lt;/p&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2012/2012-01-05-trying-out-a-static-site.html</guid><pubDate>Thu, 05 Jan 2012 08:00:00 GMT</pubDate></item><item><title>A simple Octave tip</title><link>http://dave.dkjones.org/posts/2011/a-simple-octave-tip.html</link><description>&lt;!-- alias : [/posts/2011/2011-11-19-a-simple-octave-tip.html] --&gt;
+shamelessly stolen his layout, and am trying it out here.&lt;/p&gt;</description><author></author><category>mathjax</category><guid>http://dave.dkjones.org/posts/2012/2012-01-05-trying-out-a-static-site.html</guid><pubDate>Thu, 05 Jan 2012 08:00:00 GMT</pubDate></item><item><title>A simple Octave tip</title><link>http://dave.dkjones.org/posts/2011/a-simple-octave-tip.html</link><description>&lt;!-- alias : [/posts/2011/2011-11-19-a-simple-octave-tip.html] --&gt;
 &lt;!-- /blog/2011/11/19/a-simple-octave-tip/index.html --&gt;
 &lt;!-- use_mathjax: true --&gt;
 &lt;!-- mathjax tip here --&gt;
@@ -453,4 +453,4 @@ instead of doing things ourselves.  Often, this is mostly a matter of
 learning what is available.&lt;/p&gt;
 &lt;p&gt;Sometimes, though we want to &lt;em&gt;learn&lt;/em&gt; how something works. Then, of
 course, it makes sense to do it ourselves instead of just making a
-call to existing code.&lt;/p&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2011/a-simple-octave-tip.html</guid><pubDate>Sat, 19 Nov 2011 00:00:00 GMT</pubDate></item></channel></rss>
+call to existing code.&lt;/p&gt;</description><author></author><category>mathjax</category><guid>http://dave.dkjones.org/posts/2011/a-simple-octave-tip.html</guid><pubDate>Sat, 19 Nov 2011 00:00:00 GMT</pubDate></item></channel></rss>

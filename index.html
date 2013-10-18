@@ -25,7 +25,7 @@
 </head>
 <body>
 <!-- Menubar -->
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-fixed-top" id="navbar">
     <div class="navbar-inner">
         <div class="container">
 
@@ -43,15 +43,15 @@
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     
-            <li><a href="archive.html">Archives</a>
-            </li><li><a href="categories/index.html">Tags</a>
-            </li><li><a href="rss.xml">RSS</a>
+                <li><a href="archive.html">Archives</a>
+                </li><li><a href="categories/index.html">Tags</a>
+                </li><li><a href="rss.xml">RSS</a>
 
                 </li></ul>
                     
 <form action="http://google.com/search" method="get" class="navbar-form pull-left">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:http://dave.dkjones.org">
+    <input type="hidden" name="q" value="site:http://dave.dkjones.org/">
     <input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search">
     <input type="submit" value="google search" style="visibility: hidden;">
   </fieldset>
@@ -60,7 +60,7 @@
                 <ul class="nav pull-right">
                 
                 
-                    
+                    <li>
                 </ul>
             </div>
         </div>
@@ -73,6 +73,97 @@
     <div class="span2"></div>
     <div class="span8">
     
+        <div class="postbox">
+        <h1><a href="posts/2013/c-quicksort.html">C quicksort</a>
+        <small>  
+             Posted: <time class="published" datetime="2013-10-17T22:00:00">2013-10-17 22:00</time>
+        </small></h1>
+        <hr>
+        <p>I have written quicksort in the <a class="reference external" href="posts/2012/2012-04-24-quicksort-in-d.html">past</a> mostly to learn how it works and
+to play with optimization.  (Because most of the time... I just want
+to call the system sort.)</p>
+<p>Sometimes, knowing how this works helps with other problems, like
+sorting vectors, where we can do better than a full comparison on each
+step.</p>
+<p>All of the other sorts I have written have been in a language that has
+at least some generic support.  This time, though, it is in C, using
+<cite>void *</cite>'s.</p>
+<p>And it wasn't that bad. This code is not fit for a system library, or
+anything like that, but it was fun(?) to write and test.</p>
+<p>The code stops quicksorting when the subfile gets shorter than 10
+lines, and it uses a median-of-three pivot selection.</p>
+<p>In the testing I did, an iterative version of this algorithm showed
+no improvement.</p>
+<pre class="code c literal-block">
+<span class="kt">void</span> <span class="nf">q4</span><span class="p">(</span><span class="kt">void</span>   <span class="o">*</span><span class="n">array</span><span class="p">,</span>
+        <span class="kt">size_t</span>  <span class="n">length</span><span class="p">,</span>
+        <span class="kt">size_t</span>  <span class="n">size</span><span class="p">,</span>
+        <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="n">size</span><span class="p">;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">array</span> <span class="o">+</span> <span class="n">size</span><span class="o">*</span><span class="n">length</span><span class="p">;</span> <span class="n">a</span> <span class="o">+=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+          <span class="n">b</span> <span class="o">&gt;</span> <span class="n">array</span> <span class="o">&amp;&amp;</span> <span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="o">-</span><span class="n">size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
+          <span class="n">b</span> <span class="o">-=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="o">-</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">middle</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">outer</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">pivot</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">middle</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">median_of_three</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">outer</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">compare</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">array</span> <span class="o">-</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pivot</span><span class="p">;</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">a</span> <span class="o">+=</span> <span class="n">size</span><span class="p">;</span>
+      <span class="k">for</span><span class="p">(;</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">a</span> <span class="o">+=</span> <span class="n">size</span><span class="p">){}</span>
+      <span class="n">b</span> <span class="o">-=</span> <span class="n">size</span><span class="p">;</span>
+      <span class="k">for</span><span class="p">(;</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">compare</span><span class="p">(</span><span class="n">pivot</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">b</span> <span class="o">-=</span> <span class="n">size</span><span class="p">){}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">q4</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">compare</span><span class="p">);</span>
+    <span class="n">q4</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">size</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">compare</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+<p>The median of three code leaves the smallest value at <cite>a</cite>, the middle
+at <cite>b</cite>, and the largest at <cite>c</cite>.</p>
+<pre class="code c literal-block">
+<span class="kt">void</span> <span class="nf">median_of_three</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+                     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span> <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+<p>And the swap is not efficiency minded...</p>
+<pre class="code c literal-block">
+<span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">t</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="o">*</span><span class="n">b</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+    <span class="o">++</span><span class="n">a</span><span class="p">,</span> <span class="o">++</span><span class="n">b</span><span class="p">,</span> <span class="o">--</span><span class="n">size</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+<p>In most cases, the system <cite>qsort</cite> on my machine crushes this code.</p>
+            
+
+        </div>
         <div class="postbox">
         <h1><a href="posts/2013/customizing-nikola.html">Customizing Nikola</a>
         <small>  
@@ -119,9 +210,8 @@ post-by-post basis.</p>
 <!-- http://www.emacswiki.org/emacs-en/TypographicalPunctuationMarks
 for getting better quotation marks. -->
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2013/pretty-print-log-python.html">Pretty print logging in Python</a>
         <small>  
@@ -151,9 +241,8 @@ we can send an arbitrary object into a log message call.</p>
 is not high enough, the only method call is the creation of the
 <tt class="docutils literal">PrettyLog</tt> object.</p>
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2013/2013-01-02-updating-emacs-packages.html">Updating Emacs packages</a>
         <small>  
@@ -177,9 +266,8 @@ process...)  Emacs will ask for confirmation on the installation of
 the new packages, then confirmation on the deletion of the old
 packages.</p>
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2013/2013-01-02-blog-process-with-org.html">My blog process with org</a>
         <small>  
@@ -257,9 +345,8 @@ constantly updating the stamp.</li>
 </dd>
 </dl>
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2012/2012-04-26-modified-quicksort.html">Modified Quicksort in D</a>
         <small>  
@@ -682,9 +769,8 @@ void runTimings() {
 .. : 10000000  1420
 .. : done -->
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2012/2012-04-24-quicksort-in-d.html">Quicksort in D</a>
         <small>  
@@ -995,9 +1081,8 @@ without affecting its value.</p>
 </table>
 </blockquote>
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2012/2012-03-12-astar-python.html">A* in Python</a>
         <small>  
@@ -1391,9 +1476,8 @@ distance distance: 24 steps: 862
         print "bad arg", sys.argv -->
 </div>
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2012/2012-01-25-sieve-in-racket.html">Sieve of Eratosthenes in Racket</a>
         <small>  
@@ -1449,9 +1533,8 @@ yet by doing everything in the REPL.</p>
 <p><strong>Edit</strong> Outside of the REPL this appears to only take twice as long
 as the compiled OCaml code.</p>
             
-    <p>
 
-        </p></div>
+        </div>
         <div class="postbox">
         <h1><a href="posts/2012/2012-01-08-old-blog.html">Link to older blog</a>
         <small>  
@@ -1460,184 +1543,20 @@ as the compiled OCaml code.</p>
         <hr>
         <p><a class="reference external" href="http://mingledcup.dkjones.org">My blogger site</a></p>
             
-    <p>
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-01-07-sieve-of-eratosthenes.html">Sieve of Eratosthenes</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-01-07T08:00:00">2012-01-07 08:00</time>
-        </small></h1>
-        <hr>
-        <p>A function to generate prime numbers is often useful.  This sieve of
-eratosthenes is one of the simplest ways to find prime numbers, and it
-is much more efficient than the brute force method.</p>
-<p><a class="reference external" href="http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/">Here is a nice description</a> of
-how to perform the sieve, and <a class="reference external" href="http://mingledcup.dkjones.org/2010/08/sieve-of-eratosthenes.html">here is a previous</a>
-post I wrote about it.  This time, I rewrote it in OCaml, and got a
-little farther by only generating the odd prime numbers.</p>
-<p>First, here is a helper function to take an array of integers, and
-return a new array that contains only the non-zero values.  This
-will be useful later in all of the sieve functions.</p>
-<pre class="code ocaml literal-block">
-<span class="c">(* return a new array of the non-zero items *)</span>
-<span class="k">let</span> <span class="n">filter_non_zeros</span> <span class="n">ar</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">fold_left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">count</span> <span class="n">x</span> <span class="o">-&gt;</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">count</span><span class="o">)</span> <span class="mi">0</span> <span class="n">ar</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">count</span> <span class="mi">0</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="k">rec</span> <span class="n">go</span> <span class="n">idx</span> <span class="n">jdx</span> <span class="o">=</span>
-    <span class="k">if</span> <span class="n">jdx</span> <span class="o">=</span> <span class="n">count</span> <span class="k">then</span>
-      <span class="n">result</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="n">ar</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-      <span class="n">go</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">jdx</span>
-    <span class="k">else</span>
-      <span class="o">(</span><span class="n">result</span><span class="o">.(</span><span class="n">jdx</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">ar</span><span class="o">.(</span><span class="n">idx</span><span class="o">);</span>
-       <span class="n">go</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">jdx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
-  <span class="k">in</span>
-  <span class="n">go</span> <span class="mi">0</span> <span class="mi">0</span>
-</pre>
-<p>Next, the straightforward sieve, first written to use recursion
-instead of loops. Loops are not necessary in languages like OCaml, but
-sometimes they are nicer than the recursion, depending on the problem.</p>
-<pre class="code ocaml literal-block">
-<span class="c">(* Sieve of eratosthenes, using all recursion for the looping *)</span>
-<span class="k">let</span> <span class="n">sieve</span> <span class="n">n</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-
-  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">idx</span> <span class="o">=</span>
-    <span class="k">if</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stop_index</span> <span class="k">then</span>
-      <span class="bp">()</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="n">result</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-      <span class="c">(* not prime *)</span>
-      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
-    <span class="k">else</span>
-      <span class="k">let</span> <span class="k">rec</span> <span class="n">clear</span> <span class="n">j</span> <span class="o">=</span>
-        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">then</span>
-          <span class="o">(</span><span class="n">result</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-           <span class="n">clear</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">idx</span><span class="o">));</span>
-      <span class="k">in</span>
-      <span class="n">clear</span> <span class="o">(</span><span class="n">idx</span> <span class="o">*</span> <span class="n">idx</span><span class="o">);</span>
-      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
-  <span class="k">in</span>
-  <span class="n">loop</span> <span class="mi">2</span><span class="o">;</span>
-  <span class="n">filter_non_zeros</span> <span class="n">result</span>
-</pre>
-<p>This function creates an array of potential prime numbers.  Then, it
-walks through the array, looking for the next prime.  When a new prime
-is found, the function clears all of the multiples of the prime in the
-rest of the array.</p>
-<p>Next is a function that moves the inner most recursion into a loop.</p>
-<pre class="code ocaml literal-block">
-<span class="c">(* Sieve of Eratosthenes, moving the inner loop into a loop *)</span>
-<span class="k">let</span> <span class="n">sieve2</span> <span class="n">n</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-
-  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">idx</span> <span class="o">=</span>
-    <span class="k">if</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stop_index</span> <span class="k">then</span>
-      <span class="bp">()</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="n">result</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-      <span class="c">(* not prime *)</span>
-      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
-    <span class="k">else</span>
-      <span class="o">(</span><span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">idx</span> <span class="o">*</span> <span class="n">idx</span><span class="o">)</span> <span class="k">in</span>
-       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">do</span>
-         <span class="o">(</span><span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-          <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">idx</span><span class="o">);</span>
-       <span class="k">done</span><span class="o">;</span>
-       <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
-  <span class="k">in</span>
-  <span class="n">loop</span> <span class="mi">2</span><span class="o">;</span>
-  <span class="n">filter_non_zeros</span> <span class="n">result</span>
-</pre>
-<p>That function takes the same time as the first one, and is just a difference
-in style.</p>
-<p>Next is a function that does away with the recursion altogether.</p>
-<pre class="code ocaml literal-block">
-<span class="c">(* Sieve of Eratosthenes, using all loops instead of recursion *)</span>
-<span class="k">let</span> <span class="n">sieve3</span> <span class="n">n</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-  <span class="k">let</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">2</span> <span class="k">in</span>
-  <span class="k">while</span> <span class="o">!</span><span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">stop_index</span> <span class="k">do</span>
-    <span class="k">if</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span>
-      <span class="o">(</span><span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="o">!</span><span class="n">idx</span> <span class="k">in</span>
-       <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="o">)</span> <span class="k">in</span>
-       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">do</span>
-         <span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-         <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">p</span><span class="o">;</span>
-       <span class="k">done</span><span class="o">);</span>
-    <span class="n">idx</span> <span class="o">:=</span> <span class="o">!</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-  <span class="k">done</span><span class="o">;</span>
-  <span class="n">filter_non_zeros</span> <span class="n">result</span>
-</pre>
-<p>Finally, the last method only generates the odd primes.  We can ignore
-even numbers right from the start, and halve the memory and timing
-requirements.  This requires a little trickery to do all of the
-indexing correctly, but it isn't too bad.</p>
-<!-- To get the indexing right, first we have that index \(i\) is for the -->
-<!-- value \(p = 2 i + 1\).  The square of \(p\) is -->
-<!-- \(p^2 = (2 i + 1) ^2 = 4 i ^2 + 4 i + 1 = (2 i + 1)(2 i -->
-<pre class="code ocaml literal-block">
-<span class="c">(* This one ignores the even numbers entirely, so it is about
-   twice as fast now *)</span>
-<span class="k">let</span> <span class="n">sieve4</span> <span class="n">n</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="n">m</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
-  <span class="c">(* Remeber that 2 is a prime *)</span>
-  <span class="n">result</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">2</span><span class="o">;</span>
-  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-
-  <span class="k">let</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">1</span> <span class="k">in</span>
-  <span class="k">while</span> <span class="o">!</span><span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">stop_index</span> <span class="k">do</span>
-    <span class="k">if</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span>
-      <span class="c">(* 2 * idx + 1 is the next prime.  Now
-         remove its multiples.
-         We want to start at p*p, and step by p.
-         for example, If idx is 1, then p is 3.
-         To get result(i) = 9, we need i to be 4.
-         If idx is 2, and p = 5, then to get
-         result(i) = 25, we need i to be 12.
-         So, we can move out by idx * p, then step by p
-      *)</span>
-      <span class="o">(</span><span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="k">in</span>
-       <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(!</span><span class="n">idx</span> <span class="o">*</span> <span class="o">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span> <span class="k">in</span>
-       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="k">do</span>
-         <span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-         <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">p</span><span class="o">;</span>
-       <span class="k">done</span><span class="o">);</span>
-    <span class="n">idx</span> <span class="o">:=</span> <span class="o">!</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-  <span class="k">done</span><span class="o">;</span>
-  <span class="n">filter_non_zeros</span> <span class="n">result</span>
-</pre>
-<p>And finally, a test driver.</p>
-<pre class="code ocaml literal-block">
-<span class="k">let</span> <span class="n">main</span> <span class="n">sieve_fcn</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">15485863</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="o">(</span><span class="n">sieve_fcn</span> <span class="n">n</span><span class="o">)</span> <span class="k">in</span>
-  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"number of primes less than %d: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="n">n</span> <span class="n">m</span><span class="o">;</span>
-<span class="o">;;</span>
-
-<span class="n">main</span> <span class="n">sieve4</span><span class="o">;;</span>
-</pre>
-            
-    <p>
-
-        </p></div>
+        </div>
     
 <div>
 <ul class="pager">
+    <li class="next">
+        <a href="index-1.html">Older posts →</a>
+    </li>
 </ul>
 </div>
 
     
 
-    
-        <script src="assets/js/mathjax.js" type="text/javascript"></script>
+	
 
 
     </div>
@@ -1648,13 +1567,22 @@ indexing correctly, but it isn't too bad.</p>
     Contents © 2013 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
 </div>
 
-
-
-            <script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+            <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
             <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
 
 
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script>
+	
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});
+    $(window).on('hashchange', function(){
+        if (location.hash && $(location.hash)[0]) {
+            $('body').animate({scrollTop: $(location.hash).offset().top - $('#navbar').outerHeight(true)*1.2 }, 1);
+        }
+    });
+    $(document).ready(function(){$(window).trigger('hashchange')});
+    </script>
+    
+    
 </body>
 </html>
