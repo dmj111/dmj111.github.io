@@ -4,6 +4,9 @@
 .. title: Prime sieve in JavaScript
 .. date: 2013-11-17 0:00
 
+*Update* : After running the C version through Emscripten_, the result
+is about the same speed as the C version when run through Firefox.
+Wow!
 
 
 
@@ -140,3 +143,4 @@ prime should be 15,485,863.
 
 
 .. _NumPy: http://www.numpy.org/
+.. _Emscripten: https://github.com/kripken/emscripten/wiki
