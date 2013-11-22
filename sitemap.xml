@@ -6,7 +6,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://dave.dkjones.org/</loc>
-  <lastmod>2013-11-19</lastmod>
+  <lastmod>2013-11-21</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -261,7 +261,12 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html</loc>
-  <lastmod>2013-11-19</lastmod>
+  <lastmod>2013-11-21</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
+  <loc>http://dave.dkjones.org/prime_demo/primes.html</loc>
+  <lastmod>2013-11-21</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -277,11 +282,6 @@
  <url>
   <loc>http://dave.dkjones.org/stories/about.html</loc>
   <lastmod>2013-11-19</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://dave.dkjones.org/stories/analytics.html</loc>
-  <lastmod>2013-11-18</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
