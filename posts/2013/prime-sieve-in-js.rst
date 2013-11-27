@@ -125,12 +125,12 @@ prime should be 15,485,863.
 	 var elem = document.getElementById("test_prime");
 	 var prime_ui_fcn = function () {
 	    var el = document.getElementById("prime_result");
-	    el.innerText = "Calculating...";
+	    el.innerHTML = "Calculating...";
 	    setTimeout(function() {
 	        var start = new Date();
 		var r = primes.sieve1(15485863+1);
                 var now = new Date();
-	        el.innerText = "millionth prime: " + r[999999].toLocaleString() +
+	        el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
 		               " took " + (now - start) + "ms";
 
 		}, 10);

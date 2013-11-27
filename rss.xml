@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>Undetermined</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 19 Nov 2013 22:52:29 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Prime sieve in JavaScript</title><link>http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html</link><description>&lt;p&gt;&lt;em&gt;Update&lt;/em&gt; : After running the C version through &lt;a class="reference external" href="https://github.com/kripken/emscripten/wiki"&gt;Emscripten&lt;/a&gt;, the result
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>Undetermined</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Wed, 27 Nov 2013 06:01:53 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Prime sieve in JavaScript</title><link>http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html</link><description>&lt;p&gt;&lt;em&gt;Update&lt;/em&gt; : After running the C version through &lt;a class="reference external" href="https://github.com/kripken/emscripten/wiki"&gt;Emscripten&lt;/a&gt;, the result
 is about the same speed as the C version when run through Firefox.
 Wow!&lt;/p&gt;
 &lt;p&gt;Ok, time for some more prime sieving.  This time, we are going to
@@ -154,12 +154,12 @@ var primes = function() {
       var elem = document.getElementById("test_prime");
       var prime_ui_fcn = function () {
          var el = document.getElementById("prime_result");
-         el.innerText = "Calculating...";
+         el.innerHTML = "Calculating...";
          setTimeout(function() {
              var start = new Date();
              var r = primes.sieve1(15485863+1);
              var now = new Date();
-             el.innerText = "millionth prime: " + r[999999].toLocaleString() +
+             el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
                             " took " + (now - start) + "ms";
 
              }, 10);
