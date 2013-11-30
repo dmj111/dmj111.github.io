@@ -8,6 +8,9 @@
 is about the same speed as the C version when run through Firefox.
 Wow!
 
+*Update* : Switching from a Javascript ``Array`` to ``Int8Array``
+halved the time in Firefox, making it comparable to C and Emscripten.
+(Until.... moving them to 8 bit ints too...).
 
 
 Ok, time for some more prime sieving.  This time, we are going to

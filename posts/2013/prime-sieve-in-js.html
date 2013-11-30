@@ -95,6 +95,9 @@
     <p><em>Update</em> : After running the C version through <a class="reference external" href="https://github.com/kripken/emscripten/wiki">Emscripten</a>, the result
 is about the same speed as the C version when run through Firefox.
 Wow!</p>
+<p><em>Update</em> : Switching from a Javascript <tt class="docutils literal">Array</tt> to <tt class="docutils literal">Int8Array</tt>
+halved the time in Firefox, making it comparable to C and Emscripten.
+(Until.... moving them to 8 bit ints too...).</p>
 <p>Ok, time for some more prime sieving.  This time, we are going to
 try JavaScript, Python, and C.</p>
 <p>First, the Python code</p>
@@ -160,8 +163,19 @@ try JavaScript, Python, and C.</p>
 
     <span class="c1">// Create an array of values as the result of calling fcn[i] for 0
 </span>    <span class="c1">// &lt;= i &lt; n
-</span>    <span class="nx">primes</span><span class="p">.</span><span class="nx">array_init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fcn</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[</span><span class="p">];</span>
+</span>    <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">Int8Array</span> <span class="o">===</span> <span class="s1">'function'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">primes</span><span class="p">.</span><span class="nx">create_array</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">Int8Array</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"no int8array...."</span><span class="p">);</span>
+        <span class="nx">primes</span><span class="p">.</span><span class="nx">create_array</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+    <span class="nx">primes</span><span class="p">.</span><span class="nx">array_init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fcn</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">primes</span><span class="p">.</span><span class="nx">create_array</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
         <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fcn</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
         <span class="p">}</span>
@@ -170,26 +184,31 @@ try JavaScript, Python, and C.</p>
 
     <span class="c1">// Simple sieve.
 </span>    <span class="nx">primes</span><span class="p">.</span><span class="nx">sieve1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">primes</span><span class="p">.</span><span class="nx">array_init</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">i</span><span class="p">;</span> <span class="p">},</span> <span class="nx">n</span><span class="p">);</span>
-        <span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// alert("version 2");
+</span>        <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">primes</span><span class="p">.</span><span class="nx">array_init</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">},</span> <span class="nx">n</span><span class="p">),</span>
+            <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">result</span><span class="p">;</span>
 
-        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
-            <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
-                <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+                <span class="k">for</span><span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[</span><span class="p">];</span>
-        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="p">[</span><span class="p">];</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">j</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class="p">};</span>
+
     <span class="k">return</span> <span class="nx">primes</span><span class="p">;</span>
 <span class="p">}(</span><span class="p">);</span>
 </pre>
@@ -209,8 +228,19 @@ var primes = function() {
 
     // Create an array of values as the result of calling fcn[i] for 0
     // <= i < n
+    if(typeof Int8Array === 'function') {
+        primes.create_array = function(n) {
+            return new Int8Array(n);
+        };
+    } else {
+        alert("no int8array....");
+        primes.create_array = function(n) {
+            return new Array();
+        };
+    }
+
     primes.array_init = function(fcn, n) {
-	var result = [];
+        var result = primes.create_array(n);
 	for(var i = 0; i < n; i++) {
 	    result[i] = fcn(i);
 	}
@@ -219,26 +249,31 @@ var primes = function() {
 
     // Simple sieve.
     primes.sieve1 = function(n) {
-	var values = primes.array_init(function(i) { return i; }, n);
-	values[1] = 0;
+        // alert("version 2");
+	var values = primes.array_init(function(i) { return 1; }, n),
+            i, j, result;
 
-	for(var i = 0; i < n; i++) {
-	    if(i*i > n) { break; }
-	    if(values[i]) {
-		for(var j = i*i; j < n; j += i) {
+	values[1] = 0;
+        values[0] = 0;
+
+	for(i = 0; i < n; i++) {
+	    if(values[i] > 0) {
+	        if(i*i > n) { break; }
+		for(j = i*i; j < n; j += i) {
 		    values[j] = 0;
 		}
 	    }
 	}
 
-	var result = [];
-	for(var j = 0; j < values.length; j++) {
+        result = [];
+	for(j = 0; j < values.length; j += 1) {
 	    if(values[j] > 0) {
-		result.push(values[j]);
+		result.push(j);
 	    }
 	}
 	return result;
-    }
+    };
+
     return primes;
 }();
 </script><!-- The gui javascript code... -->
