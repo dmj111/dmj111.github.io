@@ -74,6 +74,26 @@
     <div class="span8">
     
         <div class="postbox">
+        <h1><a href="posts/2013/eopl-in-js.html">EOPL in Javascript</a>
+        <small>  
+             Posted: <time class="published" datetime="2013-12-08T00:00:00">2013-12-08 00:00</time>
+        </small></h1>
+        <hr>
+        <p>I have been working through <a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798">EOPL</a> again, this time programming in
+JavaScript.  My JS experience is limited, but I finally know enough
+that it isn't as painful anymore.</p>
+<p>Some things that have helped:</p>
+<ul class="simple">
+<li>The debugging tools built into browsers</li>
+<li>Node.js</li>
+<li>Emacs -- <a class="reference external" href="https://code.google.com/p/js2-mode/">js2-mode</a>, <tt class="docutils literal"><span class="pre">flymake-jslint</span></tt>, and <a class="reference external" href="http://pegjs.majda.cz/">PEG.js</a></li>
+<li>And finally knowing enough that I don't have to look stuff up all of
+the time.</li>
+</ul>
+            
+
+        </div>
+        <div class="postbox">
         <h1><a href="posts/2013/prime-sieve-in-js.html">Prime sieve in JavaScript</a>
         <small>  
              Posted: <time class="published" datetime="2013-11-17T00:00:00">2013-11-17 00:00</time>
@@ -1691,68 +1711,11 @@ distance distance: 24 steps: 862
             
 
         </div>
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-01-25-sieve-in-racket.html">Sieve of Eratosthenes in Racket</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-01-25T00:00:00">2012-01-25 00:00</time>
-        </small></h1>
-        <hr>
-        <p>To learn some <a class="reference external" href="http://racket-lang.org/">Racket</a> I ported this <a class="reference external" href="http:/blog/2012/01/07/sieve-of-eratosthenes/">this
-Ocaml code</a> to Scheme.</p>
-<p>Racket has lots of nice features that I want to learn about.  The
-pattern matching brings something to lisp code that I would miss from
-the ML / Haskell languages.  There is a batteries included approach,
-which helps with the usual knock against scheme that there isn't
-enough library support.  There are also list comprehensions,
-but they are even more than just list comprehensions.</p>
-<p>The comprehensions can walk over lists, vectors, and strings.  The
-type can be specified to make the performance faster.  This is my
-favorite part so far -- they can generate vectors instead of lists,
-which we will see in this code.</p>
-<p>Without further delay, here is a learning attempt with Racket.</p>
-<pre class="code rkt literal-block">
-<span class="kn">#lang racket</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">sieve</span> <span class="nv">n</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">let*</span>
-      <span class="p">((</span><span class="nf">limit</span> <span class="p">(</span><span class="nb">round </span><span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="p">(</span><span class="nb">inexact-&gt;exact </span><span class="p">(</span><span class="nb">round </span><span class="p">(</span><span class="nb">sqrt </span><span class="nv">n</span><span class="p">))))</span>
-                        <span class="mi">2</span><span class="p">)))</span>
-       <span class="p">(</span><span class="nf">m</span> <span class="p">(</span><span class="nb">round </span><span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="nv">n</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span>
-       <span class="p">(</span><span class="nf">ar</span> <span class="p">(</span><span class="nb">make-vector </span><span class="nv">m</span> <span class="mi">1</span><span class="p">)))</span>
-
-    <span class="c1">;; element 0 is really for number 1, so we do not</span>
-    <span class="c1">;; want to drop its multiples.</span>
-    <span class="p">(</span><span class="nf">for</span> <span class="p">([</span><span class="nf">i</span> <span class="p">(</span><span class="nf">in-range</span> <span class="mi">1</span> <span class="nv">limit</span><span class="p">)])</span>
-         <span class="p">(</span><span class="k">when </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">vector-ref </span><span class="nv">ar</span> <span class="nv">i</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-           <span class="p">(</span><span class="nf">let</span>
-               <span class="p">((</span><span class="nf">p</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="nv">i</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-             <span class="p">(</span><span class="nf">for</span> <span class="p">([</span><span class="nf">j</span> <span class="p">(</span><span class="nf">in-range</span> <span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nb">+ </span><span class="nv">p</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">m</span> <span class="nv">p</span><span class="p">)])</span>
-                  <span class="p">(</span><span class="nb">vector-set! </span><span class="nv">ar</span> <span class="nv">j</span> <span class="mi">0</span><span class="p">)))))</span>
-
-    <span class="c1">;; Collect all of the non-zero elements</span>
-    <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">result</span>
-           <span class="p">(</span><span class="nf">for/vector</span>
-            <span class="p">([(</span><span class="nf">x</span> <span class="nv">i</span><span class="p">)</span> <span class="p">(</span><span class="nf">in-indexed</span> <span class="p">(</span><span class="nf">in-vector</span> <span class="nv">ar</span><span class="p">))]</span>
-             <span class="kd">#:when</span> <span class="p">(</span><span class="nb">&gt; </span><span class="nv">x</span> <span class="mi">0</span><span class="p">))</span>
-            <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="nv">i</span><span class="p">)))))</span>
-      <span class="c1">;; now, set the first element to 2, since it is</span>
-      <span class="c1">;; currently holding 1.</span>
-      <span class="p">(</span><span class="nb">vector-set! </span><span class="nv">result</span> <span class="mi">0</span> <span class="mi">2</span><span class="p">)</span>
-      <span class="nv">result</span><span class="p">)))</span>
-</pre>
-<p>As it stands, this code runs about five times slower than the compiled
-OCaml, but I am not sure if I am running it in under the JIT compiler
-yet by doing everything in the REPL.</p>
-<p><strong>Edit</strong> Outside of the REPL this appears to only take twice as long
-as the compiled OCaml code.</p>
-            
-
-        </div>
     
 <div>
 <ul class="pager">
     <li class="next">
-        <a href="index-1.html">Older posts →</a>
+        <a href="index-2.html">Older posts →</a>
     </li>
 </ul>
 </div>

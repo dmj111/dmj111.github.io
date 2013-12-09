@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>Undetermined</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 30 Nov 2013 13:34:37 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Prime sieve in JavaScript</title><link>http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html</link><description>&lt;p&gt;&lt;em&gt;Update&lt;/em&gt; : After running the C version through &lt;a class="reference external" href="https://github.com/kripken/emscripten/wiki"&gt;Emscripten&lt;/a&gt;, the result
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>Undetermined</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 08 Dec 2013 22:10:12 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>EOPL in Javascript</title><link>http://dave.dkjones.org/posts/2013/eopl-in-js.html</link><description>&lt;p&gt;I have been working through &lt;a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798"&gt;EOPL&lt;/a&gt; again, this time programming in
+JavaScript.  My JS experience is limited, but I finally know enough
+that it isn't as painful anymore.&lt;/p&gt;
+&lt;p&gt;Some things that have helped:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The debugging tools built into browsers&lt;/li&gt;
+&lt;li&gt;Node.js&lt;/li&gt;
+&lt;li&gt;Emacs -- &lt;a class="reference external" href="https://code.google.com/p/js2-mode/"&gt;js2-mode&lt;/a&gt;, &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;flymake-jslint&lt;/span&gt;&lt;/tt&gt;, and &lt;a class="reference external" href="http://pegjs.majda.cz/"&gt;PEG.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;And finally knowing enough that I don't have to look stuff up all of
+the time.&lt;/li&gt;
+&lt;/ul&gt;</description><author></author><guid>http://dave.dkjones.org/posts/2013/eopl-in-js.html</guid><pubDate>Sun, 08 Dec 2013 00:00:00 GMT</pubDate></item><item><title>Prime sieve in JavaScript</title><link>http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html</link><description>&lt;p&gt;&lt;em&gt;Update&lt;/em&gt; : After running the C version through &lt;a class="reference external" href="https://github.com/kripken/emscripten/wiki"&gt;Emscripten&lt;/a&gt;, the result
 is about the same speed as the C version when run through Firefox.
 Wow!&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Update&lt;/em&gt; : Switching from a Javascript &lt;tt class="docutils literal"&gt;Array&lt;/tt&gt; to &lt;tt class="docutils literal"&gt;Int8Array&lt;/tt&gt;
@@ -1527,51 +1537,4 @@ distance distance: 24 steps: 862
         test_block()
     else:
         print "bad arg", sys.argv --&gt;
-&lt;/div&gt;</description><author></author><guid>http://dave.dkjones.org/posts/2012/2012-03-12-astar-python.html</guid><pubDate>Mon, 12 Mar 2012 00:00:00 GMT</pubDate></item><item><title>Sieve of Eratosthenes in Racket</title><link>http://dave.dkjones.org/posts/2012/2012-01-25-sieve-in-racket.html</link><description>&lt;p&gt;To learn some &lt;a class="reference external" href="http://racket-lang.org/"&gt;Racket&lt;/a&gt; I ported this &lt;a class="reference external" href="http://dave.dkjones.org/blog/2012/01/07/sieve-of-eratosthenes/"&gt;this
-Ocaml code&lt;/a&gt; to Scheme.&lt;/p&gt;
-&lt;p&gt;Racket has lots of nice features that I want to learn about.  The
-pattern matching brings something to lisp code that I would miss from
-the ML / Haskell languages.  There is a batteries included approach,
-which helps with the usual knock against scheme that there isn't
-enough library support.  There are also list comprehensions,
-but they are even more than just list comprehensions.&lt;/p&gt;
-&lt;p&gt;The comprehensions can walk over lists, vectors, and strings.  The
-type can be specified to make the performance faster.  This is my
-favorite part so far -- they can generate vectors instead of lists,
-which we will see in this code.&lt;/p&gt;
-&lt;p&gt;Without further delay, here is a learning attempt with Racket.&lt;/p&gt;
-&lt;pre class="code rkt literal-block"&gt;
-&lt;span class="kn"&gt;#lang racket&lt;/span&gt;
-
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;sieve&lt;/span&gt; &lt;span class="nv"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;let*&lt;/span&gt;
-      &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;limit&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;round &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;/ &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;inexact-&amp;gt;exact &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;round &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;sqrt &lt;/span&gt;&lt;span class="nv"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-                        &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;m&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;round &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;/ &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nv"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;ar&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;make-vector &lt;/span&gt;&lt;span class="nv"&gt;m&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-
-    &lt;span class="c1"&gt;;; element 0 is really for number 1, so we do not&lt;/span&gt;
-    &lt;span class="c1"&gt;;; want to drop its multiples.&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;for&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nf"&gt;i&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;in-range&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nv"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;when &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;= &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;vector-ref &lt;/span&gt;&lt;span class="nv"&gt;ar&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;let&lt;/span&gt;
-               &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;p&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;* &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;for&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nf"&gt;j&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;in-range&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;* &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="nv"&gt;p&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;m&lt;/span&gt; &lt;span class="nv"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-                  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;vector-set! &lt;/span&gt;&lt;span class="nv"&gt;ar&lt;/span&gt; &lt;span class="nv"&gt;j&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-
-    &lt;span class="c1"&gt;;; Collect all of the non-zero elements&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;result&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;for/vector&lt;/span&gt;
-            &lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="nf"&gt;x&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;in-indexed&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;in-vector&lt;/span&gt; &lt;span class="nv"&gt;ar&lt;/span&gt;&lt;span class="p"&gt;))]&lt;/span&gt;
-             &lt;span class="kd"&gt;#:when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;&amp;gt; &lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;* &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-      &lt;span class="c1"&gt;;; now, set the first element to 2, since it is&lt;/span&gt;
-      &lt;span class="c1"&gt;;; currently holding 1.&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;vector-set! &lt;/span&gt;&lt;span class="nv"&gt;result&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="nv"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;As it stands, this code runs about five times slower than the compiled
-OCaml, but I am not sure if I am running it in under the JIT compiler
-yet by doing everything in the REPL.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Edit&lt;/strong&gt; Outside of the REPL this appears to only take twice as long
-as the compiled OCaml code.&lt;/p&gt;</description><author></author><guid>http://dave.dkjones.org/posts/2012/2012-01-25-sieve-in-racket.html</guid><pubDate>Wed, 25 Jan 2012 00:00:00 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;</description><author></author><guid>http://dave.dkjones.org/posts/2012/2012-03-12-astar-python.html</guid><pubDate>Mon, 12 Mar 2012 00:00:00 GMT</pubDate></item></channel></rss>
