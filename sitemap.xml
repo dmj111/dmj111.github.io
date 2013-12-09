@@ -140,6 +140,11 @@
   <priority>0.5000</priority>
  </url>
  <url>
+  <loc>http://dave.dkjones.org/letrec_interp/interpreter.html</loc>
+  <lastmod>2013-12-08</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
   <loc>http://dave.dkjones.org/listings/</loc>
   <lastmod>2013-11-27</lastmod>
   <priority>0.5000</priority>
