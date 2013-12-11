@@ -8,12 +8,10 @@
   </head>
   <body>
     <h1>Interpreter Demo</h1>
-    <form action="#">
     <textarea id="input" cols="60" rows="20">letrec fact(x) =
       if less?(x, 2) then 1 else *(x, (fact -(x, 1))) in (fact 10)
     </textarea>
     <button id="submit">Submit</button>
-    </form >
     <div id="output"></div>
     <div>
       <h2>syntax</h2>
