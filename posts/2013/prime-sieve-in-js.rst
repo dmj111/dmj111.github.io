@@ -85,6 +85,8 @@ This code took about 280 ms. (``clang -O3``)
 
 Finally, the JavaScript version.
 
+.. This injects the code into the text
+
 .. include:: posts/2013/prime_code.js
    :code: js
 
@@ -111,6 +113,8 @@ prime should be 15,485,863.
 
    <script type="text/javascript">
 
+.. this injects the code as code
+
 .. raw:: html
    :file: posts/2013/prime_code.js
 
@@ -131,7 +135,7 @@ prime should be 15,485,863.
 	    el.innerHTML = "Calculating...";
 	    setTimeout(function() {
 	        var start = new Date();
-		var r = primes.sieve1(15485863+1);
+		var r = primes.sieve1(15486000+1);
                 var now = new Date();
 	        el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
 		               " took " + (now - start) + "ms";

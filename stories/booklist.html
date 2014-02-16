@@ -3,9 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta charset="utf-8">
-    <meta name="description" content="Undetermined">
+    <meta name="description" content="">
     <meta name="author" content="Dave Jones">
-    <title>galleries | a mingled cup</title>
+    <title>Book list | a mingled cup</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
             <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
@@ -20,14 +20,8 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
     
-<style type="text/css">
-    .image-block {
-        display: inline-block;
-    }
-    .flowr_row {
-        width: 100%;
-    }
-    </style>
+
+
 
     <script type="text/javascript">
 // A place to store functions to run after the page loads.
@@ -74,6 +68,8 @@ dmjStartupFcns = [];
                 
                 
                     <li>
+			<a href="booklist.rst" id="sourcelink">Source</a>
+		</li>
                 </ul>
             </div>
         </div>
@@ -86,19 +82,52 @@ dmjStartupFcns = [];
     <div class="span2"></div>
     <div class="span8">
     
-    
-<ul class="breadcrumb">
-        <li><a href="#">galleries</a></li>
+    <h1>Book list</h1>
+    <p>Books to read:</p>
+<ul>
+<li><p class="first">Head First Design Patterns</p>
+<p>The GOF book was a bit much.  Maybe looking at the more common
+patterns will be useful.</p>
+</li>
+<li><p class="first">Effective Java, Bloch</p>
+<p>I don't use Java very often, but this seems like a good one to go to
+for learning some of the language idioms.</p>
+</li>
+<li><p class="first">Elements of Statistical Learning</p>
+</li>
+<li><p class="first">Doing Data Science</p>
+</li>
+<li><p class="first">Algorithms by Dasgupta</p>
+</li>
+<li><p class="first">Applied Discrete Data Structures, Doerr and Levasseur [<a class="reference external" href="http://faculty.uml.edu/klevasseur/ads2/">ads</a>]</p>
+</li>
+<li><p class="first">Math for Computer Science, Lehman and Leighton [ <a class="reference external" href="http://www.cs.princeton.edu/courses/archive/spr10/cos433/mathcs.pdf">mathcs</a> ]</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.greenteapress.com/thinkbayes/">Think Bayes</a>, Downey</p>
+</li>
+<li><p class="first">Making Software, Oram and Wilson</p>
+</li>
+<li><p class="first">Doing Bayesian Data Analysis, Kruschke</p>
+</li>
+<li><p class="first">An Introduction to Analysis of Algorithms, Flajolet and Sedgewick</p>
+</li>
+<li><p class="first">Analytic Combinatorics, Flajolet and Sedgewick</p>
+</li>
+<li><p class="first">Concrete Mathematics, Graham, Knuth, and Patashnik</p>
+</li>
+<li><p class="first">Working with Legacy Code, Feathers</p>
+</li>
+<li><p class="first">Concepts, Techniques, and Models of Computer Programming, Van Roy
+and Haridi</p>
+</li>
+<li><p class="first">Clean Code</p>
+</li>
 </ul>
-
-    <ul>
-    </ul>
-
-    <div id="gallery_container"></div>
-    <noscript>
-    <ul class="thumbnails">
-    </ul>
-    </noscript>
+<p>Due for a re-read:</p>
+<ul class="simple">
+<li>Programming Pearls, Benteley</li>
+<li>Code Complete</li>
+</ul>
 
     </div>
     </div>
@@ -124,45 +153,6 @@ dmjStartupFcns = [];
     $(document).ready(function(){$(window).trigger('hashchange')});
     </script>
     
-<script src="../assets/js/flowr.plugin.js"></script>
-<script>
-jsonContent = [];
-$("#gallery_container").flowr({
-        data : jsonContent,
-        height : 180*.6,
-        padding: 5,
-        rows: -1,
-        render : function(params) {
-            // Just return a div, string or a dom object, anything works fine
-            img = $("<img />").attr({
-                'src': params.itemData.url_thumb,
-                'width' : params.width,
-                'height' : params.height
-            }).css('max-width', '100%');
-            link = $( "<a></a>").attr({
-                'href': params.itemData.url,
-                'class': 'image-reference'
-            });
-            div = $("<div />").addClass('image-block').attr({
-                'title': params.itemData.title,
-                'data-toggle': "tooltip",
-            });
-            link.append(img);
-            div.append(link);
-            div.hover(div.tooltip());
-            return div;
-        },
-        itemWidth : function(data) { return data.size.w; },
-        itemHeight : function(data) { return data.size.h; },
-        complete : function(params) {
-            if( jsonContent.length > params.renderedItems ) {
-                nextRenderList = jsonContent.slice( params.renderedItems );
-            }
-        }
-    });
-$("a.image-reference").colorbox({rel:"gal", maxWidth:"100%",maxHeight:"100%",scalePhotos:true});
-</script>
-
     
 <script type="text/javascript">
 

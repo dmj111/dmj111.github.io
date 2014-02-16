@@ -23,7 +23,12 @@
 
 
 
-    
+    <script type="text/javascript">
+// A place to store functions to run after the page loads.
+dmjStartupFcns = [];
+</script>
+
+
 </head>
 <body>
 <!-- Menubar -->
@@ -114,7 +119,7 @@
     <!--End of body content-->
 </div>
 <div class="footerbox">
-    Contents © 2013 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+    Contents © 2014 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
 </div>
 
             <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
@@ -146,6 +151,13 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
+</script>
+<script type="text/javascript">
+if(typeof dmjStartupFcns !== 'undefined') {
+ $().ready(function () {
+    dmjStartupFcns.forEach(function(fcn) { fcn(); });
+ });
+}
 </script>
 
 </body>
