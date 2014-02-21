@@ -79,6 +79,230 @@ dmjStartupFcns = [];
     <div class="span8">
     
         <div class="postbox">
+        <h1><a href="posts/2014/js-quicksort.html">JavaScript Quicksort</a>
+        <small>  
+             Posted: <time class="published" datetime="2014-02-21T07:05:26">2014-02-21 07:05</time>
+        </small></h1>
+        <hr>
+        <p>Quicksort, yet again.  This time, in JavaScript!</p>
+<p>I have been using JavaScript more frequently, and have been pleasantly
+surprised at how fast it is.</p>
+<p>So, I naturally wanted some test cases of things that I always thought
+JavaScript was too slow for.  Sorting was one of those cases.</p>
+<p>To check it out, I wrote some quicksort functions and compared them
+to <tt class="docutils literal">Array.sort</tt>. Here is the unscientific comparison.</p>
+<p>Using <a class="reference external" href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.8162">Engineering a Sort Function</a> as a reference, along with
+textbooks, etc, I wrote the following:</p>
+<pre class="code javascript literal-block">
+<span class="ln"> 1 </span>    <span class="kd">function</span> <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2 </span>        <span class="nx">start</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+<span class="ln"> 3 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="p">}</span>
+<span class="ln"> 4 </span>
+<span class="ln"> 5 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6 </span>            <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln"> 7 </span>            <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<span class="ln"> 8 </span>        <span class="p">}</span>
+<span class="ln"> 9 </span>
+<span class="ln">10 </span>        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<span class="ln">11 </span>            <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">,</span>
+<span class="ln">12 </span>            <span class="c1">// pidx = Math.floor(Math.random() * (end - start)) + start,
+</span><span class="ln">13 </span><span class="c1"></span>            <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
+<span class="ln">14 </span>                                  <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="p">(</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+<span class="ln">15 </span>                                  <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+<span class="ln">16 </span>            <span class="nx">t</span><span class="p">;</span>
+<span class="ln">17 </span>
+<span class="ln">18 </span>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">19 </span>            <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">20 </span>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">21 </span>                <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">22 </span>            <span class="p">}</span>
+<span class="ln">23 </span>
+<span class="ln">24 </span>            <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">25 </span>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
+<span class="ln">26 </span>                <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">27 </span>            <span class="p">}</span>
+<span class="ln">28 </span>
+<span class="ln">29 </span>            <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">30 </span>                <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">31 </span>            <span class="p">}</span>
+<span class="ln">32 </span>        <span class="p">}</span>
+<span class="ln">33 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="s1">'invariant'</span><span class="p">;</span> <span class="p">}</span>
+<span class="ln">34 </span>
+<span class="ln">35 </span>        <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<span class="ln">36 </span>        <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">37 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<span class="ln">38 </span>    <span class="p">}</span>
+</pre>
+<p>This method:</p>
+<ul class="simple">
+<li>Uses a median of three pivot strategy</li>
+<li>Leave the pivot in place while partitioning</li>
+<li>Is recursive down both halves of the partition.</li>
+</ul>
+<p>Lines 18 – 32 partition the data.</p>
+<p>Originally, I used a random pivot.  That works well, but the median of
+three can help partition the data more evenly, leading to less work.</p>
+<p>The pivot value is copied out to a temporary during the paritioning.
+In JavaScript, this isn't as big of a deal, because objects besides
+primitives are basically reference types anyways... so copying the
+pivot value in that case is more like a pointer copy.</p>
+<p>A common case that I care about is when there are many equal values in
+the array.  This version of quicksort does not handle that well.</p>
+<p>The next version uses the fat partitioning described in the paper to
+group all of the values equal to the pivot.</p>
+<pre class="code javascript literal-block">
+<span class="ln"> 1 </span>    <span class="kd">function</span> <span class="nx">qsort2</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2 </span>        <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="ln"> 3 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<span class="ln"> 4 </span>
+<span class="ln"> 5 </span>        <span class="c1">// The actual sort body.
+</span><span class="ln"> 6 </span><span class="c1"></span>        <span class="kd">function</span> <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 7 </span>            <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span> <span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8 </span>                <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln"> 9 </span>                <span class="k">return</span><span class="p">;</span>
+<span class="ln">10 </span>            <span class="p">}</span>
+<span class="ln">11 </span>
+<span class="ln">12 </span>            <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<span class="ln">13 </span>                <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">,</span>
+<span class="ln">14 </span>                <span class="nx">u</span> <span class="o">=</span> <span class="nx">i</span><span class="p">,</span>
+<span class="ln">15 </span>                <span class="nx">v</span> <span class="o">=</span> <span class="nx">j</span><span class="p">,</span>
+<span class="ln">16 </span>                <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
+<span class="ln">17 </span>                                      <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="p">(</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+<span class="ln">18 </span>                                      <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+<span class="ln">19 </span>                <span class="nx">t</span><span class="p">;</span>
+<span class="ln">20 </span>            <span class="c1">// Reorder the values, and maintain the indices so we have
+</span><span class="ln">21 </span><span class="c1"></span>            <span class="c1">// the following:
+</span><span class="ln">22 </span><span class="c1"></span>            <span class="c1">//
+</span><span class="ln">23 </span><span class="c1"></span>            <span class="c1">// begin (inclusive)  |  end (exclusive)  |   description
+</span><span class="ln">24 </span><span class="c1"></span>            <span class="c1">// start              |  u                |   == pivot
+</span><span class="ln">25 </span><span class="c1"></span>            <span class="c1">// u                  |  i                |    &lt; pivot
+</span><span class="ln">26 </span><span class="c1"></span>            <span class="c1">// i                  |  v                |    &gt; pivot
+</span><span class="ln">27 </span><span class="c1"></span>            <span class="c1">// v                  |  end              |    = pivot
+</span><span class="ln">28 </span><span class="c1"></span>
+<span class="ln">29 </span>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">30 </span>                <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">31 </span>                <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">32 </span>                    <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">33 </span>                <span class="p">}</span>
+<span class="ln">34 </span>
+<span class="ln">35 </span>                <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">36 </span>                <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
+<span class="ln">37 </span>                    <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">38 </span>                <span class="p">}</span>
+<span class="ln">39 </span>
+<span class="ln">40 </span>                <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">41 </span>                    <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">42 </span>                    <span class="cm">/* jshint ignore:start */</span>
+<span class="ln">43 </span>                    <span class="c1">// We are ignoring the !.  Just trying to stick
+</span><span class="ln">44 </span><span class="c1"></span>                    <span class="c1">// with &lt; for now...
+</span><span class="ln">45 </span><span class="c1"></span>                    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">))</span> <span class="p">{</span>
+<span class="ln">46 </span>                        <span class="nx">u</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">47 </span>                        <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">48 </span>                    <span class="p">}</span>
+<span class="ln">49 </span>                    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]))</span> <span class="p">{</span>
+<span class="ln">50 </span>                        <span class="nx">v</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">51 </span>                        <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">52 </span>                    <span class="p">}</span>
+<span class="ln">53 </span>                    <span class="cm">/* jshint ignore:end */</span>
+<span class="ln">54 </span>                <span class="p">}</span>
+<span class="ln">55 </span>            <span class="p">}</span>
+<span class="ln">56 </span>
+<span class="ln">57 </span>            <span class="c1">// if(xs[i] &lt; pivot) { throw 'invariant'; }
+</span><span class="ln">58 </span><span class="c1"></span>
+<span class="ln">59 </span>            <span class="c1">// Now, 'flip' the sides around to bring the values equal
+</span><span class="ln">60 </span><span class="c1"></span>            <span class="c1">// to the pivot to the middle.
+</span><span class="ln">61 </span><span class="c1"></span>
+<span class="ln">62 </span>            <span class="nx">j</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">63 </span>            <span class="nx">i</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<span class="ln">64 </span>
+<span class="ln">65 </span>            <span class="c1">// xs[i] &gt;= pivot.
+</span><span class="ln">66 </span><span class="c1"></span>            <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<span class="ln">67 </span>            <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">68 </span>        <span class="p">}</span>
+<span class="ln">69 </span>    <span class="p">}</span>
+</pre>
+<p>Lines 45 – 52 swap values equal to the pivot to the outer part of the
+array.  At the end of the partition the pivot values are brought back
+together in the center.</p>
+<p>These sort routines use the <tt class="docutils literal">&lt;</tt> operator.  The <tt class="docutils literal">Array.sort</tt>
+routine requires a comparison operator that returns <tt class="docutils literal"><span class="pre">-1</span></tt>, <tt class="docutils literal">0</tt>, or
+<tt class="docutils literal">1</tt> for less than, equal to, and greater than.  The custom routines
+are less general (so far!)</p>
+<p>Here are some timing results on Chrome comparing the two sorts and the
+system sort.  These tests are unfair and likely misleading, but they
+are a start.</p>
+<table border="1" class="docutils">
+<caption>Timing results on 1 million values (in seconds)</caption>
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">data type</th>
+<th class="head">qsort1</th>
+<th class="head">qsort2</th>
+<th class="head">Array.sort</th>
+<th class="head">NumPy</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>random double</td>
+<td>0.13</td>
+<td>0.15</td>
+<td>3.15</td>
+<td>0.11</td>
+</tr>
+<tr><td>sawtooth <a class="footnote-reference" href="posts/2014/js-quicksort.html#id4" id="id2">[1]</a></td>
+<td>0.03</td>
+<td>0.01</td>
+<td>0.04</td>
+<td>0.02</td>
+</tr>
+<tr><td>ordered</td>
+<td>0.02</td>
+<td>0.03</td>
+<td>0.59</td>
+<td>0.01</td>
+</tr>
+<tr><td>reversed</td>
+<td>0.02</td>
+<td>0.03</td>
+<td>0.60</td>
+<td>0.02</td>
+</tr>
+<tr><td>shuffled</td>
+<td>0.11</td>
+<td>0.13</td>
+<td>0.68</td>
+<td>0.09</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal">qsort1</tt> and <tt class="docutils literal">qsort2</tt> are far less generic than <tt class="docutils literal">Array.sort</tt>,
+and there are likely several errors in how I am doing this timing.
+Sometimes, for example I seem to be getting GC pauses while doing the
+test, but I have not confirmed what is going on yet.  Overall, I am
+optimistic that in these cases, JavaScript can be made to run in a
+reasonable amount of time.</p>
+<p>The NumPy values are in there for comparison.  I am assuming that the
+NumPy sort is in native code underneath, and it is far easier to time
+python code than to write some C++ wrappers just for a comparison.</p>
+<p>Here is a <a class="reference external" href="code/quicksort1/quicksort.html">link to the test driver</a> that launches directly into the
+tests.</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="posts/2014/js-quicksort.html#id2">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, ... the
+whole way to the end of the array.</td></tr>
+</tbody>
+</table>
+            
+
+        </div>
+        <div class="postbox">
         <h1><a href="posts/2013/eopl-in-js.html">EOPL in Javascript</a>
         <small>  
              Posted: <time class="published" datetime="2013-12-08T00:00:00">2013-12-08 00:00</time>
@@ -1320,401 +1544,6 @@ without affecting its value.</p>
 </tbody>
 </table>
 </blockquote>
-            
-
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-03-12-astar-python.html">A* in Python</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-03-12T00:00:00">2012-03-12 00:00</time>
-        </small></h1>
-        <hr>
-        <p><a class="reference external" href="http://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> is a directed
-search algorithm.  Given a good heuristic function, it can perform
-much better than a blind breadth-first search.</p>
-<div class="section" id="a-code">
-<h2>A* code</h2>
-<p>First, the main algorithm itself.  I like using Python for lots of
-reasons.  One that stands out, though, is that functions are first
-class.  This allows us to write a generic A* function that works on
-many problems.</p>
-<p>(Python is not unique in this.  But it is still fun.)</p>
-<p>Here is the main solving code.</p>
-<pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">heapq</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">heuristic</span><span class="p">):</span>
-    <span class="sd">"""Find the shortest path from START to FINISH."""</span>
-    <span class="n">heap</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="n">link</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># parent node link</span>
-    <span class="n">h</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># heuristic function cache</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># shortest path to a node</span>
-
-    <span class="n">g</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">h</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">link</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-
-
-    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
-    <span class="c"># keep a count of the  number of steps, and avoid an infinite loop.</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-        <span class="n">f</span><span class="p">,</span> <span class="n">junk</span><span class="p">,</span> <span class="n">current</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="n">finish</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">"distance:"</span><span class="p">,</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="s">"steps:"</span><span class="p">,</span> <span class="n">kk</span>
-            <span class="k">return</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="n">kk</span><span class="p">,</span> <span class="n">build_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
-
-        <span class="n">moves</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">get_moves</span><span class="p">()</span>
-        <span class="n">distance</span> <span class="o">=</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">mv</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">mv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">g</span> <span class="ow">or</span> <span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="n">mv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
-                    <span class="n">h</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">heuristic</span><span class="p">(</span><span class="n">mv</span><span class="p">)</span>
-                <span class="n">link</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span>
-                <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="n">mv</span><span class="p">],</span> <span class="o">-</span><span class="n">kk</span><span class="p">,</span> <span class="n">mv</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">"did not find a solution"</span><span class="p">)</span>
-</pre>
-<p><tt class="docutils literal">solve</tt> takes two /positions/, a start and finish, and a heuristic
-function.  The heuristic function must always return a distance that
-is less or equal to the actual distance between two positions.  The
-whole algorithm rests on that assumption.</p>
-<p><tt class="docutils literal">g[mv]</tt> holds the length of the shortest known path to <tt class="docutils literal">mv</tt>, and
-<tt class="docutils literal">h[mv]</tt> holds the estimated distance from <tt class="docutils literal">mv</tt> to finish according to
-the <tt class="docutils literal">heuristic</tt> function.  Then, <tt class="docutils literal">g[mv] + h[mv]</tt> is the current best
-estimate of the distance from <tt class="docutils literal">start</tt> to <tt class="docutils literal">finish</tt> through <tt class="docutils literal">mv</tt>.</p>
-<p>We keep a the nodes to search next in a priority queue, ordered by the
-the current best estimates of the distance to <tt class="docutils literal">finish</tt>.</p>
-<p><tt class="docutils literal">solve</tt> is a generic function, and it realized on duck-typing to work.
-The position objects must provide a <tt class="docutils literal">get_moves</tt> method that returns
-neighboring positions, a hash function <tt class="docutils literal">__hash__</tt>, and an
-equality operator <tt class="docutils literal">__eq__</tt>.</p>
-<p>Whenever the goal position is at the top of the heap we are done.
-This is because the heap is ordered by the best possible score from a
-position to the goal.  If there is a shorter path to the goal, it
-would have already been explored, since we explore by the best
-possible path first.  Since it hasn't been seen before, this path is
-the best.</p>
-<p>Note that this isn't true about positions other than the goal.  That
-is because the heuristic provides an optimistic guess for the shortest
-path from a position to the goal, not the shortest path between any
-two positions.  This is the reason that in the inner loop, we check if
-we are in the shortest path seen so far to a node.  A node may be
-visited multiple times by A*, with shorter paths to the node each
-time.</p>
-<p>The function <tt class="docutils literal">build_path</tt> reconstructs the path to the solution for
-us.  This is useful for debugging, and because we often want to know
-the path, not just the path length.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">build_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-    <span class="sd">"""
-    Reconstruct the path from start to finish given
-    a dict of parent links.
-
-    """</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">finish</span>
-    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
-    <span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">start</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
-        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">xs</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">xs</span>
-</pre>
-<p>Here is a heuristic that does nothing, just for testing.  Using this
-heuristic will lead to Dijkstra's algorithm, which is a good, but
-uninformed search algorithm.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">no_heuristic</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-   <span class="sd">"""Dummy heuristic that doesn't do anything"""</span>
-   <span class="k">return</span> <span class="mi">0</span>
-</pre>
-</div>
-<div class="section" id="a-grid-example">
-<h2>A grid example</h2>
-<p>Here is a simple test class where the program must find a path on a
-rectangular grid.  We will assume the grid is infinite, but will also
-hope that our search doesn't go that far off course.</p>
-<pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">GridPosition</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">"""Represent a position on a grid."""</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">"GridPosition(</span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
-
-    <span class="k">def</span> <span class="nf">get_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># There are times when returning this in a shuffled order</span>
-        <span class="c"># would help avoid degenerate cases.  For learning, though,</span>
-        <span class="c"># life is easier if the algorithm behaves predictably.</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-</pre>
-<pre class="code python literal-block">
-<span class="n">grid_start</span> <span class="o">=</span> <span class="n">GridPosition</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">grid_end</span> <span class="o">=</span> <span class="n">GridPosition</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-</pre>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">grid_test_no_heuristic</span><span class="p">():</span>
-   <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">no_heuristic</span><span class="p">)</span>
-</pre>
-<p>This gives us:</p>
-<pre class="literal-block">
-distance: 20 steps: 840
-</pre>
-<p>Now, we can add a heuristic.  An obvious one is to Euclidean distance,
-since the shortest path between two points is a straight line.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">euclidean_h</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
-        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">y</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">f</span>
-</pre>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">grid_test_euclidean_heuristic</span><span class="p">():</span>
-    <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">euclidean_h</span><span class="p">(</span><span class="n">grid_end</span><span class="p">))</span>
-</pre>
-<pre class="literal-block">
-distance: 20 steps: 134
-</pre>
-<p>That result is significantly better.</p>
-<p>We can do even better.  Since our grid movements are restricted
-to left, right, up and down, we can use Manhattan distance as the
-heuristic.  In this simple case, Manhattan distance is a perfect
-heuristic.  Adding obstacles, or changing the cost of moving
-through grid points would keep Manhattan from being perfect.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">manhattan_h</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
-   <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
-       <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">y</span>
-       <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span>
-   <span class="k">return</span> <span class="n">f</span>
-</pre>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">grid_test_manhattan_heuristic</span><span class="p">():</span>
-    <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">manhattan_h</span><span class="p">(</span><span class="n">grid_end</span><span class="p">))</span>
-</pre>
-<pre class="literal-block">
-distance: 20 steps: 20
-</pre>
-<p>We found the path without exploring any unnecessary nodes.</p>
-</div>
-<div class="section" id="block-puzzle">
-<h2>Block Puzzle</h2>
-<p>In the Stanford AI class offered online, they discussed A* in the
-context of the classic <a class="reference external" href="https://en.wikipedia.org/wiki/Fifteen_puzzle">fifteen puzzle</a>, but simplified to
-just eight pieces.</p>
-<p>Here is a class for the block puzzle.  Usually the 15 puzzle is used,
-but the 8 puzzle is a lot faster to solve.</p>
-<pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">BlockPuzzle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">"""Create an nxn block puzzle
-
-        Use XS to initialize to a specific state.
-        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
-        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">)]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_move</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">"BlockPuzzle(</span><span class="si">%d</span><span class="s">, </span><span class="si">%s</span><span class="s">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="s">"</span><span class="si">%2d</span><span class="s">"</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">]</span>
-        <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="n">kk</span><span class="p">:</span><span class="n">kk</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xs</span>
-
-    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">get_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Find the 0 tile, and then generate any moves we</span>
-        <span class="c"># can by sliding another block into its place.</span>
-        <span class="n">tile0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-            <span class="n">j</span> <span class="o">=</span> <span class="n">tile0</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
-            <span class="n">last_move</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">last_move</span> <span class="o">=</span> <span class="n">last_move</span>
-            <span class="k">return</span> <span class="n">result</span>
-
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-</pre>
-<p>We also need a way to create a shuffled puzzle.  Here is a generic
-method for shuffling.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">xs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">get_moves</span><span class="p">())</span>
-        <span class="n">position</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">position</span>
-</pre>
-<p>Now, we need a heuristic.  The empty heuristic approach will take too
-long here.</p>
-<p>The first, and simplest heuristic is to count how many tiles are out
-of place.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">misplaced_h</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
-    <span class="sd">"""Returns the number of tiles out of place."""</span>
-    <span class="n">n2</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">n2</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n2</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">position</span><span class="o">.</span><span class="n">xs</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kk</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">c</span>
-</pre>
-<p>Here is a sample run</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">test_block_8_misplaced</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">200</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">misplaced_h</span><span class="p">)</span>
-</pre>
-<pre class="literal-block">
- 0  2  5
- 8  3  7
- 1  6  4
- distance: 19 steps: 872
- 2  7  0
- 6  8  3
- 1  5  4
- distance: 19 steps: 958
- 1  5  4
- 7  2  8
- 0  3  6
- distance: 25 steps: 13027
- 6  8  7
- 2  5  4
- 0  1  3
- distance: 27 steps: 26762
- 3  8  4
- 7  0  6
- 2  1  5
-distance: 21 steps: 3008
-</pre>
-<p>Now, another heuristic is to measure the distance that each tile must
-move.  This heuristic is ok, because we only move one tile at a time,
-and we know that each tile must move at least this many steps.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">distance_h</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">n</span>
-    <span class="k">def</span> <span class="nf">row</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="k">def</span> <span class="nf">col</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">%</span> <span class="n">n</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">xs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
-        <span class="n">ir</span><span class="p">,</span><span class="n">ic</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-        <span class="n">xr</span><span class="p">,</span><span class="n">xc</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">score</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ir</span><span class="o">-</span><span class="n">xr</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ic</span><span class="o">-</span><span class="n">xc</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">score</span>
-</pre>
-<p>And another sample run.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">test_block_8_distance</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">200</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">distance_h</span><span class="p">)</span>
-</pre>
-<pre class="literal-block">
- 4  7  2
- 1  0  5
- 6  8  3
-distance: 22 steps: 941
- 6  5  1
- 4  0  3
- 2  7  8
-distance: 16 steps: 59
- 1  3  4
- 2  0  5
- 7  8  6
-distance: 16 steps: 235
- 4  5  0
- 3  8  2
- 6  1  7
-distance: 24 steps: 1038
- 6  7  2
- 5  8  3
- 0  1  4
-distance: 24 steps: 705
-</pre>
-<p>For similar sizes, the results from this heuristic are much better.
-This testing methodology was pretty poor, though.  A more detailed
-analysis would be better, but this writeup is getting long as it is.</p>
-<p>Here is a short sample of one to one comparisons.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">test_block</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">steps</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="k">print</span> <span class="s">"misplaced"</span><span class="p">,</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">misplaced_h</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">"distance"</span><span class="p">,</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">distance_h</span><span class="p">)</span>
-</pre>
-<pre class="literal-block">
- 2  6  1
- 4  8  5
- 0  3  7
-misplaced distance: 24 steps: 14962
-distance distance: 24 steps: 862
-</pre>
-<!-- if __name__ == "__main__":
-    import sys
-    cmd = sys.argv[1]
-    if cmd== "number":
-        number_test()
-    elif cmd == "grid_no":
-        grid_test_no_heuristic()
-    elif cmd == "grid_euclidean":
-        grid_test_euclidean_heuristic()
-    elif cmd == "grid_manhattan":
-        grid_test_manhattan_heuristic()
-    elif cmd == "block_8_mis":
-        test_block_8_misplaced(1)
-    elif cmd == "block_8_distance":
-        test_block_8_distance(1)
-    elif cmd == "test_block":
-        test_block()
-    else:
-        print "bad arg", sys.argv -->
-</div>
             
 
         </div>

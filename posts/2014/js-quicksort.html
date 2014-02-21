@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="Dave Jones">
+    <title>JavaScript Quicksort | a mingled cup</title>
+    
+            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+    
+
+
+
+    <script type="text/javascript">
+// A place to store functions to run after the page loads.
+dmjStartupFcns = [];
+</script>
+
+
+</head>
+<body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top" id="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../../">
+            a mingled cup
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    
+                <li><a href="../../archive.html">Archives</a>
+                </li><li><a href="../../categories/index.html">Tags</a>
+                </li><li><a href="../../rss.xml">RSS</a>
+
+                </li></ul>
+                    
+<form action="http://google.com/search" method="get" class="navbar-form pull-left">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:http://dave.dkjones.org/">
+    <input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search">
+    <input type="submit" value="google search" style="visibility: hidden;">
+  </fieldset>
+</form>
+
+                <ul class="nav pull-right">
+                
+                
+                    <li>
+			<a href="js-quicksort.rst" id="sourcelink">Source</a>
+		</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>JavaScript Quicksort</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2014-02-21T07:05:26">2014-02-21 07:05</time>
+        
+
+		
+
+          |  
+		
+    </small>
+    <hr>
+    <p>Quicksort, yet again.  This time, in JavaScript!</p>
+<p>I have been using JavaScript more frequently, and have been pleasantly
+surprised at how fast it is.</p>
+<p>So, I naturally wanted some test cases of things that I always thought
+JavaScript was too slow for.  Sorting was one of those cases.</p>
+<p>To check it out, I wrote some quicksort functions and compared them
+to <tt class="docutils literal">Array.sort</tt>. Here is the unscientific comparison.</p>
+<p>Using <a class="reference external" href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.8162">Engineering a Sort Function</a> as a reference, along with
+textbooks, etc, I wrote the following:</p>
+<pre class="code javascript literal-block">
+<span class="ln"> 1 </span>    <span class="kd">function</span> <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2 </span>        <span class="nx">start</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+<span class="ln"> 3 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="p">}</span>
+<span class="ln"> 4 </span>
+<span class="ln"> 5 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6 </span>            <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln"> 7 </span>            <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<span class="ln"> 8 </span>        <span class="p">}</span>
+<span class="ln"> 9 </span>
+<span class="ln">10 </span>        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<span class="ln">11 </span>            <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">,</span>
+<span class="ln">12 </span>            <span class="c1">// pidx = Math.floor(Math.random() * (end - start)) + start,
+</span><span class="ln">13 </span><span class="c1"></span>            <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
+<span class="ln">14 </span>                                  <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="p">(</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+<span class="ln">15 </span>                                  <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+<span class="ln">16 </span>            <span class="nx">t</span><span class="p">;</span>
+<span class="ln">17 </span>
+<span class="ln">18 </span>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">19 </span>            <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">20 </span>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">21 </span>                <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">22 </span>            <span class="p">}</span>
+<span class="ln">23 </span>
+<span class="ln">24 </span>            <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">25 </span>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
+<span class="ln">26 </span>                <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">27 </span>            <span class="p">}</span>
+<span class="ln">28 </span>
+<span class="ln">29 </span>            <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">30 </span>                <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">31 </span>            <span class="p">}</span>
+<span class="ln">32 </span>        <span class="p">}</span>
+<span class="ln">33 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="s1">'invariant'</span><span class="p">;</span> <span class="p">}</span>
+<span class="ln">34 </span>
+<span class="ln">35 </span>        <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<span class="ln">36 </span>        <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">37 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<span class="ln">38 </span>    <span class="p">}</span>
+</pre>
+<p>This method:</p>
+<ul class="simple">
+<li>Uses a median of three pivot strategy</li>
+<li>Leave the pivot in place while partitioning</li>
+<li>Is recursive down both halves of the partition.</li>
+</ul>
+<p>Lines 18 – 32 partition the data.</p>
+<p>Originally, I used a random pivot.  That works well, but the median of
+three can help partition the data more evenly, leading to less work.</p>
+<p>The pivot value is copied out to a temporary during the paritioning.
+In JavaScript, this isn't as big of a deal, because objects besides
+primitives are basically reference types anyways... so copying the
+pivot value in that case is more like a pointer copy.</p>
+<p>A common case that I care about is when there are many equal values in
+the array.  This version of quicksort does not handle that well.</p>
+<p>The next version uses the fat partitioning described in the paper to
+group all of the values equal to the pivot.</p>
+<pre class="code javascript literal-block">
+<span class="ln"> 1 </span>    <span class="kd">function</span> <span class="nx">qsort2</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2 </span>        <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="ln"> 3 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<span class="ln"> 4 </span>
+<span class="ln"> 5 </span>        <span class="c1">// The actual sort body.
+</span><span class="ln"> 6 </span><span class="c1"></span>        <span class="kd">function</span> <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 7 </span>            <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span> <span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8 </span>                <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln"> 9 </span>                <span class="k">return</span><span class="p">;</span>
+<span class="ln">10 </span>            <span class="p">}</span>
+<span class="ln">11 </span>
+<span class="ln">12 </span>            <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<span class="ln">13 </span>                <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">,</span>
+<span class="ln">14 </span>                <span class="nx">u</span> <span class="o">=</span> <span class="nx">i</span><span class="p">,</span>
+<span class="ln">15 </span>                <span class="nx">v</span> <span class="o">=</span> <span class="nx">j</span><span class="p">,</span>
+<span class="ln">16 </span>                <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
+<span class="ln">17 </span>                                      <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="p">(</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+<span class="ln">18 </span>                                      <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+<span class="ln">19 </span>                <span class="nx">t</span><span class="p">;</span>
+<span class="ln">20 </span>            <span class="c1">// Reorder the values, and maintain the indices so we have
+</span><span class="ln">21 </span><span class="c1"></span>            <span class="c1">// the following:
+</span><span class="ln">22 </span><span class="c1"></span>            <span class="c1">//
+</span><span class="ln">23 </span><span class="c1"></span>            <span class="c1">// begin (inclusive)  |  end (exclusive)  |   description
+</span><span class="ln">24 </span><span class="c1"></span>            <span class="c1">// start              |  u                |   == pivot
+</span><span class="ln">25 </span><span class="c1"></span>            <span class="c1">// u                  |  i                |    &lt; pivot
+</span><span class="ln">26 </span><span class="c1"></span>            <span class="c1">// i                  |  v                |    &gt; pivot
+</span><span class="ln">27 </span><span class="c1"></span>            <span class="c1">// v                  |  end              |    = pivot
+</span><span class="ln">28 </span><span class="c1"></span>
+<span class="ln">29 </span>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">30 </span>                <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">31 </span>                <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">32 </span>                    <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">33 </span>                <span class="p">}</span>
+<span class="ln">34 </span>
+<span class="ln">35 </span>                <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">36 </span>                <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
+<span class="ln">37 </span>                    <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">38 </span>                <span class="p">}</span>
+<span class="ln">39 </span>
+<span class="ln">40 </span>                <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">41 </span>                    <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">42 </span>                    <span class="cm">/* jshint ignore:start */</span>
+<span class="ln">43 </span>                    <span class="c1">// We are ignoring the !.  Just trying to stick
+</span><span class="ln">44 </span><span class="c1"></span>                    <span class="c1">// with &lt; for now...
+</span><span class="ln">45 </span><span class="c1"></span>                    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">))</span> <span class="p">{</span>
+<span class="ln">46 </span>                        <span class="nx">u</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">47 </span>                        <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">48 </span>                    <span class="p">}</span>
+<span class="ln">49 </span>                    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]))</span> <span class="p">{</span>
+<span class="ln">50 </span>                        <span class="nx">v</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ln">51 </span>                        <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<span class="ln">52 </span>                    <span class="p">}</span>
+<span class="ln">53 </span>                    <span class="cm">/* jshint ignore:end */</span>
+<span class="ln">54 </span>                <span class="p">}</span>
+<span class="ln">55 </span>            <span class="p">}</span>
+<span class="ln">56 </span>
+<span class="ln">57 </span>            <span class="c1">// if(xs[i] &lt; pivot) { throw 'invariant'; }
+</span><span class="ln">58 </span><span class="c1"></span>
+<span class="ln">59 </span>            <span class="c1">// Now, 'flip' the sides around to bring the values equal
+</span><span class="ln">60 </span><span class="c1"></span>            <span class="c1">// to the pivot to the middle.
+</span><span class="ln">61 </span><span class="c1"></span>
+<span class="ln">62 </span>            <span class="nx">j</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">63 </span>            <span class="nx">i</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<span class="ln">64 </span>
+<span class="ln">65 </span>            <span class="c1">// xs[i] &gt;= pivot.
+</span><span class="ln">66 </span><span class="c1"></span>            <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<span class="ln">67 </span>            <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">68 </span>        <span class="p">}</span>
+<span class="ln">69 </span>    <span class="p">}</span>
+</pre>
+<p>Lines 45 – 52 swap values equal to the pivot to the outer part of the
+array.  At the end of the partition the pivot values are brought back
+together in the center.</p>
+<p>These sort routines use the <tt class="docutils literal">&lt;</tt> operator.  The <tt class="docutils literal">Array.sort</tt>
+routine requires a comparison operator that returns <tt class="docutils literal"><span class="pre">-1</span></tt>, <tt class="docutils literal">0</tt>, or
+<tt class="docutils literal">1</tt> for less than, equal to, and greater than.  The custom routines
+are less general (so far!)</p>
+<p>Here are some timing results on Chrome comparing the two sorts and the
+system sort.  These tests are unfair and likely misleading, but they
+are a start.</p>
+<table border="1" class="docutils">
+<caption>Timing results on 1 million values (in seconds)</caption>
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">data type</th>
+<th class="head">qsort1</th>
+<th class="head">qsort2</th>
+<th class="head">Array.sort</th>
+<th class="head">NumPy</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>random double</td>
+<td>0.13</td>
+<td>0.15</td>
+<td>3.15</td>
+<td>0.11</td>
+</tr>
+<tr><td>sawtooth <a class="footnote-reference" href="js-quicksort.html#id4" id="id2">[1]</a></td>
+<td>0.03</td>
+<td>0.01</td>
+<td>0.04</td>
+<td>0.02</td>
+</tr>
+<tr><td>ordered</td>
+<td>0.02</td>
+<td>0.03</td>
+<td>0.59</td>
+<td>0.01</td>
+</tr>
+<tr><td>reversed</td>
+<td>0.02</td>
+<td>0.03</td>
+<td>0.60</td>
+<td>0.02</td>
+</tr>
+<tr><td>shuffled</td>
+<td>0.11</td>
+<td>0.13</td>
+<td>0.68</td>
+<td>0.09</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal">qsort1</tt> and <tt class="docutils literal">qsort2</tt> are far less generic than <tt class="docutils literal">Array.sort</tt>,
+and there are likely several errors in how I am doing this timing.
+Sometimes, for example I seem to be getting GC pauses while doing the
+test, but I have not confirmed what is going on yet.  Overall, I am
+optimistic that in these cases, JavaScript can be made to run in a
+reasonable amount of time.</p>
+<p>The NumPy values are in there for comparison.  I am assuming that the
+NumPy sort is in native code underneath, and it is far easier to time
+python code than to write some C++ wrappers just for a comparison.</p>
+<p>Here is a <a class="reference external" href="../../code/quicksort1/quicksort.html">link to the test driver</a> that launches directly into the
+tests.</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="js-quicksort.html#id2">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, ... the
+whole way to the end of the array.</td></tr>
+</tbody>
+</table>
+    
+    <ul class="pager">
+        <li class="previous">
+            <a href="../2013/eopl-in-js.html">← Previous post</a>
+        </li>
+    </ul>
+
+        
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2014 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+	
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});
+    $(window).on('hashchange', function(){
+        if (location.hash && $(location.hash)[0]) {
+            $('body').animate({scrollTop: $(location.hash).offset().top - $('#navbar').outerHeight(true)*1.2 }, 1);
+        }
+    });
+    $(document).ready(function(){$(window).trigger('hashchange')});
+    </script>
+    
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript">
+if(typeof dmjStartupFcns !== 'undefined') {
+ $().ready(function () {
+    dmjStartupFcns.forEach(function(fcn) { fcn(); });
+ });
+}
+</script>
+
+</body>
+</html>
