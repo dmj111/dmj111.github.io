@@ -3,7 +3,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta charset="utf-8">
-    <meta name="description" content="">
     <meta name="author" content="Dave Jones">
     <title>Prime sieve in JavaScript | a mingled cup</title>
     
@@ -14,12 +13,15 @@
         <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
             <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 
     
+
+
 
 
 
@@ -43,7 +45,7 @@ dmjStartupFcns = [];
             <span class="icon-bar"></span>
         </a>
 
-            <a class="brand" href="../../">
+            <a class="brand" href="http://dave.dkjones.org/">
             a mingled cup
             </a>
             <!-- Everything you want hidden at 940px or less, place within here -->
@@ -55,15 +57,6 @@ dmjStartupFcns = [];
                 </li><li><a href="../../rss.xml">RSS</a>
 
                 </li></ul>
-                    
-<form action="http://google.com/search" method="get" class="navbar-form pull-left">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:http://dave.dkjones.org/">
-    <input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search">
-    <input type="submit" value="google search" style="visibility: hidden;">
-  </fieldset>
-</form>
-
                 <ul class="nav pull-right">
                 
                 
@@ -82,13 +75,14 @@ dmjStartupFcns = [];
     <div class="span2"></div>
     <div class="span8">
     
-    <div class="postbox">
+    <article class="postbox post-text">
+    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
     
-    <h1>Prime sieve in JavaScript</h1>
+    <h1 class="p-name" itemprop="headline name">Prime sieve in JavaScript</h1>
 
     <hr>
     <small>
-        Posted: <time class="published" datetime="2013-11-17T00:00:00">2013-11-17 00:00</time>
+        Posted: <time class="published dt-published" datetime="2013-11-17T00:00:00-05:00" itemprop="datePublished">2013-11-17 00:00</time>
         
 
 		
@@ -97,7 +91,8 @@ dmjStartupFcns = [];
 		
     </small>
     <hr>
-    <p><em>Update</em> : After running the C version through <a class="reference external" href="https://github.com/kripken/emscripten/wiki">Emscripten</a>, the result
+    <div class="e-content" itemprop="articleBody text">
+    <div><p><em>Update</em> : After running the C version through <a class="reference external" href="https://github.com/kripken/emscripten/wiki">Emscripten</a>, the result
 is about the same speed as the C version when run through Firefox.
 Wow!</p>
 <p><em>Update</em> : Switching from a Javascript <tt class="docutils literal">Array</tt> to <tt class="docutils literal">Int8Array</tt>
@@ -302,29 +297,31 @@ var primes = function() {
       elem.addEventListener("click", prime_ui_fcn);
       })();
 
-</script>
+</script></div>
+    </div>
+    </div>
     
-    <ul class="pager">
-        <li class="previous">
-            <a href="c-quicksort.html">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="eopl-in-js.html">Next post →</a>
-        </li>
-    </ul>
+        <ul class="pager">
+            <li class="previous">
+                <a href="c-quicksort.html" rel="prev">← Previous post</a>
+            </li>
+            <li class="next">
+                <a href="eopl-in-js.html" rel="next">Next post →</a>
+            </li>
+        </ul>
 
         
 
     
 
-    </div>
+    </article>
 
     </div>
     </div>
     <!--End of body content-->
 </div>
 <div class="footerbox">
-    Contents © 2014 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+    Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
 </div>
 
             <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
@@ -332,7 +329,7 @@ var primes = function() {
         <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
 
 
-	
+    
 
     <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});
     $(window).on('hashchange', function(){

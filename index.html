@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta charset="utf-8">
-    <meta name="description" content="Undetermined">
+    <meta name="description" content="ramblings">
     <meta name="author" content="Dave Jones">
     <title>a mingled cup | a mingled cup</title>
     
@@ -14,6 +14,7 @@
         <link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
         <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
             <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="http://dave.dkjones.org/">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
@@ -41,7 +42,7 @@ dmjStartupFcns = [];
             <span class="icon-bar"></span>
         </a>
 
-            <a class="brand" href=".">
+            <a class="brand" href="http://dave.dkjones.org/">
             a mingled cup
             </a>
             <!-- Everything you want hidden at 940px or less, place within here -->
@@ -53,15 +54,6 @@ dmjStartupFcns = [];
                 </li><li><a href="rss.xml">RSS</a>
 
                 </li></ul>
-                    
-<form action="http://google.com/search" method="get" class="navbar-form pull-left">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:http://dave.dkjones.org/">
-    <input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search">
-    <input type="submit" value="google search" style="visibility: hidden;">
-  </fieldset>
-</form>
-
                 <ul class="nav pull-right">
                 
                 
@@ -78,13 +70,14 @@ dmjStartupFcns = [];
     <div class="span2"></div>
     <div class="span8">
     
-        <div class="postbox">
-        <h1><a href="posts/2014/js-quicksort.html">JavaScript Quicksort</a>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2014/js-quicksort.html" class="u-url">JavaScript Quicksort</a>
         <small>  
-             Posted: <time class="published" datetime="2014-02-21T07:05:26">2014-02-21 07:05</time>
+             Posted: <time class="published dt-published" datetime="2014-02-21T07:05:26-05:00">2014-02-21 07:05</time>
         </small></h1>
         <hr>
-        <p>Quicksort, yet again.  This time, in JavaScript!</p>
+        <div class="e-content">
+        <div><p>Quicksort, yet again.  This time, in JavaScript!</p>
 <p>I have been using JavaScript more frequently, and have been pleasantly
 surprised at how fast it is.</p>
 <p>So, I naturally wanted some test cases of things that I always thought
@@ -298,17 +291,19 @@ tests.</p>
 <tr><td class="label"><a class="fn-backref" href="posts/2014/js-quicksort.html#id2">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, ... the
 whole way to the end of the array.</td></tr>
 </tbody>
-</table>
+</table></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/eopl-in-js.html">EOPL in Javascript</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/eopl-in-js.html" class="u-url">EOPL in Javascript</a>
         <small>  
-             Posted: <time class="published" datetime="2013-12-08T00:00:00">2013-12-08 00:00</time>
+             Posted: <time class="published dt-published" datetime="2013-12-08T00:00:00-05:00">2013-12-08 00:00</time>
         </small></h1>
         <hr>
-        <p>I have been working through <a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798">EOPL</a> again, this time programming in
+        <div class="e-content">
+        <div><p>I have been working through <a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798">EOPL</a> again, this time programming in
 JavaScript.  My JS experience is limited, but I finally know enough
 that it isn't as painful anymore.</p>
 <p>Some things that have helped:</p>
@@ -318,17 +313,19 @@ that it isn't as painful anymore.</p>
 <li>Emacs -- <a class="reference external" href="https://code.google.com/p/js2-mode/">js2-mode</a>, <tt class="docutils literal"><span class="pre">flymake-jslint</span></tt>, and <a class="reference external" href="http://pegjs.majda.cz/">PEG.js</a></li>
 <li>And finally knowing enough that I don't have to look stuff up all of
 the time.</li>
-</ul>
+</ul></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/prime-sieve-in-js.html">Prime sieve in JavaScript</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/prime-sieve-in-js.html" class="u-url">Prime sieve in JavaScript</a>
         <small>  
-             Posted: <time class="published" datetime="2013-11-17T00:00:00">2013-11-17 00:00</time>
+             Posted: <time class="published dt-published" datetime="2013-11-17T00:00:00-05:00">2013-11-17 00:00</time>
         </small></h1>
         <hr>
-        <p><em>Update</em> : After running the C version through <a class="reference external" href="https://github.com/kripken/emscripten/wiki">Emscripten</a>, the result
+        <div class="e-content">
+        <div><p><em>Update</em> : After running the C version through <a class="reference external" href="https://github.com/kripken/emscripten/wiki">Emscripten</a>, the result
 is about the same speed as the C version when run through Firefox.
 Wow!</p>
 <p><em>Update</em> : Switching from a Javascript <tt class="docutils literal">Array</tt> to <tt class="docutils literal">Int8Array</tt>
@@ -533,17 +530,19 @@ var primes = function() {
       elem.addEventListener("click", prime_ui_fcn);
       })();
 
-</script>
+</script></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/c-quicksort.html">C quicksort</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/c-quicksort.html" class="u-url">C quicksort</a>
         <small>  
-             Posted: <time class="published" datetime="2013-10-17T22:00:00">2013-10-17 22:00</time>
+             Posted: <time class="published dt-published" datetime="2013-10-17T22:00:00-04:00">2013-10-17 22:00</time>
         </small></h1>
         <hr>
-        <p>I have written quicksort in the <a class="reference external" href="posts/2012/2012-04-24-quicksort-in-d.html">past</a> mostly to learn how it works and
+        <div class="e-content">
+        <div><p>I have written quicksort in the <a class="reference external" href="posts/2012/2012-04-24-quicksort-in-d.html">past</a> mostly to learn how it works and
 to play with optimization.  (Because most of the time... I just want
 to call the system sort.)</p>
 <p>Sometimes, knowing how this works helps with other problems, like
@@ -624,17 +623,19 @@ at <cite>b</cite>, and the largest at <cite>c</cite>.</p>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre>
-<p>In most cases, the system <cite>qsort</cite> on my machine crushes this code.</p>
+<p>In most cases, the system <cite>qsort</cite> on my machine crushes this code.</p></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/customizing-nikola.html">Customizing Nikola</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/customizing-nikola.html" class="u-url">Customizing Nikola</a>
         <small>  
-             Posted: <time class="published" datetime="2013-08-08T21:51:25">2013-08-08 21:51</time>
+             Posted: <time class="published dt-published" datetime="2013-08-08T21:51:25-04:00">2013-08-08 21:51</time>
         </small></h1>
         <hr>
-        <p>This “blog” is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">Restructured Text</a> and generated by
+        <div class="e-content">
+        <div><p>This “blog” is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">Restructured Text</a> and generated by
 <a class="reference external" href="http://nikola.ralsina.com.ar/">Nikola</a>.  Simple customizations to Nikola are done by modifying files
 in <tt class="docutils literal">files/assets/</tt>.  The files in the <tt class="docutils literal">files</tt> directory are moved
 verbatim into the output.</p>
@@ -672,17 +673,19 @@ above is testing if the string exists, not if it is equal to <tt class="docutils
 <p>The main reason I was interested in this was to customize on a
 post-by-post basis.</p>
 <!-- http://www.emacswiki.org/emacs-en/TypographicalPunctuationMarks
-for getting better quotation marks. -->
+for getting better quotation marks. --></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/pretty-print-log-python.html">Pretty print logging in Python</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/pretty-print-log-python.html" class="u-url">Pretty print logging in Python</a>
         <small>  
-             Posted: <time class="published" datetime="2013-05-17T00:00:00">2013-05-17 00:00</time>
+             Posted: <time class="published dt-published" datetime="2013-05-17T00:00:00-04:00">2013-05-17 00:00</time>
         </small></h1>
         <hr>
-        <p>From the Python <a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages">logging documentation</a>,
+        <div class="e-content">
+        <div><p>From the Python <a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages">logging documentation</a>,
 we can send an arbitrary object into a log message call.</p>
 <pre class="code python literal-block">
 <span class="kn">import</span> <span class="nn">pprint</span>
@@ -703,17 +706,19 @@ we can send an arbitrary object into a log message call.</p>
 </pre>
 <p>The string isn't created until it is needed, so if the logging level
 is not high enough, the only method call is the creation of the
-<tt class="docutils literal">PrettyLog</tt> object.</p>
+<tt class="docutils literal">PrettyLog</tt> object.</p></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/2013-01-02-updating-emacs-packages.html">Updating Emacs packages</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/2013-01-02-updating-emacs-packages.html" class="u-url">Updating Emacs packages</a>
         <small>  
-             Posted: <time class="published" datetime="2013-01-02T00:00:00">2013-01-02 00:00</time>
+             Posted: <time class="published dt-published" datetime="2013-01-02T00:00:00-05:00">2013-01-02 00:00</time>
         </small></h1>
         <hr>
-        <p>I use ELPA, Marmalade, and MELPA to manage Emacs extensions.</p>
+        <div class="e-content">
+        <div><p>I use ELPA, Marmalade, and MELPA to manage Emacs extensions.</p>
 <p>This block of elisp in my config file adds all of the package
 repositories I use.</p>
 <pre class="code scm literal-block">
@@ -728,17 +733,19 @@ available and installed packages.  In this buffer, type <tt class="docutils lite
 the upgradeable packages.  (note, plan to restart emacs after this
 process...)  Emacs will ask for confirmation on the installation of
 the new packages, then confirmation on the deletion of the old
-packages.</p>
+packages.</p></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2013/2013-01-02-blog-process-with-org.html">My blog process with org</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/2013-01-02-blog-process-with-org.html" class="u-url">My blog process with org</a>
         <small>  
-             Posted: <time class="published" datetime="2013-01-02T00:00:00">2013-01-02 00:00</time>
+             Posted: <time class="published dt-published" datetime="2013-01-02T00:00:00-05:00">2013-01-02 00:00</time>
         </small></h1>
         <hr>
-        <p>I keep forgetting the steps I need to do for the blogging from this
+        <div class="e-content">
+        <div><p>I keep forgetting the steps I need to do for the blogging from this
 org file, so I am logging the steps here.</p>
 <p>The directory organization looks like this:</p>
 <blockquote>
@@ -807,17 +814,19 @@ constantly updating the stamp.</li>
 <li>get more details of the config it here.</li>
 </ul>
 </dd>
-</dl>
+</dl></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-04-26-modified-quicksort.html">Modified Quicksort in D</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2012/2012-04-26-modified-quicksort.html" class="u-url">Modified Quicksort in D</a>
         <small>  
-             Posted: <time class="published" datetime="2012-04-26T00:00:00">2012-04-26 00:00</time>
+             Posted: <time class="published dt-published" datetime="2012-04-26T00:00:00-04:00">2012-04-26 00:00</time>
         </small></h1>
         <hr>
-        <p><a class="reference external" href="blog/2012/04/24/quicksort-in-d/">In this post</a> , we saw a simple
+        <div class="e-content">
+        <div><p><a class="reference external" href="blog/2012/04/24/quicksort-in-d/">In this post</a> , we saw a simple
 textbook quicksort.  Here, we add two improvements.  First, we use
 insertion sort for sorting small subfiles instead of making as many
 recursive calls to quicksort.  Second, we select the pivot using the
@@ -1231,17 +1240,19 @@ void runTimings() {
 .. : 100000  8
 .. : 1000000  112
 .. : 10000000  1420
-.. : done -->
+.. : done --></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-04-24-quicksort-in-d.html">Quicksort in D</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2012/2012-04-24-quicksort-in-d.html" class="u-url">Quicksort in D</a>
         <small>  
-             Posted: <time class="published" datetime="2012-04-24T00:00:00">2012-04-24 00:00</time>
+             Posted: <time class="published dt-published" datetime="2012-04-24T00:00:00-04:00">2012-04-24 00:00</time>
         </small></h1>
         <hr>
-        <p>I have finally gotten around to learning about the <a class="reference external" href="http://dlang.org/">D Programming
+        <div class="e-content">
+        <div><p>I have finally gotten around to learning about the <a class="reference external" href="http://dlang.org/">D Programming
 Language</a> . Here is a toy quicksort, with some
 uninformed comments about D.</p>
 <p>First, we need to import the std.algorithm library for the swap
@@ -1543,18 +1554,19 @@ without affecting its value.</p>
 </tr>
 </tbody>
 </table>
-</blockquote>
+</blockquote></div>
+        </div>
             
 
-        </div>
+        </article>
     
-<div>
-<ul class="pager">
-    <li class="next">
-        <a href="index-2.html">Older posts →</a>
-    </li>
-</ul>
-</div>
+        <div>
+        <ul class="pager">
+            <li class="next">
+                <a href="index-2.html" rel="next">Older posts →</a>
+            </li>
+        </ul>
+        </div>
 
     
 
@@ -1566,7 +1578,7 @@ without affecting its value.</p>
     <!--End of body content-->
 </div>
 <div class="footerbox">
-    Contents © 2014 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+    Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
 </div>
 
             <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
@@ -1574,7 +1586,7 @@ without affecting its value.</p>
         <script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
 
 
-	
+    
 
     <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});
     $(window).on('hashchange', function(){

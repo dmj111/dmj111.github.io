@@ -3,9 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta charset="utf-8">
-    <meta name="description" content="Undetermined">
+    <meta name="description" content="ramblings">
     <meta name="author" content="Dave Jones">
-    <title>a mingled cup (old posts page 2) | a mingled cup</title>
+    <title>a mingled cup (old posts, page 2) | a mingled cup</title>
     
             <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
             <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
@@ -14,6 +14,7 @@
         <link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
         <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
             <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="http://dave.dkjones.org/index-2.html">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
@@ -41,7 +42,7 @@ dmjStartupFcns = [];
             <span class="icon-bar"></span>
         </a>
 
-            <a class="brand" href=".">
+            <a class="brand" href="http://dave.dkjones.org/">
             a mingled cup
             </a>
             <!-- Everything you want hidden at 940px or less, place within here -->
@@ -53,15 +54,6 @@ dmjStartupFcns = [];
                 </li><li><a href="rss.xml">RSS</a>
 
                 </li></ul>
-                    
-<form action="http://google.com/search" method="get" class="navbar-form pull-left">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:http://dave.dkjones.org/">
-    <input class="search" type="text" name="q" results="0" style="margin-top: 4px;" placeholder="Search">
-    <input type="submit" value="google search" style="visibility: hidden;">
-  </fieldset>
-</form>
-
                 <ul class="nav pull-right">
                 
                 
@@ -78,13 +70,14 @@ dmjStartupFcns = [];
     <div class="span2"></div>
     <div class="span8">
     
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-03-12-astar-python.html">A* in Python</a>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2012/2012-03-12-astar-python.html" class="u-url">A* in Python</a>
         <small>  
-             Posted: <time class="published" datetime="2012-03-12T00:00:00">2012-03-12 00:00</time>
+             Posted: <time class="published dt-published" datetime="2012-03-12T00:00:00-04:00">2012-03-12 00:00</time>
         </small></h1>
         <hr>
-        <p><a class="reference external" href="http://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> is a directed
+        <div class="e-content">
+        <div><p><a class="reference external" href="http://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> is a directed
 search algorithm.  Given a good heuristic function, it can perform
 much better than a blind breadth-first search.</p>
 <div class="section" id="a-code">
@@ -469,17 +462,19 @@ distance distance: 24 steps: 862
         test_block()
     else:
         print "bad arg", sys.argv -->
-</div>
+</div></div>
+        </div>
             
 
-        </div>
-        <div class="postbox">
-        <h1><a href="posts/2012/2012-01-25-sieve-in-racket.html">Sieve of Eratosthenes in Racket</a>
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2012/2012-01-25-sieve-in-racket.html" class="u-url">Sieve of Eratosthenes in Racket</a>
         <small>  
-             Posted: <time class="published" datetime="2012-01-25T00:00:00">2012-01-25 00:00</time>
+             Posted: <time class="published dt-published" datetime="2012-01-25T00:00:00-05:00">2012-01-25 00:00</time>
         </small></h1>
         <hr>
-        <p>To learn some <a class="reference external" href="http://racket-lang.org/">Racket</a> I ported this <a class="reference external" href="http:/blog/2012/01/07/sieve-of-eratosthenes/">this
+        <div class="e-content">
+        <div><p>To learn some <a class="reference external" href="http://racket-lang.org/">Racket</a> I ported this <a class="reference external" href="http:/blog/2012/01/07/sieve-of-eratosthenes/">this
 Ocaml code</a> to Scheme.</p>
 <p>Racket has lots of nice features that I want to learn about.  The
 pattern matching brings something to lisp code that I would miss from
@@ -526,21 +521,22 @@ which we will see in this code.</p>
 OCaml, but I am not sure if I am running it in under the JIT compiler
 yet by doing everything in the REPL.</p>
 <p><strong>Edit</strong> Outside of the REPL this appears to only take twice as long
-as the compiled OCaml code.</p>
+as the compiled OCaml code.</p></div>
+        </div>
             
 
-        </div>
+        </article>
     
-<div>
-<ul class="pager">
-    <li class="previous">
-        <a href="index.html">← Newer posts</a>
-    </li>
-    <li class="next">
-        <a href="index-1.html">Older posts →</a>
-    </li>
-</ul>
-</div>
+        <div>
+        <ul class="pager">
+            <li class="previous">
+                <a href="index.html" rel="prev">← Newer posts</a>
+            </li>
+            <li class="next">
+                <a href="index-1.html" rel="next">Older posts →</a>
+            </li>
+        </ul>
+        </div>
 
     
 
@@ -552,7 +548,7 @@ as the compiled OCaml code.</p>
     <!--End of body content-->
 </div>
 <div class="footerbox">
-    Contents © 2014 <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+    Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
 </div>
 
             <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
@@ -560,7 +556,7 @@ as the compiled OCaml code.</p>
         <script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
 
 
-	
+    
 
     <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});
     $(window).on('hashchange', function(){
