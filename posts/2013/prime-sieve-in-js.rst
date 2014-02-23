@@ -4,14 +4,16 @@
 .. title: Prime sieve in JavaScript
 .. date: 2013-11-17 0:00
 
+.. |...| unicode:: U+2026  .. ellipsis
+
+
 *Update* : After running the C version through Emscripten_, the result
 is about the same speed as the C version when run through Firefox.
 Wow!
 
 *Update* : Switching from a Javascript ``Array`` to ``Int8Array``
 halved the time in Firefox, making it comparable to C and Emscripten.
-(Until.... moving them to 8 bit ints too...).
-
+(Until moving C to 8 bits, then things got faster there as well |...|).
 
 Ok, time for some more prime sieving.  This time, we are going to
 try JavaScript, Python, and C.
@@ -93,7 +95,7 @@ Finally, the JavaScript version.
 
 This takes around 650 ms on the same computer.
 
-None of these examples were tweaked or tested rigorously...
+None of these examples were tweaked or tested rigorously |...|
 
 Just for fun, you can run the JavaScript on this page. The millionth
 prime should be 15,485,863.
@@ -103,7 +105,7 @@ prime should be 15,485,863.
 
    <button id="test_prime">Click to calculate first million primes</button>
 
-   <div id="prime_result">See the results here...</div>
+   <div id="prime_result">See the results here … </div>
 
    <div></div>
 
@@ -132,7 +134,7 @@ prime should be 15,485,863.
 	 var elem = document.getElementById("test_prime");
 	 var prime_ui_fcn = function () {
 	    var el = document.getElementById("prime_result");
-	    el.innerHTML = "Calculating...";
+	    el.innerHTML = "Calculating …";
 	    setTimeout(function() {
 	        var start = new Date();
 		var r = primes.sieve1(15486000+1);

@@ -5,6 +5,7 @@
 .. |--| unicode:: U+2013   .. en dash
 .. |---| unicode:: U+2014  .. em dash, trimming surrounding whitespace
    :trim:
+.. |...| unicode:: U+2026  .. ellipsis
 
 Quicksort, yet again.  This time, in JavaScript!
 
@@ -42,7 +43,7 @@ three can help partition the data more evenly, leading to less work.
 
 The pivot value is copied out to a temporary during the paritioning.
 In JavaScript, this isn't as big of a deal, because objects besides
-primitives are basically reference types anyways... so copying the
+primitives are basically reference types anyways |...| so copying the
 pivot value in that case is more like a pointer copy.
 
 A common case that I care about is when there are many equal values in
@@ -98,5 +99,5 @@ tests.
 __ /code/quicksort1/quicksort.html
 
 
-.. [1] The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, ... the
+.. [1] The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, |...| the
        whole way to the end of the array.
