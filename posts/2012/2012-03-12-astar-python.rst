@@ -23,23 +23,23 @@ many problems.
 Here is the main solving code.
 
 .. code:: python
-          
+
   import heapq
   import math
-  import random 
+  import random
   def solve(start, finish, heuristic):
       """Find the shortest path from START to FINISH."""
       heap = []
-  
+
       link = {} # parent node link
       h = {} # heuristic function cache
       g = {} # shortest path to a node
-  
+
       g[start] = 0
       h[start] = 0
       link[start] = None
-  
-  
+
+
       heapq.heappush(heap, (0, 0, start))
       # keep a count of the  number of steps, and avoid an infinite loop.
       for kk in xrange(1000000):
@@ -47,7 +47,7 @@ Here is the main solving code.
           if current == finish:
               print "distance:", g[current], "steps:", kk
               return g[current], kk, build_path(start, finish, link)
-  
+
           moves = current.get_moves()
           distance = g[current]
           for mv in moves:
@@ -59,9 +59,9 @@ Here is the main solving code.
                   heapq.heappush(heap, (g[mv] + h[mv], -kk, mv))
       else:
           raise Exception("did not find a solution")
-  
 
-``solve`` takes two /positions/, a start and finish, and a heuristic
+
+``solve`` takes two *positions*, a start and finish, and a heuristic
 function.  The heuristic function must always return a distance that
 is less or equal to the actual distance between two positions.  The
 whole algorithm rests on that assumption.
@@ -92,7 +92,7 @@ path from a position to the goal, not the shortest path between any
 two positions.  This is the reason that in the inner loop, we check if
 we are in the shortest path seen so far to a node.  A node may be
 visited multiple times by A*, with shorter paths to the node each
-time.  
+time.
 
 The function ``build_path`` reconstructs the path to the solution for
 us.  This is useful for debugging, and because we often want to know
@@ -104,8 +104,8 @@ the path, not just the path length.
       """
       Reconstruct the path from start to finish given
       a dict of parent links.
-      
-      """ 
+
+      """
       x = finish
       xs = [x]
       while x != start:
@@ -113,7 +113,7 @@ the path, not just the path length.
           xs.append(x)
       xs.reverse()
       return xs
-  
+
 
 
 Here is a heuristic that does nothing, just for testing.  Using this
@@ -121,7 +121,7 @@ heuristic will lead to Dijkstra's algorithm, which is a good, but
 uninformed search algorithm.
 
 .. code:: python
-          
+
    def no_heuristic(*args):
       """Dummy heuristic that doesn't do anything"""
       return 0
@@ -135,30 +135,30 @@ rectangular grid.  We will assume the grid is infinite, but will also
 hope that our search doesn't go that far off course.
 
 .. code:: python
-          
+
   class GridPosition(object):
       """Represent a position on a grid."""
       def __init__(self, x, y):
           self.x = x
           self.y = y
-  
+
       def __hash__(self):
           return hash((self.x, self.y))
-      
+
       def __repr__(self):
           return "GridPosition(%d,%d)" % (self.x, self.y)
-  
+
       def __eq__(self, other):
           return self.x == other.x and self.y == other.y
-      
+
       def get_moves(self):
           # There are times when returning this in a shuffled order
           # would help avoid degenerate cases.  For learning, though,
           # life is easier if the algorithm behaves predictably.
           yield GridPosition(self.x + 1, self.y)
-          yield GridPosition(self.x, self.y + 1)        
+          yield GridPosition(self.x, self.y + 1)
           yield GridPosition(self.x - 1, self.y)
-          yield GridPosition(self.x, self.y - 1)                
+          yield GridPosition(self.x, self.y - 1)
 
 
 .. code:: python
@@ -198,7 +198,7 @@ since the shortest path between two points is a straight line.
       solve(grid_start, grid_end, euclidean_h(grid_end))
 
 ::
-   
+
     distance: 20 steps: 134
 
 
@@ -218,7 +218,7 @@ through grid points would keep Manhattan from being perfect.
           dx, dy = pos.x - goal.x, pos.y - goal.y
           return abs(dx) + abs(dy)
       return f
-      
+
 .. code:: python
 
   def grid_test_manhattan_heuristic():
@@ -241,7 +241,7 @@ In the Stanford AI class offered online, they discussed A* in the
 context of the classic `fifteen puzzle
 <https://en.wikipedia.org/wiki/Fifteen_puzzle>`_, but simplified to
 just eight pieces.
-  
+
 Here is a class for the block puzzle.  Usually the 15 puzzle is used,
 but the 8 puzzle is a lot faster to solve.
 
@@ -250,37 +250,37 @@ but the 8 puzzle is a lot faster to solve.
   class BlockPuzzle(object):
       def __init__(self, n, xs=None):
           """Create an nxn block puzzle
-  
+
           Use XS to initialize to a specific state.
           """
           self.n = n
-          self.n2 = n * n 
+          self.n2 = n * n
           if xs is None:
               self.xs = [(x + 1) % self.n2 for x in xrange(self.n2)]
           else:
               self.xs = list(xs)
           self.hsh = None
           self.last_move = []
-  
+
       def __hash__(self):
           if self.hsh is None:
               self.hsh = hash(tuple(self.xs))
           return self.hsh
-          
+
       def __repr__(self):
           return "BlockPuzzle(%d, %s)" % (self.n, self.xs)
-  
+
       def show(self):
           ys = ["%2d" % x for x in self.xs]
           xs = [" ".join(ys[kk:kk+self.n]) for kk in xrange(0,self.n2, self.n)]
           return "\n".join(xs)
-  
+
       def __eq__(self, other):
           return self.xs == other.xs
-  
+
       def copy(self):
           return BlockPuzzle(self.n, self.xs)
-      
+
       def get_moves(self):
           # Find the 0 tile, and then generate any moves we
           # can by sliding another block into its place.
@@ -293,7 +293,7 @@ but the 8 puzzle is a lot faster to solve.
               result = BlockPuzzle(self.n, tmp)
               result.last_move = last_move
               return result
-  
+
           if tile0 - self.n >= 0:
               yield swap(tile0-self.n)
           if tile0 +self.n < self.n2:
@@ -302,7 +302,7 @@ but the 8 puzzle is a lot faster to solve.
               yield swap(tile0-1)
           if tile0 % self.n < self.n-1:
               yield swap(tile0+1)
-  
+
 
 We also need a way to create a shuffled puzzle.  Here is a generic
 method for shuffling.
@@ -315,7 +315,7 @@ method for shuffling.
           xs = list(position.get_moves())
           position = random.choice(xs)
       return position
-  
+
 
 Now, we need a heuristic.  The empty heuristic approach will take too
 long here.
@@ -386,8 +386,8 @@ and we know that each tile must move at least this many steps.
           xr,xc = row(x-1), col(x-1)
           score += abs(ir-xr) + abs(ic-xc)
       return score
-  
-  
+
+
 
 
 And another sample run.
@@ -402,7 +402,7 @@ And another sample run.
 
 
 ::
-   
+
     4  7  2
     1  0  5
     6  8  3
@@ -437,11 +437,11 @@ Here is a short sample of one to one comparisons.
       for kk in xrange(count):
           p = shuffle(BlockPuzzle(3), steps)
           print p.show()
-          print "misplaced", 
+          print "misplaced",
           x = solve(p, BlockPuzzle(3), misplaced_h)
-          print "distance", 
+          print "distance",
           x = solve(p, BlockPuzzle(3), distance_h)
-  
+
 
 
 
@@ -474,4 +474,3 @@ Here is a short sample of one to one comparisons.
           test_block()
       else:
           print "bad arg", sys.argv
-

@@ -10,13 +10,14 @@ Nothing to see here.... move along.
 abcd efghi jklmn opqrs tuvwxy zabc defg hijk lmno pqrs tuv wxyz
 
 
-abcdefghijk lmnopqrstuvwxyz abcdefg hijklmnopqrs tuvwxyzabcdefghijkl mnopq rstuv wxyz
+abcdefghijk lmnopqrstuvwxyz abcdefg hijklmnopqrs tuvwxyzabcdefghijkl
+mnopq rstuv wxyz
 
 
 .. class:: pull-right
 
-This is a test
+This is a test of pull-right.
 
 .. class:: pull-left
 
-and another.
+and another, of pull-left.

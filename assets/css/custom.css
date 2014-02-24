@@ -1,8 +1,4 @@
-/* @import url(http://fonts.googleapis.com/css?family=Droid+Serif:b,i|Droid+Serif); */
-/* @import url(http://fonts.googleapis.com/css?family=Droid+Sans:b,i|Droid+Sans); */
-/* @import url(http://fonts.googleapis.com/css?family=Inconsolata); */
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
-
 
 @media all {html, body {font-size: 18px;}}
 @media all and (max-width:1000px){html, body {font-size: 18px;}}
@@ -49,13 +45,26 @@
     font-style: normal;
 }
 
+.body-content {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* keep the paragraphs narrow enough. */
+.body-content, li, p {
+    max-width: 740px;
+}
 
 
 /* Choose the font, size and spacing */
-body {
+p, body {
     font-family: 'charterregular', serif;
 }
-p,h1,h2,h3,h4,h5,h6 {
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6
+{
+    font-family: 'charterbold_italic', charter, serif;
     line-height: 130%;
 }
 
@@ -63,10 +72,30 @@ p {
   margin: 0 0 0.5em 0;
 }
 
-/* keep the paragraphs narrow enough. */
-li, p {
-    max-width: 740px;
+table, th, td {
+  border: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  text-align: center;
 }
+th {
+  border-bottom-width: 2px;
+}
+
+html, body,
+{
+  font-family: 'charterregular', serif;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: 'Source code pro', monospace;
+  font-size: 1em;
+}
+  
+
 
 /* Space lists a little closer together */
 li {
@@ -75,12 +104,11 @@ li {
 
 /* Pick the font for the headings */
 h1,h2,h3,h4,h5,h6 {
-    font-family: "charterregular", serif;
+    // font-family: "charterregular", serif;
     line-height: 150%;
+    font-weight: bold;
     }
 
-/* Keep the headers from getting crazy big */
-h1, h2,h3,h4,h5,h6 { font-weight: bold }
 
 h1 { font-size: 1.1em; }
 h2 { font-size: 1.05em; }
@@ -95,15 +123,6 @@ tt, kbd, samp, code, pre
     line-height: 125%;
 }
 
-/* This isn't working yet...
-
-pre {
-    overflow: scroll;
-    overflow-y: hidden;
-    width: 100%;
-    }
- */
-
 h1 small,
 h2 small,
 h3 small,
@@ -115,14 +134,10 @@ small
     font-size: 85%;
 }
 
-
-/* For debug... */
-/*
-.span8 {
-     background-color: #f8f8e8;
+/* make the code blocks scroll... */
+pre, pre code {
+  white-space: pre;
+  word-wrap: normal;
+  overflow: auto;
 }
 
-.span2 {
-     background-color: #444;
-}
-*/

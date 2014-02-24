@@ -1,0 +1,128 @@
+/* @import url(http://fonts.googleapis.com/css?family=Droid+Serif:b,i|Droid+Serif); */
+/* @import url(http://fonts.googleapis.com/css?family=Droid+Sans:b,i|Droid+Sans); */
+/* @import url(http://fonts.googleapis.com/css?family=Inconsolata); */
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
+
+
+@media all {html, body {font-size: 18px;}}
+@media all and (max-width:1000px){html, body {font-size: 18px;}}
+@media all and (max-width:920px){html, body {font-size: 17px;}}
+@media all and (max-width:800px){html, body {font-size: 16px;}}
+@media all and (max-width:720px){html, body {font-size: 15px;}}
+
+
+
+@font-face {
+    font-family: 'charterregular';
+    src: url('../charter/webfonts/charter_regular-webfont.eot');
+    src: url('../charter/webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../charter/webfonts/charter_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'charterbold';
+    src: url('../charter/webfonts/charter_bold-webfont.eot');
+    src: url('../charter/webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../charter/webfonts/charter_bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'charteritalic';
+    src: url('../charter/webfonts/charter_italic-webfont.eot');
+    src: url('../charter/webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../charter/webfonts/charter_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'charterbold_italic';
+    src: url('../charter/webfonts/charter_bold_italic-webfont.eot');
+    src: url('../charter/webfonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../charter/webfonts/charter_bold_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/* Choose the font, size and spacing */
+body {
+    font-family: 'charterregular', serif;
+}
+p,h1,h2,h3,h4,h5,h6 {
+    line-height: 130%;
+}
+
+p {
+  margin: 0 0 0.5em 0;
+}
+
+/* keep the paragraphs narrow enough. */
+li, p {
+    max-width: 740px;
+}
+
+/* Space lists a little closer together */
+li {
+    line-height: 125%;
+}
+
+/* Pick the font for the headings */
+h1,h2,h3,h4,h5,h6 {
+    font-family: "charterregular", serif;
+    line-height: 150%;
+    }
+
+/* Keep the headers from getting crazy big */
+h1, h2,h3,h4,h5,h6 { font-weight: bold }
+
+h1 { font-size: 1.1em; }
+h2 { font-size: 1.05em; }
+h3 {font-size:  1.02 em; }
+h4,h5,h6 {font-size: 1em; }
+
+/* Pick the fonts for the code stuff */
+tt, kbd, samp, code, pre
+{
+    font-size: 0.9em;
+    font-family: "Source code pro",  monospace;
+    line-height: 125%;
+}
+
+/* This isn't working yet...
+
+pre {
+    overflow: scroll;
+    overflow-y: hidden;
+    width: 100%;
+    }
+ */
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+small
+{
+    font-size: 85%;
+}
+
+
+/* For debug... */
+/*
+.span8 {
+     background-color: #f8f8e8;
+}
+
+.span2 {
+     background-color: #444;
+}
+*/
