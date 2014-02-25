@@ -6,7 +6,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://dave.dkjones.org/</loc>
-  <lastmod>2014-02-23</lastmod>
+  <lastmod>2014-02-24</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/2011/</loc>
@@ -127,6 +127,10 @@
  <url>
   <loc>http://dave.dkjones.org/code/quicksort1/quicksort.html</loc>
   <lastmod>2014-02-23</lastmod>
+ </url>
+ <url>
+  <loc>http://dave.dkjones.org/demos/tictactoe/</loc>
+  <lastmod>2014-02-24</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/galleries/</loc>

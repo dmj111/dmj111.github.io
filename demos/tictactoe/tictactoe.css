@@ -1,0 +1,9 @@
+body { 
+  margin-top: 1em;
+}
+.h-space {
+  margin-bottom: 1em;
+}
+.choices > .selected {
+  background: grey;
+}

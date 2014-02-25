@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# Manifest version 4
+
+CACHE:
+index.html
+counts.js
+reversi.js
+reversi_demo.js
+
+NETWORK:
+*
