@@ -354,7 +354,7 @@ window.onload = function () {
     queue.push(function() {
         log('\nscatter');
 
-        var data = sawtooth(1000000, 10)();
+        var data = scatter(1000000, 10)();
         runTest(qsort2, data, repeats);
         runTest(qsort1, data, repeats);
         runTest(sys, data, repeats);

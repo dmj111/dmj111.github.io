@@ -131,7 +131,7 @@ textbooks, etc, I wrote the following:</p>
 <p>Lines 18 – 32 partition the data.</p>
 <p>Originally, I used a random pivot.  That works well, but the median of
 three can help partition the data more evenly, leading to less work.</p>
-<p>The pivot value is copied out to a temporary during the paritioning.
+<p>The pivot value is copied out to a temporary during the partitioning.
 In JavaScript, this isn't as big of a deal, because objects besides
 primitives are basically reference types anyways … so copying the
 pivot value in that case is more like a pointer copy.</p>
@@ -241,33 +241,40 @@ are a start.</p>
 <tr><td>random double</td>
 <td>0.13</td>
 <td>0.15</td>
-<td>3.15</td>
+<td>1.06</td>
 <td>0.11</td>
 </tr>
-<tr><td>sawtooth <a class="footnote-reference" href="posts/2014/js-quicksort.html#id4" id="id2">[1]</a></td>
-<td>0.03</td>
-<td>0.01</td>
+<tr><td>sawtooth <a class="footnote-reference" href="posts/2014/js-quicksort.html#id3" id="id2">[1]</a></td>
+<td>0.09</td>
+<td>0.02</td>
 <td>0.04</td>
 <td>0.02</td>
 </tr>
 <tr><td>ordered</td>
-<td>0.02</td>
-<td>0.03</td>
+<td>0.04</td>
+<td>0.04</td>
 <td>0.59</td>
 <td>0.01</td>
 </tr>
 <tr><td>reversed</td>
 <td>0.02</td>
 <td>0.03</td>
-<td>0.60</td>
+<td>0.59</td>
 <td>0.02</td>
 </tr>
 <tr><td>shuffled</td>
-<td>0.11</td>
-<td>0.13</td>
+<td>0.21</td>
+<td>0.18</td>
 <td>0.68</td>
 <td>0.09</td>
 </tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="posts/2014/js-quicksort.html#id2">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.</td></tr>
 </tbody>
 </table>
 <p><tt class="docutils literal">qsort1</tt> and <tt class="docutils literal">qsort2</tt> are far less generic than <tt class="docutils literal">Array.sort</tt>,
@@ -275,19 +282,13 @@ and there are likely several errors in how I am doing this timing.
 Sometimes, for example I seem to be getting GC pauses while doing the
 test, but I have not confirmed what is going on yet.  Overall, I am
 optimistic that in these cases, JavaScript can be made to run in a
-reasonable amount of time.</p>
+reasonable amount of time.  Overall, the timing is pretty variable.
+That will be worth investigating before too long.</p>
 <p>The NumPy values are in there for comparison.  I am assuming that the
 NumPy sort is in native code underneath, and it is far easier to time
 python code than to write some C++ wrappers just for a comparison.</p>
 <p>Here is a <a class="reference external" href="code/quicksort1/quicksort.html">link to the test driver</a> that launches directly into the
-tests.</p>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
-<colgroup><col class="label"><col></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="posts/2014/js-quicksort.html#id2">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
-whole way to the end of the array.</td></tr>
-</tbody>
-</table></div>
+tests.</p></div>
         </div>
             
 

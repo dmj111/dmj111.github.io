@@ -41,7 +41,7 @@ Lines 18 |--| 32 partition the data.
 Originally, I used a random pivot.  That works well, but the median of
 three can help partition the data more evenly, leading to less work.
 
-The pivot value is copied out to a temporary during the paritioning.
+The pivot value is copied out to a temporary during the partitioning.
 In JavaScript, this isn't as big of a deal, because objects besides
 primitives are basically reference types anyways |...| so copying the
 pivot value in that case is more like a pointer copy.
@@ -74,11 +74,15 @@ are a start.
 .. csv-table:: Timing results on 1 million values (in seconds)
    :header: data type, qsort1, qsort2, Array.sort, NumPy
 
-   random double, 0.13, 0.15, 3.15, 0.11
-   sawtooth [1]_, 0.03, 0.01, 0.04, 0.02
-   ordered, 0.02, 0.03, 0.59,  0.01
-   reversed, 0.02, 0.03, 0.60,  0.02
-   shuffled, 0.11, 0.13, 0.68, 0.09
+   random double, 0.13, 0.15, 1.06, 0.11
+   sawtooth [1]_, 0.09, 0.02, 0.04, 0.02
+   ordered, 0.04, 0.04, 0.59,  0.01
+   reversed, 0.02, 0.03, 0.59,  0.02
+   shuffled, 0.21, 0.18, 0.68, 0.09
+
+.. [1] The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, |...| the
+       whole way to the end of the array.
+
 
 
 ``qsort1`` and ``qsort2`` are far less generic than ``Array.sort``,
@@ -86,7 +90,8 @@ and there are likely several errors in how I am doing this timing.
 Sometimes, for example I seem to be getting GC pauses while doing the
 test, but I have not confirmed what is going on yet.  Overall, I am
 optimistic that in these cases, JavaScript can be made to run in a
-reasonable amount of time.
+reasonable amount of time.  Overall, the timing is pretty variable.
+That will be worth investigating before too long.
 
 The NumPy values are in there for comparison.  I am assuming that the
 NumPy sort is in native code underneath, and it is far easier to time
@@ -97,7 +102,3 @@ Here is a `link to the test driver`__ that launches directly into the
 tests.
 
 __ /code/quicksort1/quicksort.html
-
-
-.. [1] The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, |...| the
-       whole way to the end of the array.

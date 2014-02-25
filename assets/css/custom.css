@@ -87,14 +87,6 @@ html, body,
   font-family: 'charterregular', serif;
 }
 
-code,
-kbd,
-pre,
-samp {
-  font-family: 'Source code pro', monospace;
-  font-size: 1em;
-}
-  
 
 
 /* Space lists a little closer together */
@@ -118,10 +110,20 @@ h4,h5,h6 {font-size: 1em; }
 /* Pick the fonts for the code stuff */
 tt, kbd, samp, code, pre
 {
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-family: "Source code pro",  monospace;
     line-height: 125%;
 }
+
+/* make the code blocks scroll... */
+pre, pre code {
+  white-space: pre;
+  word-wrap: normal;
+  overflow: auto;
+}
+
+  
+
 
 h1 small,
 h2 small,
@@ -132,12 +134,5 @@ h6 small,
 small
 {
     font-size: 85%;
-}
-
-/* make the code blocks scroll... */
-pre, pre code {
-  white-space: pre;
-  word-wrap: normal;
-  overflow: auto;
 }
 

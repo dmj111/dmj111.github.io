@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>ramblings</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 23 Feb 2014 22:44:22 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>JavaScript Quicksort</title><link>http://dave.dkjones.org/posts/2014/js-quicksort.html</link><description>&lt;div&gt;&lt;p&gt;Quicksort, yet again.  This time, in JavaScript!&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>ramblings</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Mon, 24 Feb 2014 19:04:49 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>JavaScript Quicksort</title><link>http://dave.dkjones.org/posts/2014/js-quicksort.html</link><description>&lt;div&gt;&lt;p&gt;Quicksort, yet again.  This time, in JavaScript!&lt;/p&gt;
 &lt;p&gt;I have been using JavaScript more frequently, and have been pleasantly
 surprised at how fast it is.&lt;/p&gt;
 &lt;p&gt;So, I naturally wanted some test cases of things that I always thought
@@ -57,7 +57,7 @@ textbooks, etc, I wrote the following:&lt;/p&gt;
 &lt;p&gt;Lines 18 – 32 partition the data.&lt;/p&gt;
 &lt;p&gt;Originally, I used a random pivot.  That works well, but the median of
 three can help partition the data more evenly, leading to less work.&lt;/p&gt;
-&lt;p&gt;The pivot value is copied out to a temporary during the paritioning.
+&lt;p&gt;The pivot value is copied out to a temporary during the partitioning.
 In JavaScript, this isn't as big of a deal, because objects besides
 primitives are basically reference types anyways … so copying the
 pivot value in that case is more like a pointer copy.&lt;/p&gt;
@@ -167,33 +167,40 @@ are a start.&lt;/p&gt;
 &lt;tr&gt;&lt;td&gt;random double&lt;/td&gt;
 &lt;td&gt;0.13&lt;/td&gt;
 &lt;td&gt;0.15&lt;/td&gt;
-&lt;td&gt;3.15&lt;/td&gt;
+&lt;td&gt;1.06&lt;/td&gt;
 &lt;td&gt;0.11&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;sawtooth &lt;a class="footnote-reference" href="http://dave.dkjones.org/posts/2014/js-quicksort.html#id4" id="id2"&gt;[1]&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;0.03&lt;/td&gt;
-&lt;td&gt;0.01&lt;/td&gt;
+&lt;tr&gt;&lt;td&gt;sawtooth &lt;a class="footnote-reference" href="http://dave.dkjones.org/posts/2014/js-quicksort.html#id3" id="id2"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;0.09&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
 &lt;td&gt;0.04&lt;/td&gt;
 &lt;td&gt;0.02&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ordered&lt;/td&gt;
-&lt;td&gt;0.02&lt;/td&gt;
-&lt;td&gt;0.03&lt;/td&gt;
+&lt;td&gt;0.04&lt;/td&gt;
+&lt;td&gt;0.04&lt;/td&gt;
 &lt;td&gt;0.59&lt;/td&gt;
 &lt;td&gt;0.01&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;reversed&lt;/td&gt;
 &lt;td&gt;0.02&lt;/td&gt;
 &lt;td&gt;0.03&lt;/td&gt;
-&lt;td&gt;0.60&lt;/td&gt;
+&lt;td&gt;0.59&lt;/td&gt;
 &lt;td&gt;0.02&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;shuffled&lt;/td&gt;
-&lt;td&gt;0.11&lt;/td&gt;
-&lt;td&gt;0.13&lt;/td&gt;
+&lt;td&gt;0.21&lt;/td&gt;
+&lt;td&gt;0.18&lt;/td&gt;
 &lt;td&gt;0.68&lt;/td&gt;
 &lt;td&gt;0.09&lt;/td&gt;
 &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id3" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="http://dave.dkjones.org/posts/2014/js-quicksort.html#id2"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;qsort1&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;qsort2&lt;/tt&gt; are far less generic than &lt;tt class="docutils literal"&gt;Array.sort&lt;/tt&gt;,
@@ -201,19 +208,13 @@ and there are likely several errors in how I am doing this timing.
 Sometimes, for example I seem to be getting GC pauses while doing the
 test, but I have not confirmed what is going on yet.  Overall, I am
 optimistic that in these cases, JavaScript can be made to run in a
-reasonable amount of time.&lt;/p&gt;
+reasonable amount of time.  Overall, the timing is pretty variable.
+That will be worth investigating before too long.&lt;/p&gt;
 &lt;p&gt;The NumPy values are in there for comparison.  I am assuming that the
 NumPy sort is in native code underneath, and it is far easier to time
 python code than to write some C++ wrappers just for a comparison.&lt;/p&gt;
 &lt;p&gt;Here is a &lt;a class="reference external" href="http://dave.dkjones.org/code/quicksort1/quicksort.html"&gt;link to the test driver&lt;/a&gt; that launches directly into the
-tests.&lt;/p&gt;
-&lt;table class="docutils footnote" frame="void" id="id4" rules="none"&gt;
-&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
-&lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="http://dave.dkjones.org/posts/2014/js-quicksort.html#id2"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
-whole way to the end of the array.&lt;/td&gt;&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2014/js-quicksort.html</guid><pubDate>Fri, 21 Feb 2014 12:05:26 GMT</pubDate></item><item><title>EOPL in Javascript</title><link>http://dave.dkjones.org/posts/2013/eopl-in-js.html</link><description>&lt;div&gt;&lt;p&gt;I have been working through &lt;a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798"&gt;EOPL&lt;/a&gt; again, this time programming in
+tests.&lt;/p&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2014/js-quicksort.html</guid><pubDate>Fri, 21 Feb 2014 12:05:26 GMT</pubDate></item><item><title>EOPL in Javascript</title><link>http://dave.dkjones.org/posts/2013/eopl-in-js.html</link><description>&lt;div&gt;&lt;p&gt;I have been working through &lt;a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798"&gt;EOPL&lt;/a&gt; again, this time programming in
 JavaScript.  My JS experience is limited, but I finally know enough
 that it isn't as painful anymore.&lt;/p&gt;
 &lt;p&gt;Some things that have helped:&lt;/p&gt;
