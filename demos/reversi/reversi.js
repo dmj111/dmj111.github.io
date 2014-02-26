@@ -8,6 +8,17 @@
 
 (function(exports) {
     'use strict';
+
+    var hashKeys = (function(){
+        var i, N = 200,
+            M = Math.pow(2, 31),
+            result = [];
+        for(i = 0; i < 200; i += 1) {
+            result[i] = (Math.random() * M) | 0;
+        }
+        return result;
+    }());
+
     var BLACK = 1,
         WHITE = 2,
         EMPTY = 0,
@@ -52,6 +63,18 @@
     }
 
     Board.prototype = {
+        hash: function() {
+            var result = 0,
+                i, v;
+            for(i = 0; i < 100; i += 1) {
+                v = this.data[i];
+                if(v) {
+                    result = result ^ (hashKeys[i + 100 * (v - 1)]);
+                }
+            }
+            return result  % 1001683;;
+        },
+
         copy: function() {
             var result = new Board();
             result.data = this.data.slice();
@@ -584,15 +607,15 @@
         return board.countDifference(player);
     };
 
-    function Minimax(player, depth, fcn) {
+    function Minimax(depth, fcn) {
         this.depth = depth;
-        this.player = player;
         this.fcn = fcn;
     }
+
     Minimax.prototype = {
         getMove: function(board, cb) {
             var moves = board.legalMoves(this.player),
-                opp = opponent(this.player),
+                opp = opponent(board.player),
                 bestScore = -Infinity,
                 bestMove, i, s, newBoard;
             // shuffleArray(moves);
@@ -641,6 +664,7 @@
         this.depth = depth;
         this.fcn = fcn;
         this.log = [];
+        this.count = 0;
     }
 
     AlphaBeta.prototype = {
@@ -652,8 +676,11 @@
         findMove: function(board) {
             var best;
             this.log = ['starting'];
+
+            this.count = 0;
             best = this.search(board.player, board, -Infinity, Infinity,
                                this.depth);
+            console.log('did ' + this.count + ' calls to search');
             this.log.push('ending score ' + best.score);
             // console.log('best move: ' + best.move + ' score: ' + best.score);
             return best;
@@ -661,6 +688,7 @@
 
         search: function(player, board, achievable, cutoff, depth) {
             var keep = this.log;
+
             this.log = ['entering, player ' + player +
                          ' depth ' + depth +
                         ' achievable ' + achievable +
@@ -682,6 +710,7 @@
                         move: 'cutoff',
                         player: player},
                 newDepth;
+            this.count += 1;
 
             if(depth === 0) {
                 s = board.isOver(player);
@@ -723,7 +752,7 @@
                 for(i = 0; i < moves.length; i += 1) {
                     newBoard = board.makeMove(moves[i], player);
                     s = that.search(opp, newBoard, -cutoff,
-                                    -achievable, depth - 1);
+                                    -best.score, depth - 1);
                     if(-s.score > best.score) {
                         best = {
                             score: -s.score,
@@ -742,6 +771,8 @@
 
     };
     reversi.AlphaBeta = AlphaBeta;
+
+
 
 
     function negateNode(node) {
@@ -828,6 +859,287 @@
 
     };
     reversi.AlphaBeta2 = AlphaBeta2;
+
+    function AlphaBeta3(depth, fcn) {
+        this.depth = depth;
+        this.fcn = fcn;
+        this.log = [];
+        this.cache = {};
+    }
+
+    AlphaBeta3.prototype = {
+        getMove: function(board, cb) {
+            var best = this.findMove(board);
+            cb(best.move);
+        },
+
+        findMove: function(board) {
+            var best;
+            this.count = 0;
+            this.log = ['starting'];
+            best = this.search(board.player, board, -Infinity, Infinity,
+                               this.depth);
+            console.log('did ' + this.count + ' calls to search');
+            this.log.push('ending score ' + best.score);
+            // console.log('best move: ' + best.move + ' score: ' + best.score);
+            return best;
+        },
+
+        search: function(player, board, achievable, cutoff, depth) {
+            var keep = this.log;
+            this.log = ['entering, player ' + player +
+                         ' depth ' + depth +
+                        ' achievable ' + achievable +
+                       '  cutoff ' + cutoff];
+            var s = this.searchBody(player, board, achievable, cutoff, depth);
+            this.log.push(['exiting score', s]);
+            keep.push(this.log);
+            this.log = keep;
+            return s;
+        },
+
+        searchBody: function(player, board, achievable, cutoff, depth) {
+            var moves,
+                that = this,
+                opp = opponent(player),
+                s,
+                i, newBoard,
+                best = {score: achievable,
+                        move: 'cutoff',
+                        player: player},
+                newDepth,
+                hash = board.hash(),
+                hashedScore = this.cache[hash];
+            this.count += 1;
+            if(depth === 0) {
+                s = board.isOver(player);
+                if(s.over) {
+                    return s;
+                } else {
+                    return {score: this.fcn(board, player),
+                            move: 'depth reached',
+                            player: player};
+                    }
+            }
+
+            moves = board.legalMoves(player);
+
+            if(depth === this.depth) {
+                // Mix up the order to make the games more unique.
+                shuffleArray(moves);
+            }
+
+
+            if(moves.length === 0) {
+                if(board.anyLegalMove(opponent(player))) {
+                    s = this.search(opponent(player), board, -cutoff,
+                                    -achievable, depth);
+                    return {score: -s.score,
+                            move: 'no move',
+                            child: s,
+                            player: player
+                           };
+                } else {
+                    s = board.isOver(player);
+                    return s;
+                }
+            } else {
+                // Order the moves by their score in the cache, if there
+                // are any.
+                var moveScores = moves.map(function(move) {
+                    var newBoard = board.makeMove(move, player),
+                        cacheScore = that.cache[newBoard.hash()] || 0;
+                    return {move: move,
+                            board: newBoard,
+                            score: cacheScore};
+                });
+                // These need to be sorted from smallest to highest,
+                // because they represent the opponent score, not the
+                // player score.
+                moveScores.sort(function(a, b) { return a.score - b.score; });
+
+                newDepth = depth - 1;
+                // Simple quiessence search.
+                if(moves.length === 1) {
+                    newDepth = depth;
+                }
+                for(i = 0; i < moveScores.length; i += 1) {
+                    newBoard = moveScores[i].board;
+                    s = that.search(opp, newBoard, -cutoff,
+                                    -best.score, depth - 1);
+                    if(-s.score > best.score) {
+                        best = {
+                            score: -s.score,
+                            move: moveScores[i].move,
+                            child: s
+                        };
+                    }
+                    if(best.score >= cutoff) {
+                        break;
+                    }
+                }
+                best.player = player;
+                // console.log('hashed score ' + hashedScore + ' new score ' +
+                //             best.score + ' ' + hash);
+                this.cache[hash] = best.score;
+                return best;
+            }
+        }
+    };
+    reversi.AlphaBeta3 = AlphaBeta3;
+
+
+    function AlphaBeta4(maxDepth, fcn) {
+        this.maxDepth = maxDepth;
+        this.fcn = fcn;
+        this.log = [];
+        this.cache = {};
+    }
+
+    AlphaBeta4.prototype = {
+        getMove: function(board, cb) {
+            var best = this.findMove(board);
+            cb(best.move);
+        },
+
+        findMove: function(board) {
+            var best, pv;
+            this.count = 0;
+            this.log = ['starting'];
+
+            pv = null;
+            for(var depth = 1; depth <= this.maxDepth; depth += 1) {
+                best = this.search(board.player, board, -Infinity, Infinity,
+                                   depth, pv);
+                console.log('best at depth ' + depth + ' score ' +
+                            best.score + ' move ' + best.move);
+                pv = best.pv;
+            }
+            console.log('did ' + this.count + ' calls to search');
+            this.log.push('ending score ' + best.score);
+            // console.log('best move: ' + best.move + ' score: ' + best.score);
+            return best;
+        },
+
+        search: function(player, board, achievable, cutoff, depth, pv) {
+            var keep = this.log;
+            this.log = ['entering, player ' + player +
+                         ' depth ' + depth +
+                        ' achievable ' + achievable +
+                       '  cutoff ' + cutoff];
+            var s = this.searchBody(player, board, achievable, cutoff, depth,
+                                    pv);
+            this.log.push(['exiting score', s]);
+            keep.push(this.log);
+            this.log = keep;
+            return s;
+        },
+
+        reorder: function(moves, pv) {
+            var N = moves.length, i, v;
+            if(pv && pv.length > 0) {
+                v = pv[0];
+                for(i = 0; i < N; i += 1) {
+                    if(moves[i] == v) {
+                        moves[i] = moves[0];
+                        moves[0] = v;
+                        break;
+                    }
+                }
+            }
+            return moves;
+        },
+
+        searchBody: function(player, board, achievable, cutoff, depth, pv) {
+            var moves,
+                that = this,
+                opp = opponent(player),
+                s,
+                i, newBoard,
+                best = {score: achievable,
+                        move: 'cutoff',
+                        player: player},
+                newDepth;
+
+            this.count += 1;
+            if(depth === 0) {
+                s = board.isOver(player);
+                if(s.over) {
+                    return s;
+                } else {
+                    return {score: this.fcn(board, player),
+                            move: 'depth reached',
+                            player: player,
+                            pv: null};
+                    }
+            }
+
+            moves = board.legalMoves(player);
+
+            if(depth === this.depth) {
+                // Mix up the order to make the games more unique.
+                shuffleArray(moves);
+            }
+
+
+            if(moves.length === 0) {
+                if(pv && pv.length) { pv = pv.slice(1); }
+                if(board.anyLegalMove(opponent(player))) {
+                    s = this.search(opponent(player), board, -cutoff,
+                                    -achievable, depth, pv);
+                    return {score: -s.score,
+                            move: 'no move',
+                            child: s,
+                            player: player,
+                            pv: [null].concat(s.pv)
+                           };
+                } else {
+                    s = board.isOver(player);
+                    return s;
+                }
+            } else {
+                // Order the moves by their score in the cache, if there
+                // are any.
+
+                // because they represent the opponent score, not the
+                // player score.
+
+                newDepth = depth - 1;
+                // Simple quiessence search.
+                if(moves.length === 1) {
+                    newDepth = depth;
+                }
+                this.reorder(moves, pv);
+
+                if(pv && pv.length) {
+                    pv = pv.slice(1);
+                }
+
+                for(i = 0; i < moves.length; i += 1) {
+                    newBoard = board.makeMove(moves[i], board.player);
+                    s = that.search(opp, newBoard, -cutoff,
+                                    -best.score, depth - 1, pv);
+                    pv = [];
+                    if(-s.score > best.score) {
+                        best = {
+                            score: -s.score,
+                            move: moves[i],
+                            child: s,
+                            pv: [moves[i]].concat(s.pv)
+                        };
+                    }
+                    if(best.score >= cutoff) {
+                        break;
+                    }
+                }
+                best.player = player;
+                return best;
+            }
+        }
+    };
+    reversi.AlphaBeta4 = AlphaBeta4;
+
+
 
     reversi.UIPlayer = function(color, display) {
         this.display = display;
@@ -1244,11 +1556,10 @@
         };
 
 
-        module.BayesPlayer = function(weights, isLearning) {
+        module.BayesPlayer = function(weights, depth) {
             this.weights = weights || module.createWeights();
             this.factors = [];
-            this.isLearning = isLearning;
-
+            this.depth = depth || 4;
             var that = this;
 
             /// TODO: differentiate game ending scores and position
@@ -1264,20 +1575,16 @@
                 }
             }
 
-            this.searcher = new reversi.AlphaBeta(4, search);
-            this.longSearcher = new reversi.AlphaBeta(8, search);
+            this.searcher = new reversi.AlphaBeta4(this.depth, search);
+            this.longSearcher = new reversi.AlphaBeta4(Math.max(this.depth, 8),
+                                                       search);
             this.updateFactors();
 
         };
 
         module.BayesPlayer.prototype = {
             getMove: function(board, cb) {
-                var best;
-                if(this.isLearning) {
-                    best = this.findLearningMove(board);
-                } else {
-                    best = this.findMove(board);
-                }
+                var best = this.findMove(board);
                 cb(best.move);
             },
 
@@ -1315,10 +1622,30 @@
                 return {move: board.legalMoves(board.player)[0],
                         player: board.player};
             },
-            findMove: function (board) {
 
+            findMove: function (board) {
                 // evaluate current board
                 board = board.copy();
+                // this.updateFactors();
+                var move;
+                if(board.moveNumber > 51) {
+                    // Search further out at the end game.
+                    move = this.longSearcher.findMove(board);
+                } else {
+                    move = this.searcher.findMove(board);
+                }
+                // console.log('score ' + move.score.toFixed(3) + ' move ' +
+                //             board.moveNumber + '  player ' + board.player);
+                return move;
+            },
+
+
+            learn: function (board, score) {
+                // evaluate current board
+                board = board.copy();
+                if(score === 0) {
+
+                }
                 // this.updateFactors();
                 var moveIndex = Math.floor(board.moveNumber / 4),
                     factors = this.factors[moveIndex],
@@ -1326,16 +1653,9 @@
                     features = module.evaluateFeatures(board),
                     fullFeatures = module.evaluateFeaturesForTraining(board),
                     // Use search to re-evaluate.
-                    move,
                     startScore,
                     value = 0.5,
                     endScore;
-                if(board.moveNumber > 51) {
-                    // Search further out at the end game.
-                    move = this.longSearcher.findMove(board);
-                } else {
-                    move = this.searcher.findMove(board);
-                }
 
                 startScore = module.scoreFeatures(features, factors);
                 if(board.player === 2) { startScore = -startScore; }
@@ -1343,8 +1663,9 @@
                 // console.log('start score: ' + startScore.toFixed(3));
                 // console.log('evaluated score: ' + move.score);
                 value = 0.5;
-                if(move.score < 0) { value = 0; }
-                else if(move.score) { value = 1; }
+
+                if(score < 0) { value = 0; }
+                else if(score > 0) { value = 1; }
 
                 // Update the weights.
                 if(board.player === 1) {
@@ -1358,17 +1679,21 @@
                 // this.updateFactors();
                 endScore = module.scoreFeatures(features, this.factors[moveIndex]);
                 if(board.player === 2) { endScore = -endScore; }
-                console.log('start ' + startScore.toFixed(3) + ' end ' +
+                var t = '  ';
+                if(score * startScore < 0) { t = '* ';}
+
+                console.log(t + 'start ' + startScore.toFixed(3) + ' end ' +
                             endScore.toFixed(3) + ' diff ' +
                             (endScore  - startScore).toFixed(3) + '  search ' +
-                            move.score + ' move ' + board.moveNumber +
+                            score.toFixed(3) + ' move ' + board.moveNumber +
                             '  player ' + board.player);
                 // console.log('end score: ' + endScore.toFixed(3));
                 // console.log('difference ' + (startScore - endScore).toFixed(3));
                 // evaluate again (for testing)
-                this.difference = (endScore - startScore);
-                return move;
+                return (endScore - startScore);
+
             }
+
         };
 
 
@@ -1378,7 +1703,7 @@
 
     (function (module) {
         var logistic = module.logistic = {};
-        var learnWeight = 0.01;
+        var learnWeight = 0.03;
         function sigmoid(z) {
             return 1 / (1 + Math.exp(-z));
         }
@@ -1507,51 +1832,69 @@
                         player: board.player};
             },
 
-            findMove: function (board) {
-                // evaluate current board
-                board = board.copy();
-
+            boardScore: function(board) {
                 var moveIndex = Math.floor(board.moveNumber / 4),
                     weights = this.weights[moveIndex],
                     features = reversi.bayesLearner.evaluateFeatures(board),
-                    move,
-                    startScore,
-                    value = 0.5,
-                    endScore;
+                    score = logistic.score(features, weights);
+                return score;
+            },
 
+            learn: function (board, score, alpha) {
+                // evaluate current board
+
+                var moveIndex = Math.floor(board.moveNumber / 4),
+                    weights = this.weights[moveIndex],
+                    features = reversi.bayesLearner.evaluateFeaturesForTraining(
+                        board),
+                    ssq = 0;
+                if(score < 0) {
+                    score = -3;
+                } else if (score > 0) {
+                    score = 3;
+                }
+
+
+                ssq += update(features.normal, score, board.player);
+                ssq += update(features.reversed, -score, 3-board.player);
+
+                return ssq;
+
+                function update(features, score, player) {
+                    var startScore = logistic.score(features, weights),
+                        grad = sigmoid(startScore) - sigmoid(score),
+                        endScore;
+
+                    // the score is always returned as the score for the
+                    // current player.
+                    logistic.update(features, weights, grad, alpha);
+                    endScore = logistic.score(features, weights);
+                    var t = '  ';
+                    if(score * startScore < 0) {
+                        t = '* ';
+                    }
+                    console.log(t + 'start ' + startScore.toFixed(3) + ' end ' +
+                                endScore.toFixed(3) + ' search ' +
+                                score.toFixed(3) + ' move ' + board.moveNumber +
+                                '  player ' + player + ' grad ' + grad.toFixed(3));
+                    return Math.abs(grad);
+                }
+
+            },
+
+            findMove: function (board) {
+                // evaluate current board
+                board = board.copy();
+                var move;
                 if(board.moveNumber > 51) {
                     // Search further out at the end game.
                     move = this.longSearcher.findMove(board);
                 } else {
                     move = this.searcher.findMove(board);
                 }
+                console.log('score ' + move.score.toFixed(3) + ' move ' +
+                            board.moveNumber + '  player ' + player);
 
-                startScore = logistic.score(features, weights);
-
-                var grad, score = move.score;
-
-
-                if(board.player === 2) {
-                    score = - score;
-
-                }
-                var grad = sigmoid(startScore) - sigmoid(score);
-                logistic.update(features, weights, grad, learnWeight);
-
-                // console.log('start score: ' + startScore.toFixed(3));
-                // console.log('evaluated score: ' + move.score);
-                // this.updateFactors();
-                endScore = logistic.score(features, this.weights[moveIndex]);
-
-                console.log('start ' + startScore.toFixed(3) + ' end ' +
-                            endScore.toFixed(3) + ' diff ' +
-                            (startScore - endScore).toFixed(3) + '  search ' +
-                            score + ' move ' + board.moveNumber +
-                            '  player ' + board.player);
-                // console.log('end score: ' + endScore.toFixed(3));
-                // console.log('difference ' + (startScore - endScore).toFixed(3));
-                // evaluate again (for testing)
-                this.difference = (startScore - endScore);
                 return move;
             }
         };
@@ -1634,6 +1977,7 @@
         }
         return board;
     }
+    exports.reversi.fillRandomGame = fillRandomGame;
 
     function TrainSync(learner, opponent, display, N, gameCb, M) {
         this.startTime= new Date();
@@ -1660,6 +2004,9 @@
             while(!board.isOver().over) {
                 if(board.player === player) {
                     move = learner.findMove(board);
+                    console.log('move ' + board.moveNumber +
+                                '  player ' + board.player +
+                                ' score ' + move.score.toFixed(3));
                 } else {
                     move = opponent.findMove(board);
                 }

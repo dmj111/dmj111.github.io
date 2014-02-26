@@ -1,4 +1,4 @@
-/* globals reversi */
+/* globals reversi, bayesCounts */
 window.onload = function () {
     var status = document.getElementById('status');
     var canvas = document.getElementById('board');
@@ -11,7 +11,7 @@ window.onload = function () {
 
     window.player1 = new reversi.UIPlayer(reversi.BLACK, window.display);
 
-    window.player2 = new reversi.bayesLearner.BayesPlayer(counts);
+    window.player2 = new reversi.bayesLearner.BayesPlayer(bayesCounts, 6);
 
     window.game = new reversi.Game(window.player1, window.player2,
                                    window.display, status);

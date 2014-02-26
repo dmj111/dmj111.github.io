@@ -2,8 +2,6 @@
 /* global exports, console, document, alert  */
 
 
-
-
 (function(exports) {
     'use strict';
 

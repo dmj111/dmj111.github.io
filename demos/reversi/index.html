@@ -2,28 +2,44 @@
 <html manifest="myapp.appcache">
     <head>
         <title>reversi test</title>
-        <script src="reversi.js"></script>
-        <script src="counts.js"></script>
-        <script src="reversi_demo.js"></script>
+        <script type="text/javascript" src="reversi.js"></script>
+        <script type="text/javascript" src="bayes_sgd.js"></script>
+        <script type="text/javascript" src="reversi_demo.js"></script>
     </head>
     <body>
-        <h1>reversi test</h1>
-        <div id='status'></div>
-        <div>
-            <canvas id='board'></canvas>
-        </div>
-<script type="text/javascript">
+        <h1>reversi</h1>
+        <div id='status'>Waiting to play </div>
+        <div id='boarddiv'> <canvas id='board'></canvas> </div>
+    </body>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-28171814-1']);
-  _gaq.push(['_trackPageview']);
+    <script type="text/javascript">
+     var _gaq = _gaq || [];
+     _gaq.push(['_setAccount', 'UA-28171814-1']);
+     _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+     (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
 
-</script>
+    </script>
+    <script>
+     // Check if a new cache is available on page load.
+     window.addEventListener('load', function(e) {
+
+         window.applicationCache.addEventListener('updateready', function(e) {
+             if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+                 // Browser downloaded a new app cache.
+                 if (confirm('A new version of this site is available. Load it?')) {
+                     window.location.reload();
+                 }
+             } else {
+                 // Manifest didn't changed. Nothing new to server.
+             }
+         }, false);
+
+     }, false);
+    </script>
     </body>
 </html>
