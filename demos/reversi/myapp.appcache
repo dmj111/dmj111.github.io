@@ -3,7 +3,7 @@ CACHE MANIFEST
 
 CACHE:
 index.html
-counts.js
+bayes_sgd.js
 reversi.js
 reversi_demo.js
 
