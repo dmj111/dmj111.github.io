@@ -1,7 +1,6 @@
 /* jshint strict: true, unused:true, undef:true, browser:true */
+/* global exports, console, document, alert  */
 
-
-/* global tictactoe, exports, console, document, test, resume, assert, pause */
 
 
 
@@ -20,20 +19,21 @@
     colorMap[RED] = 'red';
     colorMap[BLUE] = 'blue';
 
+    /* Randomly shuffle the elements of an array */
     function shuffleArray(array) {
         var N = array.length,
             i, j, t;
 
         for(i = 0; i < N; i += 1) {
             j = Math.floor(Math.random() * (i + 1));
-            // console.log('i: ' + i + ' j: ' + j);
             t = array[j];
             array[j] = array[i];
             array[i] = t;
         }
         return array;
     }
-    tictactoe.shuffleArray = shuffleArray;
+
+    /* Find the opponent of a player */
     function getOpponent(player) {
         if(player === RED) {
             return BLUE;
@@ -44,6 +44,7 @@
         }
     }
 
+    /* Get the symbol for a player */
     function getSymbol(player) {
         if(player === RED) {
             return 'X';
@@ -54,6 +55,8 @@
         }
     }
 
+    // Helper data structure to represent moves and handle
+    // conversions.
     function Move(row, col) {
         this.row = row;
         this.col = col;
@@ -90,7 +93,7 @@
 
         getMoves: function() {
             var result = [],
-                r, c, m;
+                r, c;
             for(r = 0; r < 3; r += 1) {
                 for(c = 0; c < 3; c += 1) {
                     if(this.data[r*3 + c] === 0) {
@@ -247,7 +250,7 @@
         this.status = document.getElementById('status');
 
         function setupNode(pnum, player, node) {
-            node.onclick = function(event) {
+            node.onclick = function(/*event*/) {
                 that.selectPlayer(pnum, player, node);
 
             };
@@ -267,17 +270,19 @@
                       choices[i]);
         }
 
-        document.getElementById('restart').onclick = function() {
-            that.resetGame();
+        document.getElementById('start').onclick = function() {
+            that.startGame();
+        };
+        document.getElementById('stop').onclick = function() {
+            that.stopGame();
         };
 
-
-        this.resetGame();
+        this.startGame();
 
 
     }
 
-    GameController.prototype.resetGame = function () {
+    GameController.prototype.startGame = function () {
         // this.ui = new UI();
         var that = this;
         this.game = new Game(
@@ -285,17 +290,23 @@
                 that.isStarted = false;
                 var r = game.board.isOver();
                 if(r.winner === RED) {
-                    that.status.innerText = 'player 1 wins';
+                    that.status.innerText = 'Player 1 wins';
                 } else if (r.winner === BLUE) {
-                    that.status.innerText = 'player 2 wins';
+                    that.status.innerText = 'Player 2 wins';
                 } else {
-                    that.status.innerText = 'tie game';
+                    that.status.innerText = 'Tie game';
                 }
                 // reset?
             }, this.ui);
         setTimeout(function() {
             that.game.play();
         }, 10);
+    };
+
+    GameController.prototype.stopGame = function () {
+        this.status.innerText = 'Would you like to play a game?';
+        this.game = new Game(this.p1, this.p2, function(){}, this.ui);
+        this.game.isStarted = false;
     };
 
 
@@ -332,7 +343,7 @@
             } else {
                 this.p2 = newP;
             }
-            this.resetGame();
+
         }
     };
 
@@ -344,7 +355,7 @@
         this.size = 400;
         this.cb = null;
         this.init();
-    };
+    }
 
     tictactoe.UI = UI;
 
@@ -513,7 +524,7 @@
     }
 
     MiniMax.prototype.search = function(board, depth) {
-        var moves, bestMove, bestScore, i, t, newBoard, score,
+        var moves, bestMove, bestScore, i, t, score,
             curResult = board.isOver();
         if(curResult.over || depth === 0 ) {
             return {score: (1+depth) * this.scoreFcn(board), move: null};
