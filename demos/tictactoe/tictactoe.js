@@ -302,7 +302,7 @@
     };
 
     GameController.prototype.stopGame = function () {
-        this.status.innerText = 'Would you like to play a game?';
+        this.status.innerText = 'Shall we play a game?';
         this.game = new Game(this.p1, this.p2, function(){}, this.ui);
         this.game.isStarted = false;
     };
