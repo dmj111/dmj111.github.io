@@ -1,11 +1,15 @@
 CACHE MANIFEST
-# Manifest 2014-02-25 : v5
+# Manifest 2014-02-26: v6
 
 CACHE:
 index.html
 bayes_sgd.js
 reversi.js
-reversi_demo.js
+reversi_ui.js
+
+/assets/css/bootstrap.min.css
+/assets/css/theme.css
+/assets/css/custom.css
 
 NETWORK:
 *

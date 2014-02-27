@@ -473,8 +473,16 @@
                         this.display.draw();
                     }
                     if(this.status) {
-                        this.status.innerHTML = 'score for black: ' +
-                            newBoard.countDifference(BLACK);
+                        var i, b = 0, w = 0;
+                        for(i = 0; i < 100; i += 1) {
+                            if(this.board.data[i] === BLACK) {
+                                b += 1;
+                            } else if (this.board.data[i] === WHITE) {
+                                w += 1;
+                            }
+                        }
+                        this.status.innerText = 'Black: ' + b + '  White: ' +
+                            w;
                     }
 
                     r = newBoard.isOver();
