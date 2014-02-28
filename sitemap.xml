@@ -6,7 +6,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://dave.dkjones.org/</loc>
-  <lastmod>2014-02-26</lastmod>
+  <lastmod>2014-02-27</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/2011/</loc>
@@ -134,7 +134,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/reversi/</loc>
-  <lastmod>2014-02-26</lastmod>
+  <lastmod>2014-02-27</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/spirals/</loc>
@@ -162,7 +162,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/index-2.html</loc>
-  <lastmod>2014-02-26</lastmod>
+  <lastmod>2014-02-27</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/letrec_interp/interpreter.html</loc>
@@ -274,7 +274,11 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/js-quicksort.html</loc>
-  <lastmod>2014-02-26</lastmod>
+  <lastmod>2014-02-27</lastmod>
+ </url>
+ <url>
+  <loc>http://dave.dkjones.org/posts/2014/reversi.html</loc>
+  <lastmod>2014-02-27</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/prime_demo/primes.html</loc>
@@ -282,7 +286,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/rss.xml</loc>
-  <lastmod>2014-02-26</lastmod>
+  <lastmod>2014-02-27</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/</loc>

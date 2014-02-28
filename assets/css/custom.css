@@ -6,43 +6,41 @@
 @media all and (max-width:800px){html, body {font-size: 16px;}}
 @media all and (max-width:720px){html, body {font-size: 15px;}}
 
-
-
 @font-face {
-    font-family: 'charterregular';
-    src: url('../charter/webfonts/charter_regular-webfont.eot');
-    src: url('../charter/webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../charter/webfonts/charter_regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'charterregular';
+  src: url('../charter/webfonts/charter_regular-webfont.eot');
+  src: url('../charter/webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../charter/webfonts/charter_regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'charterbold';
-    src: url('../charter/webfonts/charter_bold-webfont.eot');
-    src: url('../charter/webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../charter/webfonts/charter_bold-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'charterbold';
+  src: url('../charter/webfonts/charter_bold-webfont.eot');
+  src: url('../charter/webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../charter/webfonts/charter_bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'charteritalic';
-    src: url('../charter/webfonts/charter_italic-webfont.eot');
-    src: url('../charter/webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../charter/webfonts/charter_italic-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'charteritalic';
+  src: url('../charter/webfonts/charter_italic-webfont.eot');
+  src: url('../charter/webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../charter/webfonts/charter_italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 
 @font-face {
-    font-family: 'charterbold_italic';
-    src: url('../charter/webfonts/charter_bold_italic-webfont.eot');
-    src: url('../charter/webfonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../charter/webfonts/charter_bold_italic-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'charterbold_italic';
+  src: url('../charter/webfonts/charter_bold_italic-webfont.eot');
+  src: url('../charter/webfonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../charter/webfonts/charter_bold_italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .body-content {
@@ -52,21 +50,15 @@
 
 /* keep the paragraphs narrow enough. */
 .body-content, li, p {
-    max-width: 740px;
+  max-width: 740px;
 }
 
 
 /* Choose the font, size and spacing */
 p, body {
-    font-family: 'charterregular', serif;
+  font-family: 'charterregular', serif;
 }
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6
-{
-    font-family: 'charterbold_italic', charter, serif;
-    line-height: 130%;
-}
 
 p {
   margin: 0 0 0.5em 0;
@@ -78,6 +70,7 @@ table, th, td {
   border-bottom-width: 1px;
   text-align: center;
 }
+
 th {
   border-bottom-width: 2px;
 }
@@ -87,32 +80,30 @@ html, body,
   font-family: 'charterregular', serif;
 }
 
-
-
 /* Space lists a little closer together */
 li {
-    line-height: 125%;
+  line-height: 125%;
 }
 
-/* Pick the font for the headings */
-h1,h2,h3,h4,h5,h6 {
-    // font-family: "charterregular", serif;
-    line-height: 150%;
-    font-weight: bold;
-    }
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6
+{
+  font-family: 'charterbold_italic', charter, serif;
+  line-height: 130%;
+}
 
 
 h1 { font-size: 1.1em; }
 h2 { font-size: 1.05em; }
-h3 {font-size:  1.02 em; }
+h3 {font-size:  1.02em; }
 h4,h5,h6 {font-size: 1em; }
 
 /* Pick the fonts for the code stuff */
 tt, kbd, samp, code, pre
 {
-    font-size: 0.8em;
-    font-family: "Source code pro",  monospace;
-    line-height: 125%;
+  font-size: 0.8em;
+  font-family: "Source code pro",  monospace;
+  line-height: 125%;
 }
 
 /* make the code blocks scroll... */
@@ -122,9 +113,6 @@ pre, pre code {
   overflow: auto;
 }
 
-  
-
-
 h1 small,
 h2 small,
 h3 small,
@@ -133,6 +121,6 @@ h5 small,
 h6 small,
 small
 {
-    font-size: 85%;
+  font-size: 85%;
 }
 

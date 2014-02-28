@@ -1,11 +1,11 @@
 CACHE MANIFEST
-# Manifest 2014-02-27: v2
+# Manifest 2014-02-27: v5
 
 CACHE:
 index.html
 reversi.js
 reversi_ui.js
-https://dl.dropboxusercontent.com/u/6197450/bayes_sgd.js
+http://dl.dropboxusercontent.com/u/6197450/bayes_sgd.js
 
 /assets/css/bootstrap.min.css
 /assets/css/theme.css
