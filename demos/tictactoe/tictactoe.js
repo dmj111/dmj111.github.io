@@ -14,8 +14,9 @@
     tictactoe.BLUE = BLUE;
 
     var colorMap = {};
-    colorMap[RED] = 'red';
-    colorMap[BLUE] = 'blue';
+    // Current colors from color brewer http://colorbrewer2.org/
+    colorMap[RED] = '#e41a1c';
+    colorMap[BLUE] = '#377eb8';
 
     /* Randomly shuffle the elements of an array */
     function shuffleArray(array) {
@@ -402,6 +403,7 @@
                 centersX = [w / 6, w / 2, 5 * w / 6],
                 radius = Math.min(w, h) / 7,
                 r, c, v;
+
             this.canvas.height = h;
             this.ctx.save();
             this.ctx.lineWidth = 4;
@@ -425,23 +427,44 @@
             this.ctx.lineTo(linesX[1], h);
             this.ctx.stroke();
             this.ctx.restore();
+
             if(board) {
                 for(r = 0; r < 3; r += 1) {
                     for(c = 0; c < 3; c += 1) {
                         v = board.get(r, c);
                         if(v !== 0) {
-                            this.ctx.save();
-                            this.ctx.fillStyle = colorMap[v];
-                            this.ctx.beginPath();
-                            this.ctx.arc(centersX[c], centersY[r], radius, 0, TWOPI);
-                            this.ctx.fill();
-                            this.ctx.restore();
+                            this.drawSymbol(v, centersX[c],
+                                            centersY[r], radius);
                         }
                     }
                 }
             }
 
+        },
+
+        drawSymbol: function(player, x, y, size) {
+            this.ctx.save();
+            this.ctx.strokeStyle = colorMap[player];
+            this.ctx.beginPath();
+            this.ctx.lineWidth = 30;
+            size = size * 0.8;
+            if(player === RED) {
+                this.ctx.moveTo(x - size, y - size);
+                this.ctx.lineTo(x + size, y + size);
+                this.ctx.stroke();
+                this.ctx.beginPath();
+                this.ctx.moveTo(x + size, y - size);
+                this.ctx.lineTo(x - size, y + size);
+                this.ctx.stroke();
+            } else {
+                this.ctx.arc(x, y, size, 0, TWOPI);
+                this.ctx.stroke();
+            }
+
+            this.ctx.restore();
+
         }
+
     };
 
 
