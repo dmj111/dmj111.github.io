@@ -67,6 +67,39 @@ dmjStartupFcns = [];
         <div class="row">
             
         <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2014/reversi.html" class="u-url">Reversi in JavaScript, again</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2014-02-28T22:42:35-05:00">2014-02-28 22:42</time>
+        </small></h1>
+        <hr>
+        <div class="e-content">
+        <div><p>Continuing down the path of mucking with JavaScript, I have ported
+Peter Norvig's Reversi code from Lisp to JavaScript.</p>
+<p>The code is in a pretty ugly state, but it is running. Besides being
+ugly, the code doesn't do any feature detection or graceful
+degradation. Though I would like to make it pretty solid, the purpose
+of this was to test out JavaScript for algorithmic work, not so much
+for the front-end work.  <a class="reference external" href="demos/reversi/index.html">Check it out here</a>.</p>
+<p>In this version, I have used Dr. Norvig's data structures, but wrapped
+it so it can display on an HTML canvas, and a person can play against
+it on the canvas.</p>
+<p>Some of the stuff going on here is:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Alpha-beta_pruning">Alpha-Beta</a> game tree searching</li>
+<li>Position evaluation using features from <a class="reference external" href="https://skatgame.net/mburo/log.html">Logistello</a></li>
+<li>Learning via <a class="reference external" href="https://en.wikipedia.org/wiki/Arthur_Samuel">Samuel's</a> strategy of using the look-ahead to train
+the evaluation function<ul>
+<li>Using a <a class="reference external" href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Classifier</a> instead of Logistic Regression</li>
+</ul>
+</li>
+<li>Some HTML5 stuff, like application caching, and maybe a webworker in
+the future.</li>
+</ul></div>
+        </div>
+            
+
+        </article>
+        <article class="postbox h-entry post-text">
         <h1 class="p-name"><a href="posts/2014/js-quicksort.html" class="u-url">JavaScript Quicksort</a>
         <small>  
              Posted: <time class="published dt-published" datetime="2014-02-21T07:05:26-05:00">2014-02-21 07:05</time>
@@ -1238,320 +1271,6 @@ void runTimings() {
 .. : 1000000  112
 .. : 10000000  1420
 .. : done --></div>
-        </div>
-            
-
-        </article>
-        <article class="postbox h-entry post-text">
-        <h1 class="p-name"><a href="posts/2012/2012-04-24-quicksort-in-d.html" class="u-url">Quicksort in D</a>
-        <small>  
-             Posted: <time class="published dt-published" datetime="2012-04-24T00:00:00-04:00">2012-04-24 00:00</time>
-        </small></h1>
-        <hr>
-        <div class="e-content">
-        <div><p>I have finally gotten around to learning about the <a class="reference external" href="http://dlang.org/">D Programming
-Language</a> . Here is a toy quicksort, with some
-uninformed comments about D.</p>
-<p>First, we need to import the std.algorithm library for the swap
-function, and the stdio libraray for printing stuff out.</p>
-<pre class="code d literal-block">
-<span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">algorithm</span><span class="p">;</span>
-<span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
-</pre>
-<p>Next, we have the partition function.  This shows several things.
-First, it is templatized on type, though not on comparison function.
-The <tt class="docutils literal">(T)</tt> in <tt class="docutils literal"><span class="pre">partition(T)(...)</span></tt> marks the function as a template
-on <tt class="docutils literal">T</tt>.</p>
-<p>This code also shows is how D handles arrays.  D is aware of array
-slices, so we can recurse on parts of the array, instead of passing in
-an array and begin / end indices.  This may only be sugar, but it
-allows stricted error checking in non-release mode, as the D arrays
-are bounds checked.</p>
-<p>The partition function uses the last element of the array as the
-pivot.  The partition function
-walks two indices, <tt class="docutils literal">i</tt> and <tt class="docutils literal">j</tt>, from the beginning and the end of the
-array.  The condition is that <tt class="docutils literal">array[x]</tt> is less than or equal to the
-pivot when x is less or equal to i, and <tt class="docutils literal">array[x]</tt> is greater than the
-pivot when x is greater or equal to j.  At the end, we swap the pivot
-out to where it belongs.</p>
-<pre class="code d literal-block">
-<span class="kt">ulong</span> <span class="n">partition</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-
-  <span class="k">auto</span> <span class="n">pivot</span> <span class="p">=</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">];</span>
-
-  <span class="c1">// We are going to increment i, and decrement j in each iteration of
-</span>  <span class="c1">// the while loop before using them.  So, they must start at the
-</span>  <span class="c1">// location before where we really want them to be.
-</span>  <span class="c1">//
-</span>  <span class="c1">// This seems inconvenient, but it cleans up the possible ending
-</span>  <span class="c1">// conditions of the while loop.  The ulong cannot really hold a
-</span>  <span class="c1">// negative number, so this -1 requires special care in the while
-</span>  <span class="c1">// loop.
-</span>  <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="p">-</span><span class="mi">1</span><span class="p">;</span>
-  <span class="kt">ulong</span> <span class="n">j</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">-</span><span class="mi">1</span><span class="p">;</span>
-
-  <span class="c1">// If i == -1, it will wrap around to a really big postive number.
-</span>  <span class="c1">// So, include a test for it here.  The only time it should be
-</span>  <span class="c1">// tested is the first iteration, while i still is -1, and the last
-</span>  <span class="c1">// iteration, when i &gt;= j.
-</span>  <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">||</span> <span class="n">i</span> <span class="p">==</span> <span class="p">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Find the next element from the start that is larger or equal to
-</span>    <span class="c1">// the pivot element.
-</span>    <span class="c1">//
-</span>    <span class="c1">// The pivot at the the end of the array is a sentinel, so we
-</span>    <span class="c1">// needn't check for overrunning this array in direction.
-</span>    <span class="n">i</span> <span class="p">+=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">i</span> <span class="p">+=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="c1">// Find the next element from the end that is less than or equal
-</span>    <span class="c1">// to the pivot.  We must guard against running past the i'th
-</span>    <span class="c1">// element, since we could have an array that was all greater than
-</span>    <span class="c1">// the pivot.  If j was 0 before this, things would be bad.  That
-</span>    <span class="c1">// is why the function asserts that the length be more than 1.
-</span>    <span class="n">j</span> <span class="p">-=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">&amp;&amp;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">j</span> <span class="p">-=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// Swap the values pointed at by i and j.  Now, array[x] for x
-</span>      <span class="c1">// &lt;= i is &lt;= pivot, and array[x] for x &gt;= j is &gt;= pivot.
-</span>      <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-
-  <span class="c1">// We know i &gt;= j.
-</span>  <span class="c1">// 1) If i was incremented to be equal to j, then
-</span>  <span class="c1">//  i = j = array.length - 1, and array[i] is the only element &gt;=
-</span>  <span class="c1">//  pivot.
-</span>  <span class="c1">// 2) Or, i was incremented to j, and array[j] &gt;= pivot from the
-</span>  <span class="c1">//    previous iteration.  In this case, array[j] &gt;= pivot.
-</span>  <span class="c1">// 3) Or, i was incremented so that array[i] &gt;= pivot, then j was
-</span>  <span class="c1">//    decremented till j == i.  So, array[i] &gt;= pivot.
-</span>  <span class="c1">/// So, array[i] is always greater than or equal to the pivot after
-</span>  <span class="c1">// the while loop.  And, array[i-1] is less than or equal to pivot,
-</span>  <span class="c1">// if i &gt; 0.
-</span>
-  <span class="c1">// Swap the pivot into the right place.  Everything to the left is
-</span>  <span class="c1">// &lt;= pivot.  Every thing to the right is &gt;= pivot.
-</span>  <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
-  <span class="c1">// Return the pivot location
-</span>  <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-<span class="p">}</span>
-</pre>
-<p>D has some nice unittest capabilities.  Code in a <tt class="docutils literal">unittest</tt> section
-is only compiled with the <tt class="docutils literal"><span class="pre">-unittest</span></tt> compile flag, and it is run
-every time the code is executed.  There is no way to forget to run it
-then.  Unless, of course, it isn't compiled with the <tt class="docutils literal"><span class="pre">-unittest</span></tt>
-flag...</p>
-<p>For example,</p>
-<pre class="code sh literal-block">
-dmd quicksort.d -unittest
-./quicksort <span class="c"># runs the tests</span>
-</pre>
-<p>So, lets add some tests for the partition function.  Imagine, if you
-wish, that the tests were written before the code.</p>
-<pre class="code d literal-block">
-<span class="k">unittest</span> <span class="p">{</span>
-  <span class="c1">/// Check that the partitioning is correct.
-</span>  <span class="k">auto</span> <span class="n">check_partition</span> <span class="p">=</span> <span class="k">function</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-    <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;=</span> <span class="n">array</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;=</span> <span class="n">array</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
-    <span class="p">}</span>
-  <span class="p">};</span>
-
-  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
-  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
-  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
-  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
-  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
-  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span><span class="p">[]</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// set all values to 10
-</span>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">writeln</span><span class="p">(</span><span class="s">"partition tests passed"</span><span class="p">);</span>
-
-<span class="p">}</span>
-</pre>
-<p>These lightweight tests are nice to have inline with the code.  More
-involved tests might not be appropriate here, but tests that are so
-easy to write make it hard to justify skipping tests.  Not that we
-should justify skipping tests anyways.</p>
-<p>A nice statement in those tests was an array expression. <tt class="docutils literal">data[] = 10</tt>
-sets all of the entries of <tt class="docutils literal">data</tt> to <tt class="docutils literal">10</tt>.  Arrays in D are much more
-first class citizens then vectors are in C++.</p>
-<p>After the <tt class="docutils literal">partition</tt> function, the rest of quicksort is easy.  We
-partition the data, and recursively sort each partition.  At each
-step, we are removing the partition element from the array, so we know
-that the total length of the subarrays is always decreasing.</p>
-<pre class="code d literal-block">
-<span class="n">T</span><span class="p">[]</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Move the middle element to the end to act as the pivot.
-</span>    <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[$/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
-    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-    <span class="c1">// Index p is in position, so now recursively sort the other two
-</span>    <span class="c1">// halves of the array.
-</span>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">]);</span>
-    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="p">$]);</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
-<span class="p">}</span>
-</pre>
-<p>Again, we can write some unittests to make sure that things seem fine.</p>
-<pre class="code d literal-block">
-<span class="kt">void</span> <span class="n">checkSorted</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-     <span class="k">assert</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">unittest</span> <span class="p">{</span>
-  <span class="k">auto</span> <span class="n">check</span> <span class="p">=</span> <span class="k">function</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">quicksort</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-    <span class="n">checkSorted</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="p">};</span>
-
-  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
-  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
-  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[];</span>
-  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">data</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
-  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">data</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="n">i</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<span class="p">}</span>
-</pre>
-<p>Finally, we would like some timings to see how we are doing.  In the
-process of writing this code, it was wrong several times.  The results
-were correct, but a bug made the code run in quadratic time.  Timing
-code isn't always for optimization; unexpected timing results can
-point to subtle bugs.</p>
-<p>Until I understand D better, I am commenting / uncommenting code
-to vary the tests.  (Yuck)</p>
-<p>Testing with reversed data is kind of a double-edged sword.  Reversed
-data is an optimistic case for the simple "pick the middle element"
-pivoting, because the middle element is always close to the median,
-reducing the depth of the recursive calls.  When implementing median
-of three, partitioning, though, the reversed order can find bugs
-causing quadratic performance.</p>
-<p>The =StopWatch= class is convenient here for some coarse timing
-information.  These tests are one shot timing tests, without any
-statistical validity.  Another convenience here is the literal number
-notation.  Underscores can be used in a number to make it read easier,
-without affecting its value.</p>
-<pre class="code d literal-block">
-<span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">datetime</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="n">timeSort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">StopWatch</span> <span class="n">sw</span><span class="p">;</span>
-  <span class="n">sw</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
-  <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-  <span class="c1">// sort(array);
-</span>  <span class="n">sw</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
-  <span class="n">writeln</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="s">"  "</span><span class="p">,</span> <span class="n">sw</span><span class="p">.</span><span class="n">peek</span><span class="p">().</span><span class="n">msecs</span><span class="p">);</span>
-
-  <span class="c1">// Also, make sure its right!
-</span>  <span class="n">checkSorted</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span><span class="p">[]</span> <span class="n">MakeOrderedData</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
-  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// cast(int)(-i);
-</span>  <span class="p">}</span>
-  <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-<span class="p">}</span>
-
-
-<span class="kt">int</span><span class="p">[]</span> <span class="n">MakeReversedData</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="n">MakeOrderedData</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-  <span class="n">data</span><span class="p">.</span><span class="n">reverse</span><span class="p">();</span>
-  <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-<span class="p">}</span>
-
-
-<span class="kt">void</span> <span class="n">runTimings</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">auto</span> <span class="n">sizes</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span>
-                <span class="mi">1_000_000</span><span class="p">,</span> <span class="mi">10_000_000</span><span class="p">];</span>
-  <span class="k">foreach</span><span class="p">(</span><span class="n">s</span><span class="p">;</span> <span class="n">sizes</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="n">MakeReversedData</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-    <span class="n">timeSort</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre>
-<p>Finally, a main function.</p>
-<pre class="code d literal-block">
-<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">runTimings</span><span class="p">();</span>
-  <span class="n">writeln</span><span class="p">(</span><span class="s">"done"</span><span class="p">);</span>
-<span class="p">}</span>
-</pre>
-<!-- http://comments.gmane.org/gmane.emacs.orgmode/45278
-#+begin_src sh :var TANGLED=(org-babel-tangle) :tangle no :exports none
-  wc $TANGLED > /dev/null
-  rm -f quicksort1
-  ~/dmd2/osx/bin/dmd -unittest quicksort1.d
-  ./quicksort1
-#+end_src
-
-#+RESULTS:
-| partition | tests | passed |
-|      1000 |     0 |        |
-|     10000 |     0 |        |
-|    100000 |     6 |        |
-|   1000000 |    71 |        |
-|  10000000 |   801 |        |
-|      done |       |        | -->
-<p>And here are some timing results.</p>
-<blockquote>
-<table border="1" class="docutils">
-<colgroup>
-<col width="43%">
-<col width="57%">
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">size</th>
-<th class="head">milliseconds</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>1000</td>
-<td>0</td>
-</tr>
-<tr><td>10000</td>
-<td>0</td>
-</tr>
-<tr><td>100000</td>
-<td>6</td>
-</tr>
-<tr><td>1000000</td>
-<td>74</td>
-</tr>
-<tr><td>10000000</td>
-<td>837</td>
-</tr>
-</tbody>
-</table>
-</blockquote></div>
         </div>
             
 
