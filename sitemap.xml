@@ -162,7 +162,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/index-2.html</loc>
-  <lastmod>2014-02-28</lastmod>
+  <lastmod>2014-03-01</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/letrec_interp/interpreter.html</loc>
@@ -273,12 +273,16 @@
   <lastmod>2014-02-28</lastmod>
  </url>
  <url>
+  <loc>http://dave.dkjones.org/posts/2014/alpha-beta-tictactoe.html</loc>
+  <lastmod>2014-03-01</lastmod>
+ </url>
+ <url>
   <loc>http://dave.dkjones.org/posts/2014/js-quicksort.html</loc>
   <lastmod>2014-02-28</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/reversi.html</loc>
-  <lastmod>2014-02-28</lastmod>
+  <lastmod>2014-03-01</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/prime_demo/primes.html</loc>
@@ -286,7 +290,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/rss.xml</loc>
-  <lastmod>2014-02-28</lastmod>
+  <lastmod>2014-03-01</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/</loc>

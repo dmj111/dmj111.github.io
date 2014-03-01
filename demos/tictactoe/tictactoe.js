@@ -415,7 +415,7 @@
     function Display() {
         this.canvas = null;
         this.ctx = null;
-        this.size = 400;
+        // this.size = 400;
         this.cb = null;
         this.init();
     }
@@ -432,8 +432,8 @@
                     document.body.appendChild(this.canvas);
                 }
                 this.ctx = this.canvas.getContext('2d');
-                this.canvas.height = this.size;
-                this.canvas.width = this.size;
+                // this.canvas.height = this.size;
+                // this.canvas.width = this.size;
             }
 
             this.draw();
@@ -475,8 +475,8 @@
                 ctx.stroke();
 
             }
-            this.canvas.height = h;
 
+            this.canvas.height = h;
             this.ctx.save();
             this.ctx.lineWidth = 4;
 
@@ -644,6 +644,11 @@
 
     // An AlphaBeta implementation for the tictactoe game.
     //
+    // This algorithm can greatly reduce the size of the search tree
+    // for a game, while still giving the exact same result as
+    // MiniMax.
+    //
+    // https://en.wikipedia.org/wiki/Alpha-beta_pruning
 
 
     function AlphaBeta(depth, scoreFcn) {
@@ -652,17 +657,33 @@
     }
 
     AlphaBeta.prototype = {
+        // Do the initial call to the search function.
+        findMove: function(board) {
+            this.count = 0;
+            var move = this.search(board, this.depth, -Infinity, Infinity);
+            console.log('move score: ' + move.score);
+            console.log('searched ' + this.count + ' times');
+            return move;
+        },
+
         search: function(board, depth, achievable, cutoff) {
+            // At every stage, achievable is the best score that the
+            // current player can definitely get.  We want to improve that.
+            //
+            // Cutoff is the best score the opponent can definitely
+            // get.  If we find a score greater than this, then the
+            // opponent will not select this branch of the tree, so we
+            // might as well stop searching it.
+            //
+
             this.count += 1;
             var moves, bestMove, bestScore, i, t, score,
                 curResult = board.isOver();
+
             if(curResult.over || depth === 0 ) {
                 return {score: this.scoreFcn(board), move: null};
             } else {
                 moves = board.getMoves();
-                // achievable = -Infinity;
-                // cutoff = Infinity;
-
                 for(i = 0; i < moves.length; i += 1) {
                     t = this.search(board.makeMove(moves[i]), depth - 1,
                                    -cutoff, -achievable);
@@ -671,10 +692,12 @@
                         achievable = score;
                         bestMove = moves[i];
                         if(achievable >= cutoff) {
+                            // This is the magic.  If we return any
+                            // value greater or equal to cutoff, the
+                            // opponent will take their better choice
+                            // instead of this one. So, there is no
+                            // sense in looking for an even better move.
                             break;
-                            // console.log('cutting off');
-
-
                         }
                     }
                 }
@@ -682,21 +705,13 @@
             }
         },
 
+        // Find the move, and pass it to the call back.
         getMove: function(board, cb) {
             var move =this.findMove(board);
             setTimeout(function() {
                 cb(move.move);
             }, 100);
-        },
-        findMove: function(board) {
-            this.count = 0;
-            var move = this.search(board, this.depth, -Infinity, Infinity);
-            console.log('move score: ' + move.score);
-            console.log('searched ' + this.count + ' times');
-            return move;
         }
-
-
     };
 
     tictactoe.AlphaBeta = AlphaBeta;
