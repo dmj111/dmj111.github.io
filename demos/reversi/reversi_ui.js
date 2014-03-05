@@ -10,7 +10,7 @@ var reversiUI = (function() {
         this.board = reversi.getInitialBoard();
         this.display = new reversi.Display(this.canvas, this.board);
         this.player1 = new reversi.UIPlayer(reversi.BLACK, this.display);
-        this.player2 = new reversi.bayesLearner.BayesPlayer(bayesCounts, 4);
+        this.player2 = new reversi.bayesLearner.BayesPlayer(bayesCounts, 2);
 
         var node, choices,  i,
             that = this;
