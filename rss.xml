@@ -1,5 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>ramblings</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 04 Mar 2014 21:49:04 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Alpha-Beta Pruning</title><link>http://dave.dkjones.org/posts/2014/alpha-beta-tictactoe.html</link><description>&lt;div&gt;&lt;p&gt;Another page I made to play with is a &lt;a class="reference external" href="http://dave.dkjones.org/demos/tictactoe/"&gt;Tic-Tac-Toe&lt;/a&gt; game.&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>ramblings</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 06 Mar 2014 23:20:43 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Quick select</title><link>http://dave.dkjones.org/posts/2014/quick-select.html</link><description>&lt;div&gt;&lt;p&gt;Why would a programmer want to write &lt;a class="reference external" href="http://dave.dkjones.org/posts/2014/js-quicksort.html"&gt;their own sort function&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;First, and most importantly,to learn about algorithms and programming.
+Sometimes a language or library has an inadequate sort function.&lt;/p&gt;
+&lt;p&gt;There is a problem out there that a custom sort is nice to use for.&lt;/p&gt;
+&lt;p&gt;Finding the median of an array of data (or any other percentile, for
+that matter.)  &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Quickselect"&gt;Quickselect&lt;/a&gt; is closely related to Quicksort.  Instead
+of recursively sorting both halves of the partition created in the
+partitioning step, we can just follow one … the one that contains
+the element we are looking for.&lt;/p&gt;
+&lt;p&gt;The C++ STL contains a &lt;a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/"&gt;partition&lt;/a&gt; function that can do just what we
+want.  Sometimes a language / library doesn't include this
+functionality.&lt;/p&gt;
+&lt;p&gt;Quickselect is an &lt;span class="math"&gt;\(O(n)\)&lt;/span&gt;
+ algorithm in the average case, which
+sounds much better than the &lt;span class="math"&gt;\(O(n \log n)\)&lt;/span&gt;
+ case for Quicksort.
+But, once &lt;span class="math"&gt;\(n\)&lt;/span&gt;
+ gets large enough, these two grow at about the
+same rate.  The bigger win is that Quickselect has a lower constant,
+so even though both it and Quicksort grow at about the same rate,
+Quickselect is a few times faster on random data.&lt;/p&gt;
+&lt;p&gt;So, here is a &lt;tt class="docutils literal"&gt;quickMedian&lt;/tt&gt; function.  This function keeps calling a
+partitioning function on the subarray that contains the middle point.
+(Not really the median … but it is our example.)&lt;/p&gt;
+&lt;p&gt;The partition function returns and object containing several indexes.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;a—the start of the left partition&lt;/li&gt;
+&lt;li&gt;b—the end of the left partition&lt;/li&gt;
+&lt;li&gt;c—the start of the right partition&lt;/li&gt;
+&lt;li&gt;d—the end of the right partition&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We also jump out early instead of breaking the array down to a single
+element, and use insertion sort on the last chunk of the array.&lt;/p&gt;
+&lt;pre class="code javascript literal-block"&gt;
+&lt;span class="ln"&gt; 1 &lt;/span&gt;    &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;quickMedian&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt; 2 &lt;/span&gt;        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;N&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="ln"&gt; 3 &lt;/span&gt;            &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;N&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="ln"&gt; 4 &lt;/span&gt;            &lt;span class="nx"&gt;middle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;N&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="ln"&gt; 5 &lt;/span&gt;            &lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt; 6 &lt;/span&gt;
+&lt;span class="ln"&gt; 7 &lt;/span&gt;        &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;end&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;INSERT_SORT_THRESHOLD&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt; 8 &lt;/span&gt;            &lt;span class="nx"&gt;idxs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;qsort2Partition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="ln"&gt; 9 &lt;/span&gt;
+&lt;span class="ln"&gt;10 &lt;/span&gt;            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;11 &lt;/span&gt;                &lt;span class="c1"&gt;// search left
+&lt;/span&gt;&lt;span class="ln"&gt;12 &lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="nx"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;13 &lt;/span&gt;            &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;14 &lt;/span&gt;                &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;15 &lt;/span&gt;            &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;16 &lt;/span&gt;                &lt;span class="c1"&gt;// We have contained the element!
+&lt;/span&gt;&lt;span class="ln"&gt;17 &lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;18 &lt;/span&gt;            &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="ln"&gt;19 &lt;/span&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="ln"&gt;20 &lt;/span&gt;
+&lt;span class="ln"&gt;21 &lt;/span&gt;        &lt;span class="nx"&gt;isort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="ln"&gt;22 &lt;/span&gt;        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;middle&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nx"&gt;middle&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;23 &lt;/span&gt;            &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="s1"&gt;'bug... partitioning failed'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;24 &lt;/span&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="ln"&gt;25 &lt;/span&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="ln"&gt;26 &lt;/span&gt;    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This function can be generalized to find a different value the center
+value, or even to partition the array such that several different
+values are in their correct locations.&lt;/p&gt;
+&lt;p&gt;Here are some non-representative timing results, from my Mac, on
+Chrome.&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;caption&gt;Timing results on 1 million values (in seconds)&lt;/caption&gt;
+&lt;colgroup&gt;
+&lt;col width="33%"&gt;
+&lt;col width="33%"&gt;
+&lt;col width="33%"&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;data type&lt;/th&gt;
+&lt;th class="head"&gt;quick sort&lt;/th&gt;
+&lt;th class="head"&gt;quick select median&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;random double&lt;/td&gt;
+&lt;td&gt;0.15&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;sawtooth &lt;a class="footnote-reference" href="http://dave.dkjones.org/posts/2014/quick-select.html#id2" id="id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;ordered&lt;/td&gt;
+&lt;td&gt;0.04&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reversed&lt;/td&gt;
+&lt;td&gt;0.05&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;shuffled&lt;/td&gt;
+&lt;td&gt;0.15&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="http://dave.dkjones.org/posts/2014/quick-select.html#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Here is a &lt;a class="reference external" href="http://dave.dkjones.org/code/quicksort1/quickselect.test.html"&gt;link to the test driver&lt;/a&gt; that launches directly into the
+tests.  It runs in Chrome, but hasn't been tested extensively.&lt;/p&gt;
+&lt;!-- Delete these comments after running --&gt;
+&lt;!-- Can add your own meta data too. --&gt;
+&lt;!-- use TEASER _ END to mark the end of the teaser section --&gt;
+&lt;!-- add a draft tag to drafts. --&gt;&lt;/div&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2014/quick-select.html</guid><pubDate>Fri, 07 Mar 2014 03:39:51 GMT</pubDate></item><item><title>Alpha-Beta Pruning</title><link>http://dave.dkjones.org/posts/2014/alpha-beta-tictactoe.html</link><description>&lt;div&gt;&lt;p&gt;Another page I made to play with is a &lt;a class="reference external" href="http://dave.dkjones.org/demos/tictactoe/"&gt;Tic-Tac-Toe&lt;/a&gt; game.&lt;/p&gt;
 &lt;p&gt;Originally, I just used the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Minimax#Minimax_algorithm_with_alternate_moves"&gt;MiniMax&lt;/a&gt; algorithm for the player.  The
 game is a small one, and &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Minimax#Minimax_algorithm_with_alternate_moves"&gt;MiniMax&lt;/a&gt; can solve the complete game pretty
 quickly.&lt;/p&gt;
@@ -620,73 +734,4 @@ available and installed packages.  In this buffer, type &lt;tt class="docutils l
 the upgradeable packages.  (note, plan to restart emacs after this
 process...)  Emacs will ask for confirmation on the installation of
 the new packages, then confirmation on the deletion of the old
-packages.&lt;/p&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2013/2013-01-02-updating-emacs-packages.html</guid><pubDate>Wed, 02 Jan 2013 05:00:00 GMT</pubDate></item><item><title>My blog process with org</title><link>http://dave.dkjones.org/posts/2013/2013-01-02-blog-process-with-org.html</link><description>&lt;div&gt;&lt;p&gt;I keep forgetting the steps I need to do for the blogging from this
-org file, so I am logging the steps here.&lt;/p&gt;
-&lt;p&gt;The directory organization looks like this:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;posts&lt;/tt&gt;&lt;ul&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;2011&lt;/tt&gt;&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;2012&lt;/tt&gt;&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;2013&lt;/tt&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;pages&lt;/tt&gt;&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;static&lt;/tt&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;The dates are mainly an organizational tool for me.  Inside the dated
-folders, there are files named like &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;2012-01-01-an-example-post.org&lt;/span&gt;&lt;/tt&gt;.
-I am currently using the date in the filename as the date of the
-post, without a time variable.  The rest of the text in the name is
-again mainly for my organization.  The title of the post is kept
-inside the org file.&lt;/p&gt;
-&lt;p&gt;The &lt;tt class="docutils literal"&gt;pages&lt;/tt&gt; folder is for stuff that I don't really consider a post,
-things that are references that I may go back and update, or
-eventually get rid of.&lt;/p&gt;
-&lt;p&gt;For now, I am using some elisp in my emacs config file to create the
-post index from the files containing the posts.  The code creates the
-listing on demand, instead of every time I publish -- that way I can
-review the changes before publishing.&lt;/p&gt;
-&lt;p&gt;Here is the code I use for creating the indices.  It takes as a
-parameter the path to the directory that I want to index.  Then, it
-finds all of the &lt;tt class="docutils literal"&gt;.org&lt;/tt&gt; files, grabs their titles, and inserts them
-into the current buffer.&lt;/p&gt;
-&lt;pre class="code scm literal-block"&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;org-dblock-write:my-get-posts&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;path&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;plist-get&lt;/span&gt; &lt;span class="nv"&gt;params&lt;/span&gt; &lt;span class="nv"&gt;:path&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;files&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;mapcar&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;concat&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;file-name-as-directory&lt;/span&gt; &lt;span class="nv"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                             &lt;span class="nv"&gt;f&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;directory-files&lt;/span&gt; &lt;span class="nv"&gt;path&lt;/span&gt; &lt;span class="nv"&gt;nil&lt;/span&gt; &lt;span class="s"&gt;"\.*org$"&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;setq&lt;/span&gt; &lt;span class="nv"&gt;files&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;nreverse&lt;/span&gt; &lt;span class="nv"&gt;files&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;dolist&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;file&lt;/span&gt; &lt;span class="nv"&gt;files&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;title&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;org-publish-find-title&lt;/span&gt; &lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;message&lt;/span&gt; &lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;message&lt;/span&gt; &lt;span class="nv"&gt;title&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;insert&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;format&lt;/span&gt; &lt;span class="s"&gt;" - [[file:%s][%s]]"&lt;/span&gt; &lt;span class="nv"&gt;file&lt;/span&gt; &lt;span class="nv"&gt;title&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;newline&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;To use the code, I put blocks that look like this one into my
-&lt;tt class="docutils literal"&gt;index.org&lt;/tt&gt; file.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-** 2013
-#+BEGIN: my-get-posts :path "posts/2013"
-#+END:
-&lt;/pre&gt;
-&lt;p&gt;To run the snippet, inside of the block I use the command
-&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;org-dblock-update&lt;/span&gt;&lt;/tt&gt;, bound to &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;C-c&lt;/span&gt; &lt;span class="pre"&gt;C-x&lt;/span&gt; &lt;span class="pre"&gt;C-u&lt;/span&gt;&lt;/tt&gt;.  Manually calling this is
-a pain, but then I can verify that the links/text look the way I want.&lt;/p&gt;
-&lt;p&gt;When I am all done, I call &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;org-publish-project&lt;/span&gt;&lt;/tt&gt; to create the output.
-Then, next, I look in the publishing directory, with &lt;tt class="docutils literal"&gt;git status&lt;/tt&gt; to
-see what has changed.  Finally, I commit, push to github, and view.&lt;/p&gt;
-&lt;dl class="docutils"&gt;
-&lt;dt&gt;Stuff to do:&lt;/dt&gt;
-&lt;dd&gt;&lt;ul class="first last simple"&gt;
-&lt;li&gt;make the generated timestamp match the file name, instead of
-constantly updating the stamp.&lt;/li&gt;
-&lt;li&gt;get more details of the config it here.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/dd&gt;
-&lt;/dl&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2013/2013-01-02-blog-process-with-org.html</guid><pubDate>Wed, 02 Jan 2013 05:00:00 GMT</pubDate></item></channel></rss>
+packages.&lt;/p&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2013/2013-01-02-updating-emacs-packages.html</guid><pubDate>Wed, 02 Jan 2013 05:00:00 GMT</pubDate></item></channel></rss>

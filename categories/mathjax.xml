@@ -1,5 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org/</link><description></description><atom:link href="http://dave.dkjones.org/categories/mathjax.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 04 Mar 2014 21:49:04 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;div&gt;&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org/</link><description></description><atom:link href="http://dave.dkjones.org/categories/mathjax.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 06 Mar 2014 23:20:42 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Quick select</title><link>http://dave.dkjones.org/posts/2014/quick-select.html</link><description>&lt;div&gt;&lt;p&gt;Why would a programmer want to write &lt;a class="reference external" href="http://dave.dkjones.org/posts/2014/js-quicksort.html"&gt;their own sort function&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;First, and most importantly,to learn about algorithms and programming.
+Sometimes a language or library has an inadequate sort function.&lt;/p&gt;
+&lt;p&gt;There is a problem out there that a custom sort is nice to use for.&lt;/p&gt;
+&lt;p&gt;Finding the median of an array of data (or any other percentile, for
+that matter.)  &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Quickselect"&gt;Quickselect&lt;/a&gt; is closely related to Quicksort.  Instead
+of recursively sorting both halves of the partition created in the
+partitioning step, we can just follow one … the one that contains
+the element we are looking for.&lt;/p&gt;
+&lt;p&gt;The C++ STL contains a &lt;a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/"&gt;partition&lt;/a&gt; function that can do just what we
+want.  Sometimes a language / library doesn't include this
+functionality.&lt;/p&gt;
+&lt;p&gt;Quickselect is an &lt;span class="math"&gt;\(O(n)\)&lt;/span&gt;
+ algorithm in the average case, which
+sounds much better than the &lt;span class="math"&gt;\(O(n \log n)\)&lt;/span&gt;
+ case for Quicksort.
+But, once &lt;span class="math"&gt;\(n\)&lt;/span&gt;
+ gets large enough, these two grow at about the
+same rate.  The bigger win is that Quickselect has a lower constant,
+so even though both it and Quicksort grow at about the same rate,
+Quickselect is a few times faster on random data.&lt;/p&gt;
+&lt;p&gt;So, here is a &lt;tt class="docutils literal"&gt;quickMedian&lt;/tt&gt; function.  This function keeps calling a
+partitioning function on the subarray that contains the middle point.
+(Not really the median … but it is our example.)&lt;/p&gt;
+&lt;p&gt;The partition function returns and object containing several indexes.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;a—the start of the left partition&lt;/li&gt;
+&lt;li&gt;b—the end of the left partition&lt;/li&gt;
+&lt;li&gt;c—the start of the right partition&lt;/li&gt;
+&lt;li&gt;d—the end of the right partition&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We also jump out early instead of breaking the array down to a single
+element, and use insertion sort on the last chunk of the array.&lt;/p&gt;
+&lt;pre class="code javascript literal-block"&gt;
+&lt;span class="ln"&gt; 1 &lt;/span&gt;    &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;quickMedian&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt; 2 &lt;/span&gt;        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;N&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="ln"&gt; 3 &lt;/span&gt;            &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;N&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="ln"&gt; 4 &lt;/span&gt;            &lt;span class="nx"&gt;middle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;N&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="ln"&gt; 5 &lt;/span&gt;            &lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt; 6 &lt;/span&gt;
+&lt;span class="ln"&gt; 7 &lt;/span&gt;        &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;end&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;INSERT_SORT_THRESHOLD&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt; 8 &lt;/span&gt;            &lt;span class="nx"&gt;idxs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;qsort2Partition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="ln"&gt; 9 &lt;/span&gt;
+&lt;span class="ln"&gt;10 &lt;/span&gt;            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;11 &lt;/span&gt;                &lt;span class="c1"&gt;// search left
+&lt;/span&gt;&lt;span class="ln"&gt;12 &lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="nx"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;13 &lt;/span&gt;            &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;14 &lt;/span&gt;                &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;idxs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;15 &lt;/span&gt;            &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;16 &lt;/span&gt;                &lt;span class="c1"&gt;// We have contained the element!
+&lt;/span&gt;&lt;span class="ln"&gt;17 &lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;18 &lt;/span&gt;            &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="ln"&gt;19 &lt;/span&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="ln"&gt;20 &lt;/span&gt;
+&lt;span class="ln"&gt;21 &lt;/span&gt;        &lt;span class="nx"&gt;isort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="ln"&gt;22 &lt;/span&gt;        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;middle&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;start&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nx"&gt;middle&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="ln"&gt;23 &lt;/span&gt;            &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="s1"&gt;'bug... partitioning failed'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="ln"&gt;24 &lt;/span&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="ln"&gt;25 &lt;/span&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="ln"&gt;26 &lt;/span&gt;    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;This function can be generalized to find a different value the center
+value, or even to partition the array such that several different
+values are in their correct locations.&lt;/p&gt;
+&lt;p&gt;Here are some non-representative timing results, from my Mac, on
+Chrome.&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;caption&gt;Timing results on 1 million values (in seconds)&lt;/caption&gt;
+&lt;colgroup&gt;
+&lt;col width="33%"&gt;
+&lt;col width="33%"&gt;
+&lt;col width="33%"&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;data type&lt;/th&gt;
+&lt;th class="head"&gt;quick sort&lt;/th&gt;
+&lt;th class="head"&gt;quick select median&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;random double&lt;/td&gt;
+&lt;td&gt;0.15&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;sawtooth &lt;a class="footnote-reference" href="http://dave.dkjones.org/posts/2014/quick-select.html#id2" id="id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;ordered&lt;/td&gt;
+&lt;td&gt;0.04&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reversed&lt;/td&gt;
+&lt;td&gt;0.05&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;shuffled&lt;/td&gt;
+&lt;td&gt;0.15&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="http://dave.dkjones.org/posts/2014/quick-select.html#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Here is a &lt;a class="reference external" href="http://dave.dkjones.org/code/quicksort1/quickselect.test.html"&gt;link to the test driver&lt;/a&gt; that launches directly into the
+tests.  It runs in Chrome, but hasn't been tested extensively.&lt;/p&gt;
+&lt;!-- Delete these comments after running --&gt;
+&lt;!-- Can add your own meta data too. --&gt;
+&lt;!-- use TEASER _ END to mark the end of the teaser section --&gt;
+&lt;!-- add a draft tag to drafts. --&gt;&lt;/div&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2014/quick-select.html</guid><pubDate>Fri, 07 Mar 2014 03:39:51 GMT</pubDate></item><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;div&gt;&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
 eratosthenes is one of the simplest ways to find prime numbers, and it
 is much more efficient than the brute force method.&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/"&gt;Here is a nice description&lt;/a&gt; of

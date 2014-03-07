@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dave Jones">
+    <title>Quick select | a mingled cup</title>
+    
+            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+      <link rel="canonical" href="http://dave.dkjones.org/posts/2014/quick-select.html">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+    
+
+
+
+
+
+    <script type="text/javascript">
+// A place to store functions to run after the page loads.
+dmjStartupFcns = [];
+</script>
+
+
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid"><!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
+        </div><!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="../../archive.html">Archives</a>
+                </li><li><a href="../../categories/index.html">Tags</a>
+                </li><li><a href="../../rss.xml">RSS</a>
+
+            </li></ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+    <li>
+    <a href="quick-select.rst" id="sourcelink">Source</a>
+    </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+    <article class="postbox post-text">
+    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
+    
+    <h1 class="p-name" itemprop="headline name">Quick select</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published dt-published" datetime="2014-03-06T22:39:51-05:00" itemprop="datePublished">2014-03-06 22:39</time>
+        
+
+        
+          |  
+        More posts about 
+    <span itemprop="keywords">
+        <a class="tag p-category" href="../../categories/mathjax.html"><span class="badge badge-info">mathjax</span></a>
+    </span>
+
+
+    </small>
+    <hr>
+    <div class="e-content" itemprop="articleBody text">
+    <div><p>Why would a programmer want to write <a class="reference external" href="js-quicksort.html">their own sort function</a>?</p>
+<p>First, and most importantly,to learn about algorithms and programming.
+Sometimes a language or library has an inadequate sort function.</p>
+<p>There is a problem out there that a custom sort is nice to use for.</p>
+<p>Finding the median of an array of data (or any other percentile, for
+that matter.)  <a class="reference external" href="https://en.wikipedia.org/wiki/Quickselect">Quickselect</a> is closely related to Quicksort.  Instead
+of recursively sorting both halves of the partition created in the
+partitioning step, we can just follow one … the one that contains
+the element we are looking for.</p>
+<p>The C++ STL contains a <a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/">partition</a> function that can do just what we
+want.  Sometimes a language / library doesn't include this
+functionality.</p>
+<p>Quickselect is an <span class="math">\(O(n)\)</span>
+ algorithm in the average case, which
+sounds much better than the <span class="math">\(O(n \log n)\)</span>
+ case for Quicksort.
+But, once <span class="math">\(n\)</span>
+ gets large enough, these two grow at about the
+same rate.  The bigger win is that Quickselect has a lower constant,
+so even though both it and Quicksort grow at about the same rate,
+Quickselect is a few times faster on random data.</p>
+<p>So, here is a <tt class="docutils literal">quickMedian</tt> function.  This function keeps calling a
+partitioning function on the subarray that contains the middle point.
+(Not really the median … but it is our example.)</p>
+<p>The partition function returns and object containing several indexes.</p>
+<ul class="simple">
+<li>a—the start of the left partition</li>
+<li>b—the end of the left partition</li>
+<li>c—the start of the right partition</li>
+<li>d—the end of the right partition</li>
+</ul>
+<p>We also jump out early instead of breaking the array down to a single
+element, and use insertion sort on the last chunk of the array.</p>
+<pre class="code javascript literal-block">
+<span class="ln"> 1 </span>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2 </span>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<span class="ln"> 3 </span>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
+<span class="ln"> 4 </span>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+<span class="ln"> 5 </span>            <span class="nx">idxs</span><span class="p">;</span>
+<span class="ln"> 6 </span>
+<span class="ln"> 7 </span>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8 </span>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln"> 9 </span>
+<span class="ln">10 </span>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">11 </span>                <span class="c1">// search left
+</span><span class="ln">12 </span><span class="c1"></span>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+<span class="ln">13 </span>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">14 </span>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
+<span class="ln">15 </span>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="ln">16 </span>                <span class="c1">// We have contained the element!
+</span><span class="ln">17 </span><span class="c1"></span>                <span class="k">break</span><span class="p">;</span>
+<span class="ln">18 </span>            <span class="p">}</span>
+<span class="ln">19 </span>        <span class="p">}</span>
+<span class="ln">20 </span>
+<span class="ln">21 </span>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="ln">22 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">23 </span>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
+<span class="ln">24 </span>        <span class="p">}</span>
+<span class="ln">25 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
+<span class="ln">26 </span>    <span class="p">}</span>
+</pre>
+<p>This function can be generalized to find a different value the center
+value, or even to partition the array such that several different
+values are in their correct locations.</p>
+<p>Here are some non-representative timing results, from my Mac, on
+Chrome.</p>
+<table border="1" class="docutils">
+<caption>Timing results on 1 million values (in seconds)</caption>
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">data type</th>
+<th class="head">quick sort</th>
+<th class="head">quick select median</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>random double</td>
+<td>0.15</td>
+<td>0.02</td>
+</tr>
+<tr><td>sawtooth <a class="footnote-reference" href="quick-select.html#id2" id="id1">[1]</a></td>
+<td>0.02</td>
+<td>0.02</td>
+</tr>
+<tr><td>ordered</td>
+<td>0.04</td>
+<td>0.02</td>
+</tr>
+<tr><td>reversed</td>
+<td>0.05</td>
+<td>0.02</td>
+</tr>
+<tr><td>shuffled</td>
+<td>0.15</td>
+<td>0.03</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="quick-select.html#id1">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.</td></tr>
+</tbody>
+</table>
+<p>Here is a <a class="reference external" href="../../code/quicksort1/quickselect.test.html">link to the test driver</a> that launches directly into the
+tests.  It runs in Chrome, but hasn't been tested extensively.</p>
+<!-- Delete these comments after running -->
+<!-- Can add your own meta data too. -->
+<!-- use TEASER _ END to mark the end of the teaser section -->
+<!-- add a draft tag to drafts. --></div>
+    </div>
+    </div>
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="alpha-beta-tictactoe.html" rel="prev">← Previous post</a>
+            </li>
+        </ul>
+
+        
+
+    
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}
+        });
+        </script>
+        <script src="../../assets/js/mathjax.js"></script>
+
+    </article>
+
+        </div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+        </footer>
+    </div>
+</div>
+
+
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+    
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript">
+if(typeof dmjStartupFcns !== 'undefined') {
+ $().ready(function () {
+    dmjStartupFcns.forEach(function(fcn) { fcn(); });
+ });
+}
+</script>
+
+</body>
+</html>
