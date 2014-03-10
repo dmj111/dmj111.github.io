@@ -1,11 +1,48 @@
 .. title: About
 .. date: 2013/05/19
 
-I am a software engineer with a background in mathematics.
+.. |--| unicode:: U+2013   .. en dash
+.. |---| unicode:: U+2014  .. em dash, trimming surrounding whitespace
+   :trim:
+.. |...| unicode:: U+2026  .. ellipsis
+
+
+This site exists for my own entertainment, but I hope that some of
+what it contains may be interesting to someone else.
+
+"A mingled cup" is just a phrase that I thought was funny when I read
+it, then saw it come up in several places.
+
+I saw it here, and thought that Lord Kelvin was a pretty funny guy.
+
+    Quaternions came from Hamilton after his really good work had been
+    done; and, though beautifully ingenious, have been an unmixed evil
+    to those who have touched them in any way, including Clerk
+    Maxwell. |--| `Lord Kelvin`_, 1892.
+
+.. _`Lord Kelvin`: http://en.wikipedia.org/wiki/Lord_Kelvin
+
+Then, I saw it here, and realized that Kelvin wasn't very original.
+
+    Lie at the threshold of Zeus, full of lots, one of good, the other
+    of evil lots, and that he to whom Zeus gives a mixture of the two
+    Sometimes meets with evil fortune, at other times with good; but
+    that he to whom is given the cup of unmingled ill, Him wild hunger
+    drives o'er the beauteous earth. |--| Plato, in "The Republic"
+    source_
+
+.. _source: http://www.thefreedictionary.com/unmingled
+
+And many more... The content here is more mingled than not.. hence, it
+is a mingled cup.
+
+
+
+I am a software engineer with a math background.
 
 The programming languages I use the most are Python and C++, and I
 have written quite a bit of Matlab and F#.  I like languages, though,
-and have dabled in OCaml, Racket, Common Lisp, Clojure, Javascript,
+and have dabled in Javascript, OCaml, Racket, Common Lisp, Clojure,
 Octave (ok... that comes with Matlab), and C.
 
 Claiming to be a mathematician may be a bit too strong, but I will
@@ -22,8 +59,6 @@ running.  Slowly.
 
 Contact
 -------
-
-I am also on
 
   - `twitter <http://twitter.com/dmj111>`_
   - `google+ <https://plus.google.com/106020883712147348652/posts>`_

@@ -25,12 +25,7 @@
 
 
 
-    <script type="text/javascript">
-// A place to store functions to run after the page loads.
-dmjStartupFcns = [];
-</script>
-
-
+    
 </head>
 <body>
 <!-- Menubar -->
@@ -278,23 +273,22 @@ var primes = function() {
 }();
 </script><!-- The gui javascript code... -->
 <script type="text/javascript">
-(function () {
-      var elem = document.getElementById("test_prime");
-      var prime_ui_fcn = function () {
-         var el = document.getElementById("prime_result");
-         el.innerHTML = "Calculating …";
-         setTimeout(function() {
-             var start = new Date();
-             var r = primes.sieve1(15486000+1);
-             var now = new Date();
-             el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
-                            " took " + (now - start) + "ms";
+window.addEventListener('load', function() {
+    var elem = document.getElementById("test_prime");
+    var prime_ui_fcn = function () {
+        var el = document.getElementById("prime_result");
+        el.innerHTML = "Calculating …";
+        setTimeout(function() {
+            var start = new Date();
+            var r = primes.sieve1(15486000+1);
+            var now = new Date();
+            el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
+                " took " + (now - start) + "ms";
 
-             }, 10);
-      };
-      elem.addEventListener("click", prime_ui_fcn);
-      })();
-
+        }, 10);
+    };
+    elem.addEventListener("click", prime_ui_fcn);
+});
 </script></div>
     </div>
     </div>
@@ -346,13 +340,6 @@ var primes = function() {
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script>
-<script type="text/javascript">
-if(typeof dmjStartupFcns !== 'undefined') {
- $().ready(function () {
-    dmjStartupFcns.forEach(function(fcn) { fcn(); });
- });
-}
 </script>
 
 </body>

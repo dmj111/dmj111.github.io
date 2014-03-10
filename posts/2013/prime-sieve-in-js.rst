@@ -130,23 +130,22 @@ prime should be 15,485,863.
 .. raw:: html
 
    <script type="text/javascript">
-   (function () {
-	 var elem = document.getElementById("test_prime");
-	 var prime_ui_fcn = function () {
-	    var el = document.getElementById("prime_result");
-	    el.innerHTML = "Calculating …";
-	    setTimeout(function() {
-	        var start = new Date();
-		var r = primes.sieve1(15486000+1);
-                var now = new Date();
-	        el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
-		               " took " + (now - start) + "ms";
+   window.addEventListener('load', function() {
+       var elem = document.getElementById("test_prime");
+       var prime_ui_fcn = function () {
+           var el = document.getElementById("prime_result");
+           el.innerHTML = "Calculating …";
+           setTimeout(function() {
+               var start = new Date();
+               var r = primes.sieve1(15486000+1);
+               var now = new Date();
+               el.innerHTML = "millionth prime: " + r[999999].toLocaleString() +
+                   " took " + (now - start) + "ms";
 
-		}, 10);
-	 };
-	 elem.addEventListener("click", prime_ui_fcn);
-	 })();
-
+           }, 10);
+       };
+       elem.addEventListener("click", prime_ui_fcn);
+   });
    </script>
 
 
