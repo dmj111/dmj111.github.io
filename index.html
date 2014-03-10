@@ -69,21 +69,39 @@ dmjStartupFcns = [];
         <div class="row">
             
         <article class="postbox h-entry post-text">
-        <h1 class="p-name"><a href="posts/2014/quick-select.html" class="u-url">Quick select</a>
+        <h1 class="p-name"><a href="posts/2014/raytracer.html" class="u-url">Raytracer</a>
         <small>  
-             Posted: <time class="published dt-published" datetime="2014-03-06T22:39:51-05:00">2014-03-06 22:39</time>
+             Posted: <time class="published dt-published" datetime="2014-03-09T22:20:41-04:00">2014-03-09 22:20</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
+        <div><p>The last couple of days I have been working on a raytracer in
+JavaScript. Years ago I wrote one in C to learn out to do OO in C, and
+now I am doing it in JavaScript to see how hard I can push plain
+JavaScript.</p>
+<p class="more"><a href="posts/2014/raytracer.html">Read more…</a></p></div>
+        </div>
+            
+
+        </article>
+        <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2014/quick-select.html" class="u-url">Quick select</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2014-03-06T23:25:35-05:00">2014-03-06 23:25</time>
+        </small></h1>
+        <hr>
+        <div class="p-summary">
         <div><p>Why would a programmer want to write <a class="reference external" href="posts/2014/js-quicksort.html">their own sort function</a>?</p>
-<p>First, and most importantly,to learn about algorithms and programming.
-Sometimes a language or library has an inadequate sort function.</p>
-<p>There is a problem out there that a custom sort is nice to use for.</p>
+<p>First, and most importantly, to learn about algorithms and
+programming.  Also, a language or library sometimes has an inadequate
+sort function for a specific situation.</p>
+<p>There is also a problem in the wild that a custom sort is nice to use
+for.</p>
 <p>Finding the median of an array of data (or any other percentile, for
 that matter.)  <a class="reference external" href="https://en.wikipedia.org/wiki/Quickselect">Quickselect</a> is closely related to Quicksort.  Instead
 of recursively sorting both halves of the partition created in the
-partitioning step, we can just follow one … the one that contains
-the element we are looking for.</p>
+partitioning step, we can just follow the one that contains the
+element we are looking for.</p>
 <p>The C++ STL contains a <a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/">partition</a> function that can do just what we
 want.  Sometimes a language / library doesn't include this
 functionality.</p>
@@ -136,9 +154,8 @@ element, and use insertion sort on the last chunk of the array.</p>
 <span class="ln">25 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
 <span class="ln">26 </span>    <span class="p">}</span>
 </pre>
-<p>This function can be generalized to find a different value the center
-value, or even to partition the array such that several different
-values are in their correct locations.</p>
+<p>This function can be generalized to find a different value than the
+center value, or even to find several percentiles at once.</p>
 <p>Here are some non-representative timing results, from my Mac, on
 Chrome.</p>
 <table border="1" class="docutils">
@@ -185,11 +202,7 @@ whole way to the end of the array.</td></tr>
 </tbody>
 </table>
 <p>Here is a <a class="reference external" href="code/quicksort1/quickselect.test.html">link to the test driver</a> that launches directly into the
-tests.  It runs in Chrome, but hasn't been tested extensively.</p>
-<!-- Delete these comments after running -->
-<!-- Can add your own meta data too. -->
-<!-- use TEASER _ END to mark the end of the teaser section -->
-<!-- add a draft tag to drafts. --></div>
+tests.  It runs in Chrome, but hasn't been tested extensively.</p></div>
         </div>
             
 
@@ -200,7 +213,7 @@ tests.  It runs in Chrome, but hasn't been tested extensively.</p>
              Posted: <time class="published dt-published" datetime="2014-03-01T14:04:08-05:00">2014-03-01 14:04</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>Another page I made to play with is a <a class="reference external" href="demos/tictactoe/">Tic-Tac-Toe</a> game.</p>
 <p>Originally, I just used the <a class="reference external" href="https://en.wikipedia.org/wiki/Minimax#Minimax_algorithm_with_alternate_moves">MiniMax</a> algorithm for the player.  The
 game is a small one, and <a class="reference external" href="https://en.wikipedia.org/wiki/Minimax#Minimax_algorithm_with_alternate_moves">MiniMax</a> can solve the complete game pretty
@@ -227,7 +240,7 @@ that is down to less than 20,000.</p>
              Posted: <time class="published dt-published" datetime="2014-02-28T22:42:35-05:00">2014-02-28 22:42</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>Continuing down the path of mucking with JavaScript, I have ported
 Peter Norvig's Reversi code from Lisp to JavaScript.</p>
 <p>The code is in a pretty ugly state, but it is running. Besides being
@@ -260,7 +273,7 @@ the future.</li>
              Posted: <time class="published dt-published" datetime="2014-02-21T07:05:26-05:00">2014-02-21 07:05</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>Quicksort, yet again.  This time, in JavaScript!</p>
 <p>I have been using JavaScript more frequently, and have been pleasantly
 surprised at how fast it is.</p>
@@ -487,7 +500,7 @@ tests.</p></div>
              Posted: <time class="published dt-published" datetime="2013-12-08T00:00:00-05:00">2013-12-08 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>I have been working through <a class="reference external" href="http://www.amazon.com/Essentials-Programming-Languages-Daniel-Friedman/dp/0262062798">EOPL</a> again, this time programming in
 JavaScript.  My JS experience is limited, but I finally know enough
 that it isn't as painful anymore.</p>
@@ -509,7 +522,7 @@ the time.</li>
              Posted: <time class="published dt-published" datetime="2013-11-17T00:00:00-05:00">2013-11-17 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p><em>Update</em> : After running the C version through <a class="reference external" href="https://github.com/kripken/emscripten/wiki">Emscripten</a>, the result
 is about the same speed as the C version when run through Firefox.
 Wow!</p>
@@ -726,7 +739,7 @@ var primes = function() {
              Posted: <time class="published dt-published" datetime="2013-10-17T22:00:00-04:00">2013-10-17 22:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>I have written quicksort in the <a class="reference external" href="posts/2012/2012-04-24-quicksort-in-d.html">past</a> mostly to learn how it works and
 to play with optimization.  (Because most of the time... I just want
 to call the system sort.)</p>
@@ -819,7 +832,7 @@ at <cite>b</cite>, and the largest at <cite>c</cite>.</p>
              Posted: <time class="published dt-published" datetime="2013-08-08T21:51:25-04:00">2013-08-08 21:51</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>This “blog” is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">Restructured Text</a> and generated by
 <a class="reference external" href="http://nikola.ralsina.com.ar/">Nikola</a>.  Simple customizations to Nikola are done by modifying files
 in <tt class="docutils literal">files/assets/</tt>.  The files in the <tt class="docutils literal">files</tt> directory are moved
@@ -869,7 +882,7 @@ for getting better quotation marks. --></div>
              Posted: <time class="published dt-published" datetime="2013-05-17T00:00:00-04:00">2013-05-17 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>From the Python <a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages">logging documentation</a>,
 we can send an arbitrary object into a log message call.</p>
 <pre class="code python literal-block">
@@ -892,33 +905,6 @@ we can send an arbitrary object into a log message call.</p>
 <p>The string isn't created until it is needed, so if the logging level
 is not high enough, the only method call is the creation of the
 <tt class="docutils literal">PrettyLog</tt> object.</p></div>
-        </div>
-            
-
-        </article>
-        <article class="postbox h-entry post-text">
-        <h1 class="p-name"><a href="posts/2013/2013-01-02-updating-emacs-packages.html" class="u-url">Updating Emacs packages</a>
-        <small>  
-             Posted: <time class="published dt-published" datetime="2013-01-02T00:00:00-05:00">2013-01-02 00:00</time>
-        </small></h1>
-        <hr>
-        <div class="e-content">
-        <div><p>I use ELPA, Marmalade, and MELPA to manage Emacs extensions.</p>
-<p>This block of elisp in my config file adds all of the package
-repositories I use.</p>
-<pre class="code scm literal-block">
-<span class="p">(</span><span class="nf">setq</span> <span class="nv">package-archives</span>
-      <span class="o">'</span><span class="p">((</span><span class="s">"gnu"</span> <span class="o">.</span> <span class="s">"http://elpa.gnu.org/packages/"</span><span class="p">)</span>
-        <span class="p">(</span><span class="s">"marmalade"</span> <span class="o">.</span> <span class="s">"http://marmalade-repo.org/packages/"</span><span class="p">)</span>
-        <span class="p">(</span><span class="s">"melpa"</span> <span class="o">.</span> <span class="s">"http://melpa.milkbox.net/packages/"</span><span class="p">)))</span>
-</pre>
-<p>Occasionally, I must run <tt class="docutils literal"><span class="pre">M-x</span> <span class="pre">package-list-packages</span></tt> to update then
-pacakge listing.  This creates a <tt class="docutils literal">*Packages*</tt> buffer that shows the
-available and installed packages.  In this buffer, type <tt class="docutils literal">U</tt> to mark
-the upgradeable packages.  (note, plan to restart emacs after this
-process...)  Emacs will ask for confirmation on the installation of
-the new packages, then confirmation on the deletion of the old
-packages.</p></div>
         </div>
             
 

@@ -1,6 +1,6 @@
 .. title: Quick select
 .. tags: mathjax
-.. date: 2014/03/06 22:39:51
+.. date: 2014/03/06 23:25:35
 
 .. |--| unicode:: U+2013   .. en dash
 .. |---| unicode:: U+2014  .. em dash, trimming surrounding whitespace
@@ -9,20 +9,23 @@
 
 Why would a programmer want to write `their own sort function`_?
 
-First, and most importantly,to learn about algorithms and programming.
-Sometimes a language or library has an inadequate sort function.
+First, and most importantly, to learn about algorithms and
+programming.  Also, a language or library sometimes has an inadequate
+sort function for a specific situation.
 
-There is a problem out there that a custom sort is nice to use for.
+There is also a problem in the wild that a custom sort is nice to use
+for.
 
 Finding the median of an array of data (or any other percentile, for
 that matter.)  Quickselect_ is closely related to Quicksort.  Instead
 of recursively sorting both halves of the partition created in the
-partitioning step, we can just follow one |...| the one that contains
-the element we are looking for.
+partitioning step, we can just follow the one that contains the
+element we are looking for.
 
 The C++ STL contains a partition_ function that can do just what we
 want.  Sometimes a language / library doesn't include this
 functionality.
+
 
 .. _partition: http://www.cplusplus.com/reference/algorithm/partition/
 
@@ -56,9 +59,8 @@ element, and use insertion sort on the last chunk of the array.
    :number-lines:
 
 
-This function can be generalized to find a different value the center
-value, or even to partition the array such that several different
-values are in their correct locations.
+This function can be generalized to find a different value than the
+center value, or even to find several percentiles at once.
 
 
 Here are some non-representative timing results, from my Mac, on
@@ -84,8 +86,3 @@ __ /code/quicksort1/quickselect.test.html
 
 .. _Quickselect : https://en.wikipedia.org/wiki/Quickselect
 .. _`their own sort function`: /posts/2014/js-quicksort.html
-
-.. Delete these comments after running
-.. Can add your own meta data too.
-.. use TEASER _ END to mark the end of the teaser section
-.. add a draft tag to drafts.

@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dave Jones">
+    <title>Raytracer | a mingled cup</title>
+    
+            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+      <link rel="canonical" href="http://dave.dkjones.org/posts/2014/raytracer.html">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+    
+
+
+
+
+
+    <script type="text/javascript">
+// A place to store functions to run after the page loads.
+dmjStartupFcns = [];
+</script>
+
+
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid"><!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
+        </div><!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="../../archive.html">Archives</a>
+                </li><li><a href="../../categories/index.html">Tags</a>
+                </li><li><a href="../../rss.xml">RSS</a>
+
+            </li></ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+    <li>
+    <a href="raytracer.rst" id="sourcelink">Source</a>
+    </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+    <article class="postbox post-text">
+    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
+    
+    <h1 class="p-name" itemprop="headline name">Raytracer</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published dt-published" datetime="2014-03-09T22:20:41-04:00" itemprop="datePublished">2014-03-09 22:20</time>
+        
+
+        
+
+    </small>
+    <hr>
+    <div class="e-content" itemprop="articleBody text">
+    <div><p>The last couple of days I have been working on a raytracer in
+JavaScript. Years ago I wrote one in C to learn out to do OO in C, and
+now I am doing it in JavaScript to see how hard I can push plain
+JavaScript.</p>
+<!-- TEASER_END -->
+<p>The first image is just a test image with several spheres, lights,
+and a plane.  The lights are just spheres, and can see the main light
+pretty clearly in the reflection.</p>
+<img alt="/galleries/raytrace/raytrace_1.png" src="../../galleries/raytrace/raytrace_1.png">
+<p>This image has a lot more going on.  There are nine reflective
+spheres, and the plane behind them is sloped away so we can see the
+reflections off of it.</p>
+<img alt="/galleries/raytrace/raytrace_3.png" src="../../galleries/raytrace/raytrace_3.png">
+<p>I spend a lot of time forgetting vectors and planes, so it was a good
+re-learning experience. The code isn't in shape to post yet, and it is
+still too slow yet.</p>
+<p>The second image takes about a minute on my machine.  In defense of
+the code, each pixel found tracing four rays (to anti-alias the
+edges), so this should get a lot faster when I make it smarter about
+that.</p></div>
+    </div>
+    </div>
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="quick-select.html" rel="prev">← Previous post</a>
+            </li>
+        </ul>
+
+        
+
+    
+
+    </article>
+
+        </div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+        </footer>
+    </div>
+</div>
+
+
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+    
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript">
+if(typeof dmjStartupFcns !== 'undefined') {
+ $().ready(function () {
+    dmjStartupFcns.forEach(function(fcn) { fcn(); });
+ });
+}
+</script>
+
+</body>
+</html>

@@ -82,7 +82,7 @@ dmjStartupFcns = [];
 
     <hr>
     <small>
-        Posted: <time class="published dt-published" datetime="2014-03-06T22:39:51-05:00" itemprop="datePublished">2014-03-06 22:39</time>
+        Posted: <time class="published dt-published" datetime="2014-03-06T23:25:35-05:00" itemprop="datePublished">2014-03-06 23:25</time>
         
 
         
@@ -97,14 +97,16 @@ dmjStartupFcns = [];
     <hr>
     <div class="e-content" itemprop="articleBody text">
     <div><p>Why would a programmer want to write <a class="reference external" href="js-quicksort.html">their own sort function</a>?</p>
-<p>First, and most importantly,to learn about algorithms and programming.
-Sometimes a language or library has an inadequate sort function.</p>
-<p>There is a problem out there that a custom sort is nice to use for.</p>
+<p>First, and most importantly, to learn about algorithms and
+programming.  Also, a language or library sometimes has an inadequate
+sort function for a specific situation.</p>
+<p>There is also a problem in the wild that a custom sort is nice to use
+for.</p>
 <p>Finding the median of an array of data (or any other percentile, for
 that matter.)  <a class="reference external" href="https://en.wikipedia.org/wiki/Quickselect">Quickselect</a> is closely related to Quicksort.  Instead
 of recursively sorting both halves of the partition created in the
-partitioning step, we can just follow one … the one that contains
-the element we are looking for.</p>
+partitioning step, we can just follow the one that contains the
+element we are looking for.</p>
 <p>The C++ STL contains a <a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/">partition</a> function that can do just what we
 want.  Sometimes a language / library doesn't include this
 functionality.</p>
@@ -157,9 +159,8 @@ element, and use insertion sort on the last chunk of the array.</p>
 <span class="ln">25 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
 <span class="ln">26 </span>    <span class="p">}</span>
 </pre>
-<p>This function can be generalized to find a different value the center
-value, or even to partition the array such that several different
-values are in their correct locations.</p>
+<p>This function can be generalized to find a different value than the
+center value, or even to find several percentiles at once.</p>
 <p>Here are some non-representative timing results, from my Mac, on
 Chrome.</p>
 <table border="1" class="docutils">
@@ -206,17 +207,16 @@ whole way to the end of the array.</td></tr>
 </tbody>
 </table>
 <p>Here is a <a class="reference external" href="../../code/quicksort1/quickselect.test.html">link to the test driver</a> that launches directly into the
-tests.  It runs in Chrome, but hasn't been tested extensively.</p>
-<!-- Delete these comments after running -->
-<!-- Can add your own meta data too. -->
-<!-- use TEASER _ END to mark the end of the teaser section -->
-<!-- add a draft tag to drafts. --></div>
+tests.  It runs in Chrome, but hasn't been tested extensively.</p></div>
     </div>
     </div>
     
         <ul class="pager">
             <li class="previous">
                 <a href="alpha-beta-tictactoe.html" rel="prev">← Previous post</a>
+            </li>
+            <li class="next">
+                <a href="raytracer.html" rel="next">Next post →</a>
             </li>
         </ul>
 

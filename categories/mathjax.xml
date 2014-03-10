@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org/</link><description></description><atom:link href="http://dave.dkjones.org/categories/mathjax.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 06 Mar 2014 23:20:42 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Quick select</title><link>http://dave.dkjones.org/posts/2014/quick-select.html</link><description>&lt;div&gt;&lt;p&gt;Why would a programmer want to write &lt;a class="reference external" href="http://dave.dkjones.org/posts/2014/js-quicksort.html"&gt;their own sort function&lt;/a&gt;?&lt;/p&gt;
-&lt;p&gt;First, and most importantly,to learn about algorithms and programming.
-Sometimes a language or library has an inadequate sort function.&lt;/p&gt;
-&lt;p&gt;There is a problem out there that a custom sort is nice to use for.&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup (mathjax)</title><link>http://dave.dkjones.org/</link><description></description><atom:link href="http://dave.dkjones.org/categories/mathjax.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 09 Mar 2014 22:39:40 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Quick select</title><link>http://dave.dkjones.org/posts/2014/quick-select.html</link><description>&lt;div&gt;&lt;p&gt;Why would a programmer want to write &lt;a class="reference external" href="http://dave.dkjones.org/posts/2014/js-quicksort.html"&gt;their own sort function&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;First, and most importantly, to learn about algorithms and
+programming.  Also, a language or library sometimes has an inadequate
+sort function for a specific situation.&lt;/p&gt;
+&lt;p&gt;There is also a problem in the wild that a custom sort is nice to use
+for.&lt;/p&gt;
 &lt;p&gt;Finding the median of an array of data (or any other percentile, for
 that matter.)  &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Quickselect"&gt;Quickselect&lt;/a&gt; is closely related to Quicksort.  Instead
 of recursively sorting both halves of the partition created in the
-partitioning step, we can just follow one … the one that contains
-the element we are looking for.&lt;/p&gt;
+partitioning step, we can just follow the one that contains the
+element we are looking for.&lt;/p&gt;
 &lt;p&gt;The C++ STL contains a &lt;a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/"&gt;partition&lt;/a&gt; function that can do just what we
 want.  Sometimes a language / library doesn't include this
 functionality.&lt;/p&gt;
@@ -60,9 +62,8 @@ element, and use insertion sort on the last chunk of the array.&lt;/p&gt;
 &lt;span class="ln"&gt;25 &lt;/span&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="ln"&gt;26 &lt;/span&gt;    &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;
-&lt;p&gt;This function can be generalized to find a different value the center
-value, or even to partition the array such that several different
-values are in their correct locations.&lt;/p&gt;
+&lt;p&gt;This function can be generalized to find a different value than the
+center value, or even to find several percentiles at once.&lt;/p&gt;
 &lt;p&gt;Here are some non-representative timing results, from my Mac, on
 Chrome.&lt;/p&gt;
 &lt;table border="1" class="docutils"&gt;
@@ -109,11 +110,7 @@ whole way to the end of the array.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;Here is a &lt;a class="reference external" href="http://dave.dkjones.org/code/quicksort1/quickselect.test.html"&gt;link to the test driver&lt;/a&gt; that launches directly into the
-tests.  It runs in Chrome, but hasn't been tested extensively.&lt;/p&gt;
-&lt;!-- Delete these comments after running --&gt;
-&lt;!-- Can add your own meta data too. --&gt;
-&lt;!-- use TEASER _ END to mark the end of the teaser section --&gt;
-&lt;!-- add a draft tag to drafts. --&gt;&lt;/div&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2014/quick-select.html</guid><pubDate>Fri, 07 Mar 2014 03:39:51 GMT</pubDate></item><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;div&gt;&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
+tests.  It runs in Chrome, but hasn't been tested extensively.&lt;/p&gt;&lt;/div&gt;</description><category>mathjax</category><guid>http://dave.dkjones.org/posts/2014/quick-select.html</guid><pubDate>Fri, 07 Mar 2014 04:25:35 GMT</pubDate></item><item><title>Sieve of Eratosthenes</title><link>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</link><description>&lt;div&gt;&lt;p&gt;A function to generate prime numbers is often useful.  This sieve of
 eratosthenes is one of the simplest ways to find prime numbers, and it
 is much more efficient than the brute force method.&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/"&gt;Here is a nice description&lt;/a&gt; of

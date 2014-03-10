@@ -69,12 +69,39 @@ dmjStartupFcns = [];
         <div class="row">
             
         <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/2013-01-02-updating-emacs-packages.html" class="u-url">Updating Emacs packages</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2013-01-02T00:00:00-05:00">2013-01-02 00:00</time>
+        </small></h1>
+        <hr>
+        <div class="p-summary">
+        <div><p>I use ELPA, Marmalade, and MELPA to manage Emacs extensions.</p>
+<p>This block of elisp in my config file adds all of the package
+repositories I use.</p>
+<pre class="code scm literal-block">
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">package-archives</span>
+      <span class="o">'</span><span class="p">((</span><span class="s">"gnu"</span> <span class="o">.</span> <span class="s">"http://elpa.gnu.org/packages/"</span><span class="p">)</span>
+        <span class="p">(</span><span class="s">"marmalade"</span> <span class="o">.</span> <span class="s">"http://marmalade-repo.org/packages/"</span><span class="p">)</span>
+        <span class="p">(</span><span class="s">"melpa"</span> <span class="o">.</span> <span class="s">"http://melpa.milkbox.net/packages/"</span><span class="p">)))</span>
+</pre>
+<p>Occasionally, I must run <tt class="docutils literal"><span class="pre">M-x</span> <span class="pre">package-list-packages</span></tt> to update then
+pacakge listing.  This creates a <tt class="docutils literal">*Packages*</tt> buffer that shows the
+available and installed packages.  In this buffer, type <tt class="docutils literal">U</tt> to mark
+the upgradeable packages.  (note, plan to restart emacs after this
+process...)  Emacs will ask for confirmation on the installation of
+the new packages, then confirmation on the deletion of the old
+packages.</p></div>
+        </div>
+            
+
+        </article>
+        <article class="postbox h-entry post-text">
         <h1 class="p-name"><a href="posts/2013/2013-01-02-blog-process-with-org.html" class="u-url">My blog process with org</a>
         <small>  
              Posted: <time class="published dt-published" datetime="2013-01-02T00:00:00-05:00">2013-01-02 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>I keep forgetting the steps I need to do for the blogging from this
 org file, so I am logging the steps here.</p>
 <p>The directory organization looks like this:</p>
@@ -155,7 +182,7 @@ constantly updating the stamp.</li>
              Posted: <time class="published dt-published" datetime="2012-04-26T00:00:00-04:00">2012-04-26 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p><a class="reference external" href="blog/2012/04/24/quicksort-in-d/">In this post</a> , we saw a simple
 textbook quicksort.  Here, we add two improvements.  First, we use
 insertion sort for sorting small subfiles instead of making as many
@@ -581,7 +608,7 @@ void runTimings() {
              Posted: <time class="published dt-published" datetime="2012-04-24T00:00:00-04:00">2012-04-24 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>I have finally gotten around to learning about the <a class="reference external" href="http://dlang.org/">D Programming
 Language</a> . Here is a toy quicksort, with some
 uninformed comments about D.</p>
@@ -895,7 +922,7 @@ without affecting its value.</p>
              Posted: <time class="published dt-published" datetime="2012-03-12T00:00:00-04:00">2012-03-12 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p><a class="reference external" href="http://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> is a directed
 search algorithm.  Given a good heuristic function, it can perform
 much better than a blind breadth-first search.</p>
@@ -1292,7 +1319,7 @@ distance distance: 24 steps: 862
              Posted: <time class="published dt-published" datetime="2012-01-25T00:00:00-05:00">2012-01-25 00:00</time>
         </small></h1>
         <hr>
-        <div class="e-content">
+        <div class="p-summary">
         <div><p>To learn some <a class="reference external" href="http://racket-lang.org/">Racket</a> I ported this <a class="reference external" href="http:/blog/2012/01/07/sieve-of-eratosthenes/">this
 Ocaml code</a> to Scheme.</p>
 <p>Racket has lots of nice features that I want to learn about.  The
