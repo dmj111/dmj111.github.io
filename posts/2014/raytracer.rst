@@ -4,8 +4,7 @@
 
 The last couple of days I have been working on a raytracer in
 JavaScript. Years ago I wrote one in C to learn out to do OO in C, and
-now I am doing it in JavaScript to see how hard I can push plain
-JavaScript.
+now I am doing it in JavaScript to see what is possible.
 
 .. TEASER_END
 
@@ -21,7 +20,7 @@ reflections off of it.
 
 .. image:: /galleries/raytrace/raytrace_3.png
 
-I spend a lot of time forgetting vectors and planes, so it was a good
+I spent a lot of time forgetting vectors and planes, so it was a good
 re-learning experience. The code isn't in shape to post yet, and it is
 still too slow yet.
 
