@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dave Jones">
+    <title>Monte Carlo Simulations of Bitcoin Options | a mingled cup</title>
+    
+            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+      <link rel="canonical" href="http://dave.dkjones.org/demos/bitcoin/">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+    
+
+
+
+    
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid"><!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
+        </div><!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="../../archive.html">Archives</a>
+                </li><li><a href="../../categories/index.html">Tags</a>
+                </li><li><a href="../../rss.xml">RSS</a>
+
+            </li></ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+    <li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+    <h1>Monte Carlo Simulations of Bitcoin Options</h1>
+    <div><p>Based on this <a class="reference external" href="http://rawrjustin.github.io/blog/2014/03/18/julia-vs-python-monte-carlo-simulations-of-bitcoin-options/">Python / Julia comparison</a>, I wanted to see how the
+same code would work on Javascript.</p>
+<p>This is just an attempt to show how Javascript handles the numeric
+computations.  On Chrome, it does pretty well.</p>
+<p>On a MacBook Air, I am seeing times of about 1.1 second for the
+100,000 iteration case from the original blog post (in Chrome).</p>
+<p>Click run to run the simulation.  The simulation will do 10 repeats,
+each with 100,000 iterations.  Every repeat will return its time, and
+the <cite>C0</cite> value.  At the end, it reports the mean of the <cite>C0</cite>'s.</p>
+<button id="runButton" type="button" class="btn btn-default">Run</button><style>
+.graph {
+  background-color: #e8e8e8;
+  font: 10px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  display: none;
+}
+.point {
+  fill: none;
+  stroke: #112;
+}
+.line {
+  fill: none;
+  stroke: #112;
+}
+</style><div id="output"></div><script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="bitcoin.js"></script>
+<script src="bitcoin.d3.js"></script><!-- Delete these comments after running -->
+<!-- Can add your own meta data too. -->
+<!-- use TEASER _ END to mark the end of the teaser section -->
+<!-- add a draft tag to drafts. --></div>
+
+        </div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+        </footer>
+    </div>
+</div>
+
+
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+    
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
