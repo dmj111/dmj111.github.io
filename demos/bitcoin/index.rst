@@ -14,7 +14,7 @@ On a MacBook Air, I am seeing times of about 1.1 second for the
 
 Click run to run the simulation.  The simulation will do 10 repeats,
 each with 100,000 iterations.  Every repeat will return its time, and
-the `C0` value.  At the end, it reports the mean of the `C0`'s.
+the ``C0`` value.  At the end, it reports the mean of the ``C0``'s.
 
 .. raw:: html
 
