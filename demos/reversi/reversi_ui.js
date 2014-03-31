@@ -1,7 +1,40 @@
-/* globals reversi, bayesCounts */
+/* globals reversi, reversiLearnerCounts, document */
 
 var reversiUI = (function() {
     var my = {};
+
+    var learner = new reversi.bayesScore.BayesScore(
+        reversiLearnerCounts);
+
+    function scoreFunction(board) {
+        return learner.score(board);
+    }
+
+    function buildPlayer(midDepth) {
+        return new reversi.PhasePlayer([
+            [8, new reversi.SemiRandom(
+                new reversi.AlphaBeta6({
+                    maxDepth: 3,
+                    maxTime: 10000,
+                    scoreFunction: scoreFunction,
+                    verbose:true
+                })
+            )],
+            [51, new reversi.AlphaBeta6({
+                maxDepth: midDepth,
+                maxTime: 10000,
+                scoreFunction: scoreFunction,
+                verbose: true
+            })],
+            [61, new reversi.AlphaBeta6({
+                maxDepth: 8,
+                maxTime: 10000,
+                scoreFunction: scoreFunction,
+                verbose: true
+            })]
+        ]);
+    }
+
     function UI() {
         this.status = document.getElementById('status');
         this.canvas = document.getElementById('board');
@@ -10,7 +43,7 @@ var reversiUI = (function() {
         this.board = reversi.getInitialBoard();
         this.display = new reversi.Display(this.canvas, this.board);
         this.player1 = new reversi.UIPlayer(reversi.BLACK, this.display);
-        this.player2 = new reversi.bayesLearner.BayesPlayer(bayesCounts, 2);
+        this.player2 = buildPlayer(4);
 
         var node, choices,  i,
             that = this;
@@ -92,6 +125,7 @@ var reversiUI = (function() {
                     i, x, newP,
                     pVal;
 
+
                 if(playerNumber === 1) {
                     pVal = reversi.BLACK;
                 } else {
@@ -105,7 +139,7 @@ var reversiUI = (function() {
                             /(?:^|\s)selected(?!\S)/g , '');
 
                 }
-
+                player = player.trim();
                 node.className += ' selected';
 
                 if(player === 'Human') {
@@ -123,8 +157,7 @@ var reversiUI = (function() {
                     } else {
                         alert('bug');
                     }
-                    newP = new reversi.bayesLearner.BayesPlayer(bayesCounts,
-                                                                depth);
+                    newP = buildPlayer(depth);
                 }
                 if(playerNumber === 1) {
                     this.player1 = newP;
@@ -143,11 +176,7 @@ var reversiUI = (function() {
 
     my.UI = UI;
     return my;
-
-
 }());
-
-
 
 window.addEventListener('load', function(e) {
     window.UI = new reversiUI.UI();
