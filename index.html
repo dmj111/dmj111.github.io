@@ -64,6 +64,92 @@
         <div class="row">
             
         <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2014/js-quicksort-update.html" class="u-url">JavaScript QuickSort update</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2014-04-03T22:19:12-04:00">2014-04-03 22:19</time>
+        </small></h1>
+        <hr>
+        <div class="p-summary">
+        <div><p>The code in <a class="reference external" href="posts/2014/js-quicksort.html">this post</a> was a quicksort that defaulted to using the less
+than operator for comparison.  Here are some times of quicksort using
+a comparison function the same way the <tt class="docutils literal">Array.sort</tt> works.</p>
+<p>The times are quite a bit slower, and I need to dig into some of them.
+These are the means of five runs each on one million values.  Some of
+the cases (triangular, random) had a very large variation between
+runs.</p>
+<table border="1" class="docutils">
+<caption>Timing results on 1 million values (in seconds)</caption>
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">data type</th>
+<th class="head">qsort2</th>
+<th class="head">Array.sort</th>
+<th class="head">qsort2cmp</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>random double</td>
+<td>0.14</td>
+<td>0.95</td>
+<td>0.38</td>
+</tr>
+<tr><td>sawtooth <a class="footnote-reference" href="posts/2014/js-quicksort-update.html#id3" id="id1">[1]</a></td>
+<td>0.07</td>
+<td>0.06</td>
+<td>0.08</td>
+</tr>
+<tr><td>triangular <a class="footnote-reference" href="posts/2014/js-quicksort-update.html#id4" id="id2">[2]</a></td>
+<td>0.14</td>
+<td>0.71</td>
+<td>0.42</td>
+</tr>
+<tr><td>ordered</td>
+<td>0.03</td>
+<td>0.46</td>
+<td>0.13</td>
+</tr>
+<tr><td>reversed</td>
+<td>0.03</td>
+<td>0.59</td>
+<td>0.10</td>
+</tr>
+<tr><td>shuffled</td>
+<td>0.13</td>
+<td>0.65</td>
+<td>0.28</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="posts/2014/js-quicksort-update.html#id1">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="posts/2014/js-quicksort-update.html#id2">[2]</a></td><td>The value in the array are 0, 1, …, N/2-1, N/2, N/2-1,
+…, 1,0</td></tr>
+</tbody>
+</table>
+<p>What does this tell us?  Not much yet. I have a lot to learn about the
+performance of JavaScript engines.</p></div>
+        </div>
+            
+        
+    <p>
+        <a href="posts/2014/js-quicksort-update.html#disqus_thread" data-disqus-identifier="cache/posts/2014/js-quicksort-update.html">Comments</a>
+
+
+        </p></article>
+        <article class="postbox h-entry post-text">
         <h1 class="p-name"><a href="posts/2014/raytracer.html" class="u-url">Raytracer</a>
         <small>  
              Posted: <time class="published dt-published" datetime="2014-03-09T22:20:41-04:00">2014-03-09 22:20</time>
@@ -902,43 +988,6 @@ for getting better quotation marks. --></div>
         
     <p>
         <a href="posts/2013/customizing-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/2013/customizing-nikola.html">Comments</a>
-
-
-        </p></article>
-        <article class="postbox h-entry post-text">
-        <h1 class="p-name"><a href="posts/2013/pretty-print-log-python.html" class="u-url">Pretty print logging in Python</a>
-        <small>  
-             Posted: <time class="published dt-published" datetime="2013-05-17T00:00:00-04:00">2013-05-17 00:00</time>
-        </small></h1>
-        <hr>
-        <div class="p-summary">
-        <div><p>From the Python <a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages">logging documentation</a>,
-we can send an arbitrary object into a log message call.</p>
-<pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">pprint</span>
-
-<span class="k">class</span> <span class="nc">PrettyLog</span><span class="p">():</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span>
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
-</pre>
-<p>Then, in the code, we can use it with <tt class="docutils literal">logging</tt>.</p>
-<pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">logging</span>
-
-<span class="c"># ...</span>
-
-<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">PrettyLog</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-</pre>
-<p>The string isn't created until it is needed, so if the logging level
-is not high enough, the only method call is the creation of the
-<tt class="docutils literal">PrettyLog</tt> object.</p></div>
-        </div>
-            
-        
-    <p>
-        <a href="posts/2013/pretty-print-log-python.html#disqus_thread" data-disqus-identifier="cache/posts/2013/pretty-print-log-python.html">Comments</a>
 
 
         </p></article>

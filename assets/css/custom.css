@@ -66,12 +66,11 @@ p {
 
 table, th, td {
   border: none;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
   text-align: center;
 }
 
 th {
+  border-bottom-style: solid;
   border-bottom-width: 2px;
 }
 

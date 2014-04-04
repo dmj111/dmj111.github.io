@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dave Jones">
-    <title>Raytracer | a mingled cup</title>
+    <title>JavaScript QuickSort update | a mingled cup</title>
     
             <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
             <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
-      <link rel="canonical" href="http://dave.dkjones.org/posts/2014/raytracer.html">
+      <link rel="canonical" href="http://dave.dkjones.org/posts/2014/js-quicksort-update.html">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
@@ -55,7 +55,7 @@
                 
                     
     <li>
-    <a href="raytracer.rst" id="sourcelink">Source</a>
+    <a href="js-quicksort-update.rst" id="sourcelink">Source</a>
     </li>
 
             </ul>
@@ -73,11 +73,11 @@
     <article class="postbox post-text">
     <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
     
-    <h1 class="p-name" itemprop="headline name">Raytracer</h1>
+    <h1 class="p-name" itemprop="headline name">JavaScript QuickSort update</h1>
 
     <hr>
     <small>
-        Posted: <time class="published dt-published" datetime="2014-03-09T22:20:41-04:00" itemprop="datePublished">2014-03-09 22:20</time>
+        Posted: <time class="published dt-published" datetime="2014-04-03T22:19:12-04:00" itemprop="datePublished">2014-04-03 22:19</time>
         
 
         
@@ -85,34 +85,83 @@
     </small>
     <hr>
     <div class="e-content" itemprop="articleBody text">
-    <div><p>The last couple of days I have been working on a raytracer in
-JavaScript. Years ago I wrote one in C to learn out to do OO in C, and
-now I am doing it in JavaScript to see what is possible.</p>
-<!-- TEASER_END -->
-<p>The first image is just a test image with several spheres, lights,
-and a plane.  The lights are just spheres, and can see the main light
-pretty clearly in the reflection.</p>
-<img alt="/galleries/raytrace/raytrace_1.png" src="../../galleries/raytrace/raytrace_1.png">
-<p>This image has a lot more going on.  There are nine reflective
-spheres, and the plane behind them is sloped away so we can see the
-reflections off of it.</p>
-<img alt="/galleries/raytrace/raytrace_3.png" src="../../galleries/raytrace/raytrace_3.png">
-<p>I spent a lot of time forgetting vectors and planes, so it was a good
-re-learning experience. The code isn't in shape to post yet, and it is
-still too slow yet.</p>
-<p>The second image takes about a minute on my machine.  In defense of
-the code, each pixel found tracing four rays (to anti-alias the
-edges), so this should get a lot faster when I make it smarter about
-that.</p></div>
+    <div><p>The code in <a class="reference external" href="js-quicksort.html">this post</a> was a quicksort that defaulted to using the less
+than operator for comparison.  Here are some times of quicksort using
+a comparison function the same way the <tt class="docutils literal">Array.sort</tt> works.</p>
+<p>The times are quite a bit slower, and I need to dig into some of them.
+These are the means of five runs each on one million values.  Some of
+the cases (triangular, random) had a very large variation between
+runs.</p>
+<table border="1" class="docutils">
+<caption>Timing results on 1 million values (in seconds)</caption>
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">data type</th>
+<th class="head">qsort2</th>
+<th class="head">Array.sort</th>
+<th class="head">qsort2cmp</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>random double</td>
+<td>0.14</td>
+<td>0.95</td>
+<td>0.38</td>
+</tr>
+<tr><td>sawtooth <a class="footnote-reference" href="js-quicksort-update.html#id3" id="id1">[1]</a></td>
+<td>0.07</td>
+<td>0.06</td>
+<td>0.08</td>
+</tr>
+<tr><td>triangular <a class="footnote-reference" href="js-quicksort-update.html#id4" id="id2">[2]</a></td>
+<td>0.14</td>
+<td>0.71</td>
+<td>0.42</td>
+</tr>
+<tr><td>ordered</td>
+<td>0.03</td>
+<td>0.46</td>
+<td>0.13</td>
+</tr>
+<tr><td>reversed</td>
+<td>0.03</td>
+<td>0.59</td>
+<td>0.10</td>
+</tr>
+<tr><td>shuffled</td>
+<td>0.13</td>
+<td>0.65</td>
+<td>0.28</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="js-quicksort-update.html#id1">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label"><col></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="js-quicksort-update.html#id2">[2]</a></td><td>The value in the array are 0, 1, …, N/2-1, N/2, N/2-1,
+…, 1,0</td></tr>
+</tbody>
+</table>
+<p>What does this tell us?  Not much yet. I have a lot to learn about the
+performance of JavaScript engines.</p></div>
     </div>
     </div>
     
         <ul class="pager">
             <li class="previous">
-                <a href="quick-select.html" rel="prev">← Previous post</a>
-            </li>
-            <li class="next">
-                <a href="js-quicksort-update.html" rel="next">Next post →</a>
+                <a href="raytracer.html" rel="prev">← Previous post</a>
             </li>
         </ul>
 
@@ -121,9 +170,9 @@ that.</p></div>
         <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="a-mingled-cup",
-            disqus_url="http://dave.dkjones.org/posts/2014/raytracer.html",
-        disqus_title="Raytracer",
-        disqus_identifier="cache/posts/2014/raytracer.html",
+            disqus_url="http://dave.dkjones.org/posts/2014/js-quicksort-update.html",
+        disqus_title="JavaScript QuickSort update",
+        disqus_identifier="cache/posts/2014/js-quicksort-update.html",
         disqus_config = function () {
             this.language = "en";
         };

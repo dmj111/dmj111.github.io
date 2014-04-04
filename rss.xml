@@ -1,5 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>ramblings</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 29 Mar 2014 15:53:38 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Raytracer</title><link>http://dave.dkjones.org/posts/2014/raytracer.html</link><description>&lt;div&gt;&lt;p&gt;The last couple of days I have been working on a raytracer in
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>a mingled cup</title><link>http://dave.dkjones.org/</link><description>ramblings</description><atom:link href="http://dave.dkjones.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 03 Apr 2014 22:52:06 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>JavaScript QuickSort update</title><link>http://dave.dkjones.org/posts/2014/js-quicksort-update.html</link><description>&lt;div&gt;&lt;p&gt;The code in &lt;a class="reference external" href="http://dave.dkjones.org/posts/2014/js-quicksort.html"&gt;this post&lt;/a&gt; was a quicksort that defaulted to using the less
+than operator for comparison.  Here are some times of quicksort using
+a comparison function the same way the &lt;tt class="docutils literal"&gt;Array.sort&lt;/tt&gt; works.&lt;/p&gt;
+&lt;p&gt;The times are quite a bit slower, and I need to dig into some of them.
+These are the means of five runs each on one million values.  Some of
+the cases (triangular, random) had a very large variation between
+runs.&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;caption&gt;Timing results on 1 million values (in seconds)&lt;/caption&gt;
+&lt;colgroup&gt;
+&lt;col width="25%"&gt;
+&lt;col width="25%"&gt;
+&lt;col width="25%"&gt;
+&lt;col width="25%"&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;data type&lt;/th&gt;
+&lt;th class="head"&gt;qsort2&lt;/th&gt;
+&lt;th class="head"&gt;Array.sort&lt;/th&gt;
+&lt;th class="head"&gt;qsort2cmp&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;random double&lt;/td&gt;
+&lt;td&gt;0.14&lt;/td&gt;
+&lt;td&gt;0.95&lt;/td&gt;
+&lt;td&gt;0.38&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;sawtooth &lt;a class="footnote-reference" href="http://dave.dkjones.org/posts/2014/js-quicksort-update.html#id3" id="id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;0.07&lt;/td&gt;
+&lt;td&gt;0.06&lt;/td&gt;
+&lt;td&gt;0.08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;triangular &lt;a class="footnote-reference" href="http://dave.dkjones.org/posts/2014/js-quicksort-update.html#id4" id="id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;0.14&lt;/td&gt;
+&lt;td&gt;0.71&lt;/td&gt;
+&lt;td&gt;0.42&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;ordered&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;td&gt;0.46&lt;/td&gt;
+&lt;td&gt;0.13&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reversed&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;td&gt;0.59&lt;/td&gt;
+&lt;td&gt;0.10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;shuffled&lt;/td&gt;
+&lt;td&gt;0.13&lt;/td&gt;
+&lt;td&gt;0.65&lt;/td&gt;
+&lt;td&gt;0.28&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id3" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="http://dave.dkjones.org/posts/2014/js-quicksort-update.html#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id4" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="http://dave.dkjones.org/posts/2014/js-quicksort-update.html#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;The value in the array are 0, 1, …, N/2-1, N/2, N/2-1,
+…, 1,0&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;What does this tell us?  Not much yet. I have a lot to learn about the
+performance of JavaScript engines.&lt;/p&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2014/js-quicksort-update.html</guid><pubDate>Fri, 04 Apr 2014 02:19:12 GMT</pubDate></item><item><title>Raytracer</title><link>http://dave.dkjones.org/posts/2014/raytracer.html</link><description>&lt;div&gt;&lt;p&gt;The last couple of days I have been working on a raytracer in
 JavaScript. Years ago I wrote one in C to learn out to do OO in C, and
 now I am doing it in JavaScript to see what is possible.&lt;/p&gt;
 &lt;p class="more"&gt;&lt;a href="http://dave.dkjones.org/posts/2014/raytracer.html"&gt;Read more…&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2014/raytracer.html</guid><pubDate>Mon, 10 Mar 2014 02:20:41 GMT</pubDate></item><item><title>Quick select</title><link>http://dave.dkjones.org/posts/2014/quick-select.html</link><description>&lt;div&gt;&lt;p&gt;Why would a programmer want to write &lt;a class="reference external" href="http://dave.dkjones.org/posts/2014/js-quicksort.html"&gt;their own sort function&lt;/a&gt;?&lt;/p&gt;
@@ -697,25 +767,4 @@ above is testing if the string exists, not if it is equal to &lt;tt class="docut
 &lt;p&gt;The main reason I was interested in this was to customize on a
 post-by-post basis.&lt;/p&gt;
 &lt;!-- http://www.emacswiki.org/emacs-en/TypographicalPunctuationMarks
-for getting better quotation marks. --&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2013/customizing-nikola.html</guid><pubDate>Fri, 09 Aug 2013 01:51:25 GMT</pubDate></item><item><title>Pretty print logging in Python</title><link>http://dave.dkjones.org/posts/2013/pretty-print-log-python.html</link><description>&lt;div&gt;&lt;p&gt;From the Python &lt;a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages"&gt;logging documentation&lt;/a&gt;,
-we can send an arbitrary object into a log message call.&lt;/p&gt;
-&lt;pre class="code python literal-block"&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pprint&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PrettyLog&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__repr__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pformat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Then, in the code, we can use it with &lt;tt class="docutils literal"&gt;logging&lt;/tt&gt;.&lt;/p&gt;
-&lt;pre class="code python literal-block"&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging&lt;/span&gt;
-
-&lt;span class="c"&gt;# ...&lt;/span&gt;
-
-&lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PrettyLog&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;The string isn't created until it is needed, so if the logging level
-is not high enough, the only method call is the creation of the
-&lt;tt class="docutils literal"&gt;PrettyLog&lt;/tt&gt; object.&lt;/p&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2013/pretty-print-log-python.html</guid><pubDate>Fri, 17 May 2013 04:00:00 GMT</pubDate></item></channel></rss>
+for getting better quotation marks. --&gt;&lt;/div&gt;</description><guid>http://dave.dkjones.org/posts/2013/customizing-nikola.html</guid><pubDate>Fri, 09 Aug 2013 01:51:25 GMT</pubDate></item></channel></rss>
