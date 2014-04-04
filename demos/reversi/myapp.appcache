@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Manifest 2014-03-30: v2
+# Manifest 2014-04-03: v1
 
 CACHE:
 index.html
@@ -7,6 +7,7 @@ reversi.js
 reversi_ui.js
 reversi.css
 
+http://dl.dropboxusercontent.com/u/6197450/learner.js
 http://dl.dropboxusercontent.com/u/6197450/bayes_sgd.js
 
 /assets/css/bootstrap.min.css
