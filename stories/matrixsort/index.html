@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dave Jones">
+    <title>Matrix sort demonstration | a mingled cup</title>
+    
+            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+      <link rel="canonical" href="http://dave.dkjones.org/stories/matrixsort/">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+    
+
+
+
+    
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid"><!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
+        </div><!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="../../archive.html">Archives</a>
+                </li><li><a href="../../categories/index.html">Tags</a>
+                </li><li><a href="../../rss.xml">RSS</a>
+
+            </li></ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+    <li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+    <h1>Matrix sort demonstration</h1>
+    <script src="matrixsort.js"></script>
+<style>
+    td.inputLabel {
+    text-align:right;
+ }
+</style><p>Demonstration of quicksort modified for vector or string comparisons,
+as mentioned in Sedgewick's Algorithms in C++.  All bugs and mistakes
+are my own...</p>
+<p>This code solves the problem of removing all duplicate rows from a
+square matrix by first sorting the rows, then using the sorted result
+to find the first instance of each unique row in the matrix.</p>
+<p>The goal was to improve the best case of the algorithm.  For this
+algorithm, the "run all random" is the best case, because given enough
+columns and unique values, the sort won't have to even look at many of
+the values in the matrix.  The worst case is the "run equal until last
+column", because every value in the matrix is examined, and the last
+column will take some time to sort.</p>
+<p>Here is the <a class="reference external" href="matrixsort.js">code</a>.</p>
+<table>
+    <tr>
+        <td class="inputLabel">rows</td>
+        <td><input id="rows" size="32" value="20"></td>
+    </tr>
+    <tr>
+        <td class="inputLabel">columns</td>
+        <td><input id="columns" size="32" value="4"></td>
+    </tr>
+    <tr>
+        <td class="inputLabel"> num unique (for non-constant cases)</td>
+        <td><input id="numUnique" size="32" value="2"></td>
+    </tr>
+
+</table>
+<button id="runEqual">run all equal</button>
+<button id="runRandom">run all random</button>
+<button id="runLastColumn">run equal until last column</button>
+<h3 id="summary"></h3>
+<pre id="output"></pre><!-- Delete these comments after running -->
+<!-- Can add your own meta data too. -->
+<!-- use TEASER _ END to mark the end of the teaser section -->
+<!-- add a draft tag to drafts. -->
+
+        </div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+        </footer>
+    </div>
+</div>
+
+
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+    
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
