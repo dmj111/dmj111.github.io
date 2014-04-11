@@ -1,14 +1,13 @@
 CACHE MANIFEST
-# Manifest 2014-04-03: v2
+# Manifest 2014-04-10-v2
 
 CACHE:
 index.html
-reversi.js
-reversi_ui.js
+require.js
+main-built.js
 reversi.css
 
 http://dl.dropboxusercontent.com/u/6197450/learner.js
-http://dl.dropboxusercontent.com/u/6197450/bayes_sgd.js
 
 /assets/charter/webfonts/charter_bold_italic-webfont.woff
 /assets/charter/webfonts/charter_regular-webfont.woff

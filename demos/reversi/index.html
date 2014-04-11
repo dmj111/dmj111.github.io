@@ -20,17 +20,15 @@
         <![endif]-->
 
         <title>reversi</title>
-        <script type="text/javascript"
-                src="http://dl.dropboxusercontent.com/u/6197450/learner.js">
-        </script>
-        <script type="text/javascript" src="reversi.js"></script>
-        <script type="text/javascript" src="reversi_ui.js"></script>
     </head>
 
     <body>
         <div class="container">
             <h1>reversi</h1>
-            <div id='status'>Waiting to play </div>
+            <h2 class='status' id='loadStatus'>
+                Waiting for files to load</h2>
+            <div id='status'></div>
+
             <div id='boarddiv'> <canvas id='board'></canvas> </div>
             <div id='p1' class='pchoice'>
                 Player 1
@@ -110,9 +108,9 @@
      // http://www.html5rocks.com/en/tutorials/appcache/beginner/
      // Check if a new cache is available on page load.
      window.addEventListener('load', function(e) {
-
          window.applicationCache.addEventListener('updateready', function(e) {
-             if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+             if (window.applicationCache.status ===
+                        window.applicationCache.UPDATEREADY) {
                  // Browser downloaded a new app cache.
                  if (confirm('A new version of this site is available. Load it?')) {
                      window.location.reload();
@@ -121,8 +119,8 @@
                  // Manifest didn't changed. Nothing new to server.
              }
          }, false);
-
      }, false);
     </script>
+    <script data-main='main-built' src='require.js'></script>
     </body>
 </html>
