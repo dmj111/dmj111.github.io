@@ -85,10 +85,10 @@
     </small>
     <hr>
     <div class="e-content" itemprop="articleBody text">
-    <div><p>The code in <a class="reference external" href="js-quicksort.html">this post</a> was a quicksort that defaulted to using the less
-than operator for comparison.  Here are some times of quicksort using
-a comparison function the same way the <tt class="docutils literal">Array.sort</tt> works.</p>
-<p>The times are quite a bit slower, and I need to dig into some of them.
+    <div><p>The code in <a class="reference external" href="js-quicksort.html">this post</a> was a quicksort that used the less than
+operator for comparison.  Here are some times of quicksort using a
+comparison function the same way the <tt class="docutils literal">Array.sort</tt> works.</p>
+<p>The times are quite a bit slower, and I need to dig into it further.
 These are the means of five runs each on one million values.  Some of
 the cases (triangular, random) had a very large variation between
 runs.</p>
@@ -163,28 +163,12 @@ performance of JavaScript engines.</p></div>
             <li class="previous">
                 <a href="raytracer.html" rel="prev">← Previous post</a>
             </li>
+            <li class="next">
+                <a href="coffee-notes.html" rel="next">Next post →</a>
+            </li>
         </ul>
 
         
-        
-        <div id="disqus_thread"></div>
-        <script>
-        var disqus_shortname ="a-mingled-cup",
-            disqus_url="http://dave.dkjones.org/posts/2014/js-quicksort-update.html",
-        disqus_title="JavaScript QuickSort update",
-        disqus_identifier="cache/posts/2014/js-quicksort-update.html",
-        disqus_config = function () {
-            this.language = "en";
-        };
-        (function() {
-            var dsq = document.createElement('script'); dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
-
 
     
 
@@ -194,7 +178,10 @@ performance of JavaScript engines.</p></div>
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+            Contents © 2014
+<a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by
+<a href="http://getnikola.com" rel="nofollow">Nikola</a>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
         </footer>
     </div>
 </div>

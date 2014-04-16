@@ -7,13 +7,13 @@
    :trim:
 .. |...| unicode:: U+2026  .. ellipsis
 
-The code in `this post`_ was a quicksort that defaulted to using the less
-than operator for comparison.  Here are some times of quicksort using
-a comparison function the same way the ``Array.sort`` works.
+The code in `this post`_ was a quicksort that used the less than
+operator for comparison.  Here are some times of quicksort using a
+comparison function the same way the ``Array.sort`` works.
 
 .. _`this post`: js-quicksort.html
 
-The times are quite a bit slower, and I need to dig into some of them.
+The times are quite a bit slower, and I need to dig into it further.
 These are the means of five runs each on one million values.  Some of
 the cases (triangular, random) had a very large variation between
 runs.
