@@ -124,3 +124,7 @@ small
 }
 
 .navbar-fixed-top { position: absolute; }
+
+body {
+  margin-bottom: 20px;
+}

@@ -48,6 +48,22 @@ var demo = {};
         return matrix;
     };
 
+    // Create a matrix that is all ones, except the last column which
+    // is randomly selected from 0 to `numUnique`.
+    demo.equalExceptFirstColumn = function (rows, columns, numUnique) {
+        var matrix = [],
+            r, c;
+        for(r = 0; r < rows; r += 1) {
+            matrix.push([]);
+            for(c = 0; c < columns; c += 1) {
+                matrix[r][c] = 1;
+            }
+            matrix[r][0] = Math.floor(Math.random() * numUnique);
+        }
+        return matrix;
+    };
+
+
     demo.timer = function(fcn) {
         var start = new Date(),
             r = fcn(),
@@ -400,7 +416,13 @@ var demo = {};
 
         var runLastColumn = document.getElementById('runLastColumn');
         runLastColumn.addEventListener('click', function () {
-            run(demo.equalUpToLastColumn, 'equal until the last column');
+            run(demo.equalUpToLastColumn, 'equal except the last column');
         });
+
+        var runFirstColumn = document.getElementById('runFirstColumn');
+        runFirstColumn.addEventListener('click', function () {
+            run(demo.equalExceptFirstColumn, 'equal except the first column');
+        });
+
     });
 }(demo));

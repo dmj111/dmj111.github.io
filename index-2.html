@@ -64,6 +64,99 @@
         <div class="row">
             
         <article class="postbox h-entry post-text">
+        <h1 class="p-name"><a href="posts/2013/c-quicksort.html" class="u-url">C quicksort</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2013-10-17T22:00:00-04:00">2013-10-17 22:00</time>
+        </small></h1>
+        <hr>
+        <div class="p-summary">
+        <div><p>I have written quicksort in the <a class="reference external" href="posts/2012/2012-04-24-quicksort-in-d.html">past</a> mostly to learn how it works and
+to play with optimization.  (Because most of the time... I just want
+to call the system sort.)</p>
+<p>Sometimes, knowing how this works helps with other problems, like
+sorting vectors, where we can do better than a full comparison on each
+step.</p>
+<p>All of the other sorts I have written have been in a language that has
+at least some generic support.  This time, though, it is in C, using
+<cite>void *</cite>'s.</p>
+<p>And it wasn't that bad. This code is not fit for a system library, or
+anything like that, but it was fun(?) to write and test.</p>
+<p>The code stops quicksorting when the subfile gets shorter than 10
+lines, and it uses a median-of-three pivot selection.</p>
+<p>In the testing I did, an iterative version of this algorithm showed
+no improvement.</p>
+<pre class="code c literal-block">
+<span class="kt">void</span> <span class="nf">q4</span><span class="p">(</span><span class="kt">void</span>   <span class="o">*</span><span class="n">array</span><span class="p">,</span>
+        <span class="kt">size_t</span>  <span class="n">length</span><span class="p">,</span>
+        <span class="kt">size_t</span>  <span class="n">size</span><span class="p">,</span>
+        <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="n">size</span><span class="p">;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">array</span> <span class="o">+</span> <span class="n">size</span><span class="o">*</span><span class="n">length</span><span class="p">;</span> <span class="n">a</span> <span class="o">+=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+          <span class="n">b</span> <span class="o">&gt;</span> <span class="n">array</span> <span class="o">&amp;&amp;</span> <span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="o">-</span><span class="n">size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
+          <span class="n">b</span> <span class="o">-=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="o">-</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">middle</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">outer</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">pivot</span> <span class="o">=</span> <span class="n">array</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">middle</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">median_of_three</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">outer</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">compare</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">array</span> <span class="o">-</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pivot</span><span class="p">;</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">a</span> <span class="o">+=</span> <span class="n">size</span><span class="p">;</span>
+      <span class="k">for</span><span class="p">(;</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">a</span> <span class="o">+=</span> <span class="n">size</span><span class="p">){}</span>
+      <span class="n">b</span> <span class="o">-=</span> <span class="n">size</span><span class="p">;</span>
+      <span class="k">for</span><span class="p">(;</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">compare</span><span class="p">(</span><span class="n">pivot</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">b</span> <span class="o">-=</span> <span class="n">size</span><span class="p">){}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">q4</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">compare</span><span class="p">);</span>
+    <span class="n">q4</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">size</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">compare</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+<p>The median of three code leaves the smallest value at <cite>a</cite>, the middle
+at <cite>b</cite>, and the largest at <cite>c</cite>.</p>
+<pre class="code c literal-block">
+<span class="kt">void</span> <span class="nf">median_of_three</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+                     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span> <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+<p>And the swap is not efficiency minded...</p>
+<pre class="code c literal-block">
+<span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">t</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="o">*</span><span class="n">b</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+    <span class="o">++</span><span class="n">a</span><span class="p">,</span> <span class="o">++</span><span class="n">b</span><span class="p">,</span> <span class="o">--</span><span class="n">size</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+<p>In most cases, the system <cite>qsort</cite> on my machine crushes this code.</p></div>
+        </div>
+            
+
+        </article>
+        <article class="postbox h-entry post-text">
         <h1 class="p-name"><a href="posts/2013/customizing-nikola.html" class="u-url">Customizing Nikola</a>
         <small>  
              Posted: <time class="published dt-published" datetime="2013-08-08T21:51:25-04:00">2013-08-08 21:51</time>

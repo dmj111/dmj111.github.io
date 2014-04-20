@@ -52,7 +52,9 @@ Here is the code_.
     </table>
     <button id='runEqual'>run all equal</button>
     <button id='runRandom'>run all random</button>
-    <button id='runLastColumn'>run equal until last column</button>
+    <button id='runFirstColumn'>run equal except first column</button>
+    <button id='runLastColumn'>run equal except last column</button>
+
     <h2 id='summary'></h2>
     <pre id='output'></pre>
 

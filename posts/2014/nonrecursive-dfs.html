@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dave Jones">
+    <title>Non-recursive DFS | a mingled cup</title>
+    
+            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+      <link rel="canonical" href="http://dave.dkjones.org/posts/2014/nonrecursive-dfs.html">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+    
+
+
+
+
+
+    
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid"><!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
+        </div><!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="../../archive.html">Archives</a>
+                </li><li><a href="../../categories/index.html">Tags</a>
+                </li><li><a href="../../rss.xml">RSS</a>
+
+            </li></ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+    <li>
+    <a href="nonrecursive-dfs.rst" id="sourcelink">Source</a>
+    </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+    <article class="postbox post-text">
+    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
+    
+    <h1 class="p-name" itemprop="headline name">Non-recursive DFS</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published dt-published" datetime="2014-04-20T09:34:41-04:00" itemprop="datePublished">2014-04-20 09:34</time>
+        
+
+        
+
+    </small>
+    <hr>
+    <div class="e-content" itemprop="articleBody text">
+    <div><p>Depth-first search (<a class="reference external" href="http://en.wikipedia.org/wiki/Depth-first_search">DFS</a>) is a powerful algorithm.  The recursive DFS
+algorithm is probably the easiest to understand, and most of the time
+it is good enough.</p>
+<p>In some problems, the recursion stack gets very large.  This can
+easily blow the stack limit in Python. Fortunately, there is a simple
+way to make the algorithm iterative.</p>
+<p>Recursive DFS implementations sometimes ignore the pre or post
+numbering of the vertexes, because they aren't needed – the work is
+done in the recursive call.  Those numbers are key to the iterative
+algorithm.</p>
+<p>The main idea of the recursive algorithm is to visit every vertex, and
+at each visit:</p>
+<ul class="simple">
+<li>Set the pre-order number.</li>
+<li>Visit all unvisited children.</li>
+<li>Set the post-order number.</li>
+</ul>
+<p>In a recursive algorithm, we can also do some work before visiting the
+child vertexes, while visiting them, or after.</p>
+<p>The pre-order and post-order numbers are the key to making DFS
+iterative.  We will use an explicit stack for this algorithm.</p>
+<p>First, we add the starting vertex to the stack.  Then, while the stack
+is non-empty, we pop the last vertex off of the stack and do the
+following:</p>
+<ol class="arabic simple">
+<li>If the vertex has a post-order number, skip it.</li>
+<li>Otherwise, if the vertex has a pre-order number, we are in the
+post-child step.</li>
+</ol>
+<blockquote>
+<ol class="loweralpha simple">
+<li>Set the post-order number and do any post processing.</li>
+</ol>
+</blockquote>
+<ol class="arabic simple" start="3">
+<li>Otherwise, we are now visiting the vertex for the first time.</li>
+</ol>
+<blockquote>
+<ol class="loweralpha simple">
+<li>Set the pre-order number.</li>
+<li>Add the vertex back to the stack.</li>
+<li>Add all of its unvisited children to the stack.</li>
+</ol>
+</blockquote>
+<p>Let's informally check if this makes sense.</p>
+<ul class="simple">
+<li>A vertex is added to the stack only if it has not been visited
+(pre-order is not set), or while it is being visited, before its
+children are added to the stack.  (3a and 3b)</li>
+<li>A vertex only hits step 3 once.  After step 3, it has a pre-order
+number, so the next time the vertex is processed, it will go to
+step 2.</li>
+<li>The vertex only makes it to step 2 after its children have been
+processed.</li>
+<li>So, step 2 is the post-order step.</li>
+</ul>
+<p>Finally, here is some code</p>
+<pre class="code python literal-block">
+<span class="ln"> 1 </span><span class="k">class</span> <span class="nc">DFS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="ln"> 2 </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">adj</span><span class="p">):</span>
+<span class="ln"> 3 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">adj</span> <span class="o">=</span> <span class="n">adj</span>
+<span class="ln"> 4 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>
+<span class="ln"> 5 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
+<span class="ln"> 6 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
+<span class="ln"> 7 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="ln"> 8 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="ln"> 9 </span>
+<span class="ln">10 </span>    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="ln">11 </span>        <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="ln">12 </span>        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+<span class="ln">13 </span>            <span class="n">u</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="ln">14 </span>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<span class="ln">15 </span>                <span class="k">continue</span>
+<span class="ln">16 </span>            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<span class="ln">17 </span>                <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span>
+<span class="ln">18 </span>                <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ln">19 </span>            <span class="k">else</span><span class="p">:</span>
+<span class="ln">20 </span>                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="ln">21 </span>                <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span>
+<span class="ln">22 </span>                <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ln">23 </span>                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+<span class="ln">24 </span>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<span class="ln">25 </span>                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre>
+<p>This code only handles starting a search tree from a specific vertex.
+To search the entire graph, the <tt class="docutils literal">dfs</tt> method needs to be called for
+every vertex.  That order is up to the caller. Pre-order or post-order
+steps can be added to this code, or it could be generalized to provide
+hooks for sub-classes to use.</p></div>
+    </div>
+    </div>
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="coffee-notes.html" rel="prev">← Previous post</a>
+            </li>
+        </ul>
+
+        
+
+    
+
+    </article>
+
+        </div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2014
+<a href="mailto:dave@dkjones.org">Dave Jones</a> - Powered by
+<a href="http://getnikola.com" rel="nofollow">Nikola</a>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+        </footer>
+    </div>
+</div>
+
+
+            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+    
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
