@@ -2,11 +2,11 @@
 .. date: 2014/03/29 15:40:34
 
 Based on this `Python / Julia comparison`__, I wanted to see how the
-same code would work on Javascript.
+same code would work on JavaScript.
 
 .. __: http://rawrjustin.github.io/blog/2014/03/18/julia-vs-python-monte-carlo-simulations-of-bitcoin-options/
 
-This is just an attempt to show how Javascript handles the numeric
+This is just an attempt to show how JavaScript handles the numeric
 computations.  On Chrome, it does pretty well.
 
 On a MacBook Air, I am seeing times of about 1.1 second for the

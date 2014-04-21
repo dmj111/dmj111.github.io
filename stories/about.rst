@@ -54,7 +54,7 @@ my time there pretending to be a signal processing engineer.  My
 current employer is Minitab, and all of the views expressed here are
 my own.
 
-My hobbies include home roasting coffee, and swimming, biking, and
+My non-tech hobbies include roasting coffee, and swimming, biking, and
 running.  Slowly.
 
 Contact
