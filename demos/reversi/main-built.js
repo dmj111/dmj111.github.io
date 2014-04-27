@@ -474,15 +474,12 @@ define('app/game',['./board'], function(my) {
                                 w += 1;
                             }
                         }
-                        this.status.innerText = 'Black: ' + b + '  White: ' +
+                        this.status.innerHTML = 'Black: ' + b + '  White: ' +
                             w;
                     }
 
                     r = newBoard.isOver();
                     if(r.over) {
-                        console.log('game over');
-                        this.status.innerHTML = 'GAME OVER score for black: ' +
-                            newBoard.countDifference(BLACK);
                         if(this.gameOverCb) { this.gameOverCb(newBoard); }
                     } else {
                         this.player = newBoard.nextToPlay(this.player);
@@ -2346,7 +2343,7 @@ define('reversiUi',['app/reversi', 'learner'], function(reversi) {
             } else {
                 s = 'Tie game, ' + b + '-' + w;
             }
-            this.status.innerText = s;
+            this.status.innerHTML = s;
         },
 
         startGame: function() {
@@ -2358,7 +2355,7 @@ define('reversiUi',['app/reversi', 'learner'], function(reversi) {
                                              that.gameOver(board);
                                          }
                                         );
-            this.status.innerText = 'Make a move, or press stop to change settings';
+            this.status.innerHTML = 'Make a move, or press stop to change settings';
             this.isStarted = true;
             this.game.play();
         },
@@ -2412,9 +2409,11 @@ define('reversiUi',['app/reversi', 'learner'], function(reversi) {
             }
         },
 
+
+
         stopGame: function() {
             this.isStarted = false;
-            this.status.innerText = 'Change settings or press Start to play';
+            this.status.innerHTML = 'Change settings or press Start to play';
         }
 
     };
