@@ -2429,7 +2429,7 @@ define('reversiUi',['app/reversi', 'learner'], function(reversi) {
 require.config({
     shim: {'learner': {exports: 'reversiLearnerCounts'}},
     paths: {'learner':
-            'http://dl.dropboxusercontent.com/u/6197450/learner',
+            'learner',
             app: '../src/'}
 
 });

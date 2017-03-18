@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Manifest Sat Apr 26 20:39:41 EDT 2014
+# Manifest Sat Mar 18 13:42:11 EDT 2017
 
 
 CACHE:
@@ -7,8 +7,7 @@ index.html
 require.js
 main-built.js
 reversi.css
-
-http://dl.dropboxusercontent.com/u/6197450/learner.js
+learner.js
 
 /assets/charter/webfonts/charter_bold_italic-webfont.woff
 /assets/charter/webfonts/charter_regular-webfont.woff
