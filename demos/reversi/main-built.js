@@ -458,7 +458,7 @@ define('app/game',['./board'], function(my) {
                 delay;
             try {
                 if(this.board.isLegal(move, player)) {
-                    // console.log('move ' + move);
+                    console.log('move ' + move);
                     newBoard = this.board.makeMove(move, player);
                     this.board = newBoard;
                     this.display.board = this.board;
@@ -475,7 +475,7 @@ define('app/game',['./board'], function(my) {
                             }
                         }
                         this.status.innerHTML = 'Black: ' + b + '  White: ' +
-                            w;
+                            w + ' move was : ' + move;
                     }
 
                     r = newBoard.isOver();
