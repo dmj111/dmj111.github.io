@@ -474,8 +474,12 @@ define('app/game',['./board'], function(my) {
                                 w += 1;
                             }
                         }
+                        var row = Math.floor(move / 10),
+                            col = move - row * 10,
+                            disp_move = 10*col + row;
+
                         this.status.innerHTML = 'Black: ' + b + '  White: ' +
-                            w + ' move was : ' + move;
+                            w + ' move was : ' + disp_move;
                     }
 
                     r = newBoard.isOver();
