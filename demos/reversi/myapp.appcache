@@ -1,0 +1,20 @@
+CACHE MANIFEST
+# Manifest 2014-04-10-v2
+
+CACHE:
+index.html
+require.js
+main-built.js
+reversi.css
+
+http://dl.dropboxusercontent.com/u/6197450/learner.js
+
+/assets/charter/webfonts/charter_bold_italic-webfont.woff
+/assets/charter/webfonts/charter_regular-webfont.woff
+
+/assets/css/bootstrap.min.css
+/assets/css/theme.css
+/assets/css/custom.css
+
+NETWORK:
+*
