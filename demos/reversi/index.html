@@ -30,62 +30,62 @@
             <div id='status'></div>
 
             <div id='boarddiv'> <canvas id='board'></canvas> </div>
-            <div id='p1' class='pchoice'>
+            <div id='players'>
+              <div id='p1' class='pchoice'>
                 Player 1
                 <div class='choices'>
-                    <button type='button'
-                            class='btn btn-default player selected'>
-                        Human
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 1
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 2
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 3
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 4
-                    </button>
+                  <button type='button'
+                          class='btn btn-default player selected'>
+                    Human
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 1
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 2
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 3
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 4
+                  </button>
                 </div>
 
-            </div>
+              </div>
 
-            <div id='p2' class='pchoice'>
+              <div id='p2' class='pchoice'>
                 Player 2
                 <div class='choices'>
-                    <button type='button' class='btn btn-default player '>
-                        Human
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 1
-                    </button>
-                    <button type='button'
-                            class='btn btn-default player selected'>
-                        Level 2
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 3
-                    </button>
-                    <button type='button' class='btn btn-default player'>
-                        Level 4
-                    </button>
+                  <button type='button' class='btn btn-default player '>
+                    Human
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 1
+                  </button>
+                  <button type='button'
+                          class='btn btn-default player selected'>
+                    Level 2
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 3
+                  </button>
+                  <button type='button' class='btn btn-default player'>
+                    Level 4
+                  </button>
                 </div>
+              </div>
             </div>
-
             <div class='h-space'></div>
 
             <div class='h-space'></div>
-            <div>
+            <div class='controls'>
                 <button id='start' type='button' class='btn btn-default'>
                     Start
                 </button>
                 <button id='stop' type='button' class='btn btn-default'>
                     Stop
                 </button>
-
             </div>
 
         </div>
@@ -104,23 +104,8 @@
      })();
 
     </script>
-    <script>
-     // http://www.html5rocks.com/en/tutorials/appcache/beginner/
-     // Check if a new cache is available on page load.
-     window.addEventListener('load', function(e) {
-         window.applicationCache.addEventListener('updateready', function(e) {
-             if (window.applicationCache.status ===
-                        window.applicationCache.UPDATEREADY) {
-                 // Browser downloaded a new app cache.
-                 if (confirm('A new version of this site is available. Load it?')) {
-                     window.location.reload();
-                 }
-             } else {
-                 // Manifest didn't changed. Nothing new to server.
-             }
-         }, false);
-     }, false);
-    </script>
-    <script data-main='main-built' src='require.js'></script>
+    <script src='learner.js'></script>
+    <script src='reversi.js'></script>
+    <script src='reversiUi.js'></script>
     </body>
 </html>

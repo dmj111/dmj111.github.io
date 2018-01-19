@@ -8,3 +8,11 @@ body {
 .choices > .selected {
   background: grey;
 }
+
+.running {
+  background: light-grey;
+}
+
+.controls > .selected {
+  background: grey;
+}

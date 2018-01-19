@@ -1,6 +1,7 @@
-(function (module) {
+/* board.js */
 /* globals module */
-(function (my) {
+
+var reversi = (function(my) {
     'use strict';
 
     var BLACK = 1,
@@ -13,11 +14,13 @@
     my.WHITE = WHITE;
     my.EMPTY = EMPTY;
 
+    /* Simple test for verifying that MOVE is a valid move number */
     function isValid(move) {
         return (move > 10 && move < 89 &&
                 move % 10 > 0 && move % 10 < 9);
     }
 
+    /* Returns the opponent for PLAYER */
     function opponent(player) {
         if(player === WHITE) {
             return BLACK;
@@ -27,59 +30,106 @@
             throw 'invalid player in opp';
         }
     }
+
     my.opponent = opponent;
 
 
-    function Board () {
-        var i = 0;
-        this.N = 100;
-        this.moveNumber = 0;
-        this.data = [];
-        this.player = BLACK;
-        for(i = 0; i < this.N; i += 1) {
-            this.data[i] = EMPTY;
+    /* Board constructor. Tracks move number, player, and data. */
+    function Board (data, move, player) {
+        var i;
+        this.moveNumber = move || 0;
+        this.player = player || BLACK;
+        this.data = data;
+        if (!data) {
+            this.data = [];
+            for(i = 0; i < 100; i += 1) {
+                this.data[i] = EMPTY;
+            }
         }
     }
 
     my.Board = Board;
 
-    Board.prototype = {
-        // hash: function() {
-        //     var result = 0,
-        //         i, v;
-        //     for(i = 0; i < 100; i += 1) {
-        //         v = this.data[i];
-        //         if(v) {
-        //             result = result ^ (hashKeys[i + 100 * (v - 1)]);
-        //         }
-        //     }
-        //     return result  % 1001683;
-        // },
+    my.boardFromString = function(s) {
+        var b = new Board();
+        b.fromString(s);
+        return b;
+    };
 
+    my.boardFromJSON = function(json) {
+        var obj = JSON.parse(json);
+        return new Board(obj.data.slice(),
+                         obj.moveNumber, obj.player);
+
+    };
+
+    Board.prototype = {
+        /* Create a copy of the current board. */
         copy: function() {
-            var result = new Board();
-            result.data = this.data.slice();
-            result.moveNumber = this.moveNumber;
-            result.player = this.player;
-            return result;
+            // return my.boardFromJSON(this.toJSON());
+            return new Board(this.data.slice(), this.moveNumber, this.player);
         },
 
+        toJSON: function () {
+            var data = {data: this.data,
+                        moveNumber: this.moveNumber,
+                        player: this.player};
+            return JSON.stringify(data);
+        },
+
+        /* Make a nice string out of the board. */
         toString: function() {
-            var result = [], i, j, p;
+            var result = [], i, j, p, row;
             for(i = 1; i < 9; i += 1) {
+                row = [];
                 for(j = 1; j < 9; j += 1) {
                     p = this.data[i * 10 + j];
                     if(p === BLACK) {
-                        result.push('@');
+                        row.push('@');
                     } else if(p === WHITE) {
-                        result.push('O');
+                        row.push('O');
                     } else {
-                        result.push('.');
+                        row.push('.');
                     }
                 }
-                result.push('\n');
+                result.push(row.join(''));
             }
-            return result.join('');
+            return result.join('\n');
+        },
+
+        fromString: function(input) {
+            var row, col,
+                lines = input.split('\n'),
+                p, x;
+
+            for(row = 1; row < 9; row += 1) {
+                for(col = 1; col < 9; col += 1) {
+                    p = lines[row-1][col-1];
+                    x = EMPTY;
+                    if (p === '@') {
+                        x = BLACK;
+                    } else if (p === 'O') {
+                        x = WHITE;
+                    }
+                    this.set(row * 10 + col, x);
+                }
+            }
+        },
+
+        /* Convert to a 64 bit packed representation */
+        toPacked: function() {
+            // bit 0: row 0, col 0
+            // bit 1: row 0, col 1
+            // stores: BLow, BHigh, WLow, WHigh
+            var result = [0, 0],
+                mult = 1,
+                row, col,
+                x;
+            for(row = 1; row < 9; row += 1) {
+                for(col = 1; col < 9; col += 1) {
+                }
+            }
+
         },
         // 128 chars to represent as a bitboard
         // 32 chars to represent as hex
@@ -121,6 +171,7 @@
             this.data[square] = v;
         },
 
+        /* returns a list of all of the valid squares */
         allSquares: (function() {
             var i, result = [];
             for(i = 11; i < 89; i += 1) {
@@ -133,6 +184,8 @@
         }()),
 
 
+        /* Check the move for the player, then return a copy of the
+           board with the updated state   */
         makeMove: function(move, player) {
             if(player !== this.player) {
                 throw 'invalid player in make move';
@@ -150,7 +203,7 @@
             // result.player = result.nextToPlay(result.player);
         },
 
-        // Make any flips in the given direction.
+        /* Make all flips in the given direction. */
         makeFlips: function(move, player, dir) {
             var end = this.findBracketingPiece(move, player, dir);
             if(end !== 0) {
@@ -159,10 +212,12 @@
                 }
             }
         },
-        // Moving DIR from SQUARE, return the piece owned by PLAYER
+
+        /* Moving DIR from SQUARE, return the piece owned by PLAYER
         // that occurs after a string of opponent pieces.
         //
         // Returns 0 if no such square is found.
+        */
         findBracketingPiece: function(move, player, dir) {
             var s = move + dir,
                 opp = opponent(player),
@@ -217,7 +272,7 @@
 
         },
 
-
+        /* Given the current state of the board, which player has the next move. */
         nextToPlay: function(previousPlayer) {
             var opp = opponent(previousPlayer);
             if(this.anyLegalMove(opp)) {
@@ -244,6 +299,7 @@
             }, 0);
         },
 
+        /* test if the game is over, and if so, return the score. */
         isOver: function(player) {
             player = player || BLACK;
             var p = this.nextToPlay(player) === null,
@@ -256,11 +312,20 @@
             } else {
                 return {over: false};
             }
+        },
+
+        /* Return a new board, flipped across the rows (i.e., a square
+         * stays in the same row) */
+        flipBoard: function() {
+            var result = this.copy(), r, c;
+            for(r = 0; r < 10; r += 1) {
+                for(c = 0; c < 10; c += 1) {
+                    result.data[r * 10 + c] = this.data[r * 10 + 9 - c];
+                }
+            }
+            return result;
         }
-
     };
-
-
 
     my.getInitialBoard = function() {
         var result = new Board();
@@ -271,13 +336,12 @@
         return result;
     };
 
+    return my;
+} (reversi || {}));
+/* display.js */
+/* global console */
 
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module, setTimeout */
-
-(function (my) {
+var reversi = (function (my) {
     'use strict';
     var WHITE = my.WHITE,
         BLACK = my.BLACK,
@@ -406,19 +470,16 @@
             if(cb) {
                 setTimeout(cb, 50);
             }
+            console.log(this.board.toString());
         }
-
-
     };
-
     my.Display = Display;
+    return my;
+}(reversi || {}));
+/* game.js */
+/* globals define, console, window */
 
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module, console, window */
-
-(function (my) {
+var reversi = (function(my) {
     'use strict';
     var BLACK = my.BLACK,
         WHITE = my.WHITE;
@@ -479,15 +540,12 @@
                                 w += 1;
                             }
                         }
-                        this.status.innerText = 'Black: ' + b + '  White: ' +
+                        this.status.innerHTML = 'Black: ' + b + '  White: ' +
                             w;
                     }
 
                     r = newBoard.isOver();
                     if(r.over) {
-                        console.log('game over');
-                        this.status.innerHTML = 'GAME OVER score for black: ' +
-                            newBoard.countDifference(BLACK);
                         if(this.gameOverCb) { this.gameOverCb(newBoard); }
                     } else {
                         this.player = newBoard.nextToPlay(this.player);
@@ -508,13 +566,12 @@
 
     };
     my.Game = Game;
+    return my;
+}(reversi || {}));
 
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
 /* globals module */
 
-(function (my) {
+var reversi = (function(my) {
     'use strict';
 
     my.shuffleArray = function(array) {
@@ -546,14 +603,43 @@
         }
         return moves;
     };
+    my.util = {};
 
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
+    my.util.objectMap = function(obj, fcn) {
+        var key, result = {};
+        for(key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                result[key] = fcn(obj[key], key, obj);
+            }
+        }
+        return result;
+    };
+
+    my.util.objectReduce = function(obj, fcn, init) {
+        var key;
+        for(key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                init = fcn(init, obj[key], key, obj);
+            }
+        }
+        return init;
+    };
+
+    my.util.objectForEach = function(obj, fcn) {
+        var key;
+        for(key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                fcn(obj[key], key, obj);
+            }
+        }
+    };
+    return my;
+}(reversi || {}));
+
 /* globals module */
 
-(function (my) {
+var reversi = (function(my) {
     'use strict';
-
 
     my.mobility = function(board, player) {
         return board.legalMoves(player).length -
@@ -616,13 +702,13 @@
             }
         }, w);
     };
+    return my;
+}(reversi || {}));
 
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
+/* alphabeta.js */
 /* globals module, console */
 
-(function (my) {
+var reversi = (function(my) {
     'use strict';
     var opponent = my.opponent;
 
@@ -737,16 +823,14 @@
 
     };
     my.AlphaBeta = AlphaBeta;
-
-
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
+    return my;
+}(reversi || {}));
+/* alphabeta6.js */
 /* globals module, console */
 
-(function (my) {
+var reversi = (function(my) {
     'use strict';
-    var verbose = false;
+    // var verbose = false;
     function AlphaBeta6(options) {
         this.maxDepth = options.maxDepth || 64;
         this.maxTime = options.maxTime || 60000; // Just to keep it from running forever
@@ -902,14 +986,13 @@
         }
     };
     my.AlphaBeta6 = AlphaBeta6;
+    return my;
+}(reversi || {}));
 
+/* randomplayer.js */
+/* global module */
 
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module */
-
-(function (my) {
+var reversi = (function(my) {
     'use strict';
     function RandomPlayer () {
         this.ab = new my.AlphaBeta(8, my.countDifference);
@@ -930,13 +1013,13 @@
     };
 
     my.RandomPlayer = RandomPlayer;
+    return my;
+}(reversi || {}));
 
+/* bayesplayer.js */
+/* global module, console */
 
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module, console */
-
-(function (my) {
+var reversi = (function(my) {
     'use strict';
     var module = my.bayesLearner = {};
 
@@ -1673,11 +1756,13 @@
     //         return (endScore * score);
     //     }
     // };
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module, console */
+    return my;
+}(reversi || {}));
 
-(function (my) {
+/* bayescore.js */
+/* global module, console */
+
+var reversi = (function(my) {
     'use strict';
 
     function objectMap(obj, fcn) {
@@ -1711,8 +1796,6 @@
 
     var module = my.bayesScore = {};
 
-
-
     // Rotate the board 90 degrees clockwise.
     module.rotate = function (square) {
         var r = Math.floor(square / 10),
@@ -1730,6 +1813,17 @@
             c = square % 10,
             nc = 9-c,
             result = r*10 + nc;
+        return result;
+    };
+
+    module.generate_patterns = function(pattern, is_d8) {
+        var i, result = [],
+            N = is_d8 ? 2 : 4;
+
+        for(i = 0; i < N; i += 1) {
+            result.push(pattern);
+            pattern = pattern.map(module.rotate);
+        }
         return result;
     };
 
@@ -1759,35 +1853,33 @@
 
         // Build up all of the patterns from the base pattern
         // (rotating and flipping the board.)
-        for(key in initial) {
-            if(initial.hasOwnProperty(key) ) {
-                groups = initial[key].groups[0];
-                initial[key].size = groups.length;
-                for(i = 0; i < 3; i += 1) {
-                    groups = groups.map(module.rotate);
-                    initial[key].groups.push(groups);
-                }
-                initial[key].v = 1;
 
-                // Do the flips at the end, so they are all together
-                // in the table.  d8 has only two instances though,
-                // not 8, so we don't want to flip it again.
-
-                if(key !== 'd8') {
-                    for(i = 0; i < 4; i += 1) {
-                        groups = initial[key].groups[i].map(module.flip);
-                        initial[key].groups.push(groups);
-                    }
-                } else {
-                    initial[key].v = 2;
-                }
-
+        objectForEach(initial, function(value, key, initial) {
+            groups = value.groups[0];
+            value.size = groups.length;
+            for(i = 0; i < 3; i += 1) {
+                groups = groups.map(module.rotate);
+                value.groups.push(groups);
             }
-        }
+            value.v = 1;
+
+            // Do the flips at the end, so they are all together
+            // in the table.  d8 has only two instances though,
+            // not 8, so we don't want to flip it again.
+
+            if(key !== 'd8') {
+                for(i = 0; i < 4; i += 1) {
+                    groups = value.groups[i].map(module.flip);
+                    value.groups.push(groups);
+                }
+            } else {
+                value.v = 2;
+            }
+        });
         return initial;
     }());
 
-
+    module.features = features;
     // Find the features for the current board.
     module.evaluateFeatures = function (board) {
         var result = {},
@@ -1797,6 +1889,7 @@
         tmp = {};
         for(key in features) {
             if(features.hasOwnProperty(key)) {
+                // console.log('key: ' + key);
                 if(key === 'b2x4') {
                     tmp[key] = features[key].groups.map(evalFeature);
                 } else {
@@ -1819,12 +1912,16 @@
         function evalFeature(squares) {
             var j = 0,
                 s = 0,
-                M = squares.length;
+                M = squares.length,
+                acc = [];
             s = board.get(squares[0]);
+            acc.push(board.get(squares[j]) + '');
             for(j = 1; j < M; j += 1) {
                 s *= 3;
+                acc.push(board.get(squares[j]) + '');
                 s += board.get(squares[j]);
             }
+            // console.log(acc.join(''));
             return s;
         }
 
@@ -2063,7 +2160,6 @@
         // same score.  This requires some knowledge of the mirroring...
     };
 
-
     module.BayesScore = function(bayesCounts) {
         this.counts = bayesCounts;
         this.factors = objectMap(this.counts, function(cnts) {
@@ -2152,12 +2248,13 @@
             cb(move.move);
         }
     };
+    return my;
+} (reversi || {}));
 
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module */
+/* phaseplayer.js */
+/* globals define */
 
-(function (my) {
+var reversi = (function(my) {
     'use strict';
 
     // This player switches to a longer view of the game towards the end.
@@ -2182,14 +2279,13 @@
             throw 'no player found...';
         }
     };
+    return my;
+}(reversi || {}));
 
+/* semirandomplayer.js */
+/* globals define */
 
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module */
-
-(function (my) {
+var reversi = (function(my) {
     'use strict';
 
     // This player uses the player passed in, but does a randomized selection.
@@ -2221,15 +2317,13 @@
                     score: 1};
         }
     };
+    return my;
+}(reversi || {}));
 
+/* uiplayer.js */
+/* global module */
+var reversi = (function(my) {
 
-
-
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-/* globals module, console */
-
-(function (my) {
     'use strict';
     my.UIPlayer = function(color, display) {
         this.display = display;
@@ -2247,8 +2341,6 @@
             };
         }
     };
+    return my;
+}(reversi || {}));
 
-} ((typeof module !== 'undefined' && module) ||
-   (this.reversi = this.reversi || {})));
-}((typeof module !== 'undefined' && module.exports) ||
-  (this.reversi = this.reversi || {})));
