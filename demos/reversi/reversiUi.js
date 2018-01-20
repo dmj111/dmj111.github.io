@@ -70,19 +70,19 @@ var reversi = (function(my) {
                       choices[i]);
         }
 
-        document.getElementById('start').onclick = function() {
-            that.startGame();
+        document.getElementById('control').onclick = function() {
+            if(that.isStarted) {
+                that.stopGame();
+            } else {
+                that.startGame();
+            }
         };
-        document.getElementById('stop').onclick = function() {
-            that.stopGame();
-        };
-
-        this.startGame();
+        this.stopGame();
     }
 
     UI.prototype = {
         gameOver: function(board) {
-            this.isStarted = false;
+            this.stopGame();
             var i, b = 0, w = 0;
             for(i = 0; i < 100; i += 1) {
                 if(board.data[i] === reversi.BLACK) {
@@ -109,12 +109,14 @@ var reversi = (function(my) {
                                          this.display, this.status,
                                          function(board) {
                                              that.gameOver(board);
+                                         },
+                                         function () {
+                                             return !that.isStarted;
                                          }
                                         );
             this.status.innerHTML = 'Make a move, or press stop to change settings';
             this.isStarted = true;
-            document.getElementById('start').classList.add('selected');
-            document.getElementById('stop').classList.remove('selected');
+            document.getElementById('control').textContent = 'Stop';
             document.getElementById('players').classList.add('running');
             this.game.play();
 
@@ -171,8 +173,7 @@ var reversi = (function(my) {
         stopGame: function() {
             this.isStarted = false;
             this.status.innerHTML = 'Change settings or press Start to play';
-            document.getElementById('stop').classList.add('selected');
-            document.getElementById('start').classList.remove('selected');
+            document.getElementById('control').textContent = 'Start';
             document.getElementById('players').classList.remove('running');
         }
 
@@ -187,6 +188,7 @@ var reversi = (function(my) {
         var status = document.getElementById('loadStatus');
         status.style.display = 'none';
         window.UI = new UI();
+        window.UI.stopGame();
     });
 
     return my;
