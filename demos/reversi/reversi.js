@@ -495,6 +495,7 @@ var reversi = (function(my) {
         this.status = status;
         this.gameOverCb = gameOverCb;
         this.isCanceled = isCanceled;
+        this.moves = [];
 
     }
 
@@ -525,6 +526,10 @@ var reversi = (function(my) {
                 delay;
             try {
                 if(this.board.isLegal(move, player)) {
+                    var x, y;
+                    x = move % 10;
+                    y = (move - x) / 10;
+                    this.moves.push([y * 10 + x, player]);
                     // console.log('move ' + move);
                     newBoard = this.board.makeMove(move, player);
                     this.board = newBoard;
@@ -884,7 +889,8 @@ var reversi = (function(my) {
                 else { throw(e); }
             }
             if(this.verbose) {
-                console.log('did ' + this.count + ' calls to search');
+                console.log('did ' + this.count + ' calls to search ' +
+                           best.score + ' ' + best.move);
             }
             // console.log('player ' + board.player +
             //             ' best at depth ' + depth + ' score ' +
