@@ -36,6 +36,7 @@ var reversi = (function(my) {
     function UI() {
         this.status = document.getElementById('status');
         this.canvas = document.getElementById('board');
+        this.move_list = document.getElementById('move_list');
         this.canvas.height = 500;
         this.canvas.width = 500;
         this.board = reversi.getInitialBoard();
@@ -106,7 +107,8 @@ var reversi = (function(my) {
             var that = this;
             this.board = reversi.getInitialBoard();
             this.game = new reversi.Game(this.player1, this.player2,
-                                         this.display, this.status,
+                                         this.display,
+                                         x => this.status.textContent = x,
                                          function(board) {
                                              that.gameOver(board);
                                          },
@@ -114,6 +116,33 @@ var reversi = (function(my) {
                                              return !that.isStarted;
                                          }
                                         );
+            this.game.updateMoves = mvs => {
+                var elt = document.createElement('pre'),
+                    text = [],
+                    p = 1,
+                    count = 0,
+                    prev = 2,
+                    idx = 0, m;
+                while(idx < mvs.length) {
+                    m = mvs[idx];
+                    if(m[1] === 1 || prev === 2) {
+                        ++count;
+                        text.push('\n' + count + '. ');
+                    }
+                    if (m[1] === (3-prev)) {
+                        text.push(' ' + Math.floor(m[0]/10) +
+                                  ('abcdefgh'[m[0] % 10 - 1]));
+                        ++idx;
+                    } else {
+                        text.push('  *');
+                    }
+                    prev = 3-prev;
+                }
+                elt.textContent = text.join('');
+                this.move_list.removeChild(this.move_list.firstChild);
+                this.move_list.appendChild(elt);
+            };
+
             this.status.innerHTML = 'Make a move, or press stop to change settings';
             this.isStarted = true;
             document.getElementById('control').textContent = 'Stop';
@@ -168,8 +197,6 @@ var reversi = (function(my) {
             }
         },
 
-
-
         stopGame: function() {
             this.isStarted = false;
             this.status.innerHTML = 'Change settings or press Start to play';
@@ -189,8 +216,8 @@ var reversi = (function(my) {
         status.style.display = 'none';
         window.UI = new UI();
         window.UI.stopGame();
+        window.UI.startGame();
     });
 
     return my;
 }(reversi || {}));
-

@@ -407,8 +407,9 @@ var reversi = (function (my) {
             var colors = {};
             colors[WHITE] = '#f8f8f8';
             colors[BLACK] = '#040404';
-            var background = '#aaa';
 
+            var background = '#a0a0a0';
+            var line_color = '#e0e0e0';
             var i, j, p, fill;
             var player = this.board.player;
             var legalMoves, moves = {};
@@ -425,12 +426,13 @@ var reversi = (function (my) {
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
             // For the lines
-            this.ctx.lineStyle = '#040404';
+            this.ctx.strokeStyle = line_color;
             for(i = 0; i < this.lineXs.length; i += 1) {
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.lineXs[i], 0);
                 this.ctx.lineTo(this.lineXs[i], this.height);
                 this.ctx.stroke();
+                this.ctx.closePath();
             }
             for(i = 0; i < this.lineYs.length; i += 1) {
                 this.ctx.beginPath();
@@ -496,28 +498,35 @@ var reversi = (function(my) {
         this.gameOverCb = gameOverCb;
         this.isCanceled = isCanceled;
         this.moves = [];
+        this.updateMoves = ((x) => null);
 
+        if(typeof this.status !== 'function') {
+            this.status = ((x) => null);
+        }
     }
 
     Game.prototype = {
         play: function() {
             var newBoard = this.board.copy(),
-                that = this;
+                that = this,
+                player;
             this.lastTime = new Date();
 
             if(this.display) {
                 this.display.board = this.board;
                 this.display.draw();
             }
+
             if(this.player === BLACK) {
-                this.player1.getMove(newBoard, function(move) {
-                    that.doMove(BLACK, move);
-                });
+                player = this.player1;
             } else {
-                this.player2.getMove(newBoard, function(move) {
-                    that.doMove(WHITE, move);
-                });
+                player = this.player2;
             }
+
+            player.getMove(newBoard, function(move) {
+                that.doMove(that.player, move);
+            });
+
         },
 
         doMove: function(player, move) {
@@ -530,6 +539,7 @@ var reversi = (function(my) {
                     x = move % 10;
                     y = (move - x) / 10;
                     this.moves.push([y * 10 + x, player]);
+                    this.updateMoves(this.moves.slice());
                     // console.log('move ' + move);
                     newBoard = this.board.makeMove(move, player);
                     this.board = newBoard;
@@ -537,18 +547,15 @@ var reversi = (function(my) {
                     if(this.display) {
                         this.display.draw();
                     }
-                    if(this.status) {
-                        var i, b = 0, w = 0;
-                        for(i = 0; i < 100; i += 1) {
-                            if(this.board.data[i] === BLACK) {
-                                b += 1;
-                            } else if (this.board.data[i] === WHITE) {
-                                w += 1;
-                            }
+                    var i, b = 0, w = 0;
+                    for(i = 0; i < 100; i += 1) {
+                        if(this.board.data[i] === BLACK) {
+                            b += 1;
+                        } else if (this.board.data[i] === WHITE) {
+                            w += 1;
                         }
-                        this.status.innerHTML = 'Black: ' + b + '  White: ' +
-                            w;
                     }
+                    this.status('Black: ' + b + '  White: ' + w);
 
                     r = newBoard.isOver();
                     if(r.over) {
@@ -560,7 +567,8 @@ var reversi = (function(my) {
                             this.isCanceled()) {
                             that.status = 'canceled';
                         } else {
-                            // Math.max(, 50 - (new Date() - this.lastTime));
+                            // Set a delay to make give the UI a
+                            // chance to catch events.
                             window.setTimeout(function() {
                                 that.play();
                             }, delay);
@@ -579,7 +587,6 @@ var reversi = (function(my) {
     my.Game = Game;
     return my;
 }(reversi || {}));
-
 /* globals module */
 
 var reversi = (function(my) {
