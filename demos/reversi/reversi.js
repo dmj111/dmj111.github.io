@@ -48,6 +48,7 @@ var reversi = (function(my) {
         }
     }
 
+
     my.Board = Board;
 
     my.boardFromString = function(s) {
@@ -68,6 +69,18 @@ var reversi = (function(my) {
         copy: function() {
             // return my.boardFromJSON(this.toJSON());
             return new Board(this.data.slice(), this.moveNumber, this.player);
+        },
+
+        pieces: function() {
+            return this.data.map(x =>  {
+                if (x === this.player) {
+                    return 1;
+                } else if (x === EMPTY) {
+                    return 0;
+                } else {
+                    return 2;
+                }
+            });
         },
 
         toJSON: function () {
@@ -102,6 +115,7 @@ var reversi = (function(my) {
                 lines = input.split('\n'),
                 p, x;
 
+            this.moveNumber = 60;
             for(row = 1; row < 9; row += 1) {
                 for(col = 1; col < 9; col += 1) {
                     p = lines[row-1][col-1];
@@ -110,8 +124,17 @@ var reversi = (function(my) {
                         x = BLACK;
                     } else if (p === 'O') {
                         x = WHITE;
+                    } else {
+                        --this.moveNumber;
                     }
                     this.set(row * 10 + col, x);
+                }
+            }
+            if(lines.length > 8) {
+                if(lines[8][0] == 'b') {
+                    this.player = BLACK;
+                } else {
+                    this.player = WHITE;
                 }
             }
         },
@@ -377,7 +400,7 @@ var reversi = (function (my) {
             this.centerYs.push(Math.floor(this.height * (i / 8 + 1 / 16)));
         }
         this.pieceRadius = Math.min(this.width, this.height) / 19;
-        this.moveRadius = this.pieceRadius / 4;
+        this.moveRadius = this.pieceRadius / 2;
 
         this.lineXs[0] += 1;
         this.lineXs[8] -= 1;
@@ -405,10 +428,13 @@ var reversi = (function (my) {
 
         draw: function(cb) {
             var colors = {};
+            var shaded = {};
             colors[WHITE] = '#f8f8f8';
             colors[BLACK] = '#040404';
+            shaded[WHITE] = '#f8f8f888';
+            shaded[BLACK] = '#04040488';
 
-            var background = '#a0a0a0';
+            var background = '#808080';
             var line_color = '#e0e0e0';
             var i, j, p, fill;
             var player = this.board.player;
@@ -455,7 +481,7 @@ var reversi = (function (my) {
                         this.ctx.fill();
                         this.ctx.stroke();
                     } else if (moves[11 + i * 10 + j]) {
-                        fill = colors[player];
+                        fill = shaded[player];
                         // alert(p);
                         this.ctx.fillStyle = fill;
                         this.ctx.strokeStyle = fill;
@@ -472,7 +498,6 @@ var reversi = (function (my) {
             if(cb) {
                 setTimeout(cb, 50);
             }
-            console.log(this.board.toString());
         }
     };
     my.Display = Display;
@@ -723,135 +748,16 @@ var reversi = (function(my) {
     return my;
 }(reversi || {}));
 
-/* alphabeta.js */
-/* globals module, console */
-
-var reversi = (function(my) {
-    'use strict';
-    var opponent = my.opponent;
-
-    function AlphaBeta(depth, fcn) {
-        this.depth = depth;
-        this.fcn = fcn;
-        this.log = [];
-        this.count = 0;
-    }
-
-    AlphaBeta.prototype = {
-        getMove: function(board, cb) {
-            var best = this.findMove(board);
-            cb(best.move);
-        },
-
-        findMove: function(board) {
-            var best;
-            this.log = ['starting'];
-
-            this.count = 0;
-            best = this.search(board.player, board, -Infinity, Infinity,
-                               this.depth);
-            console.log('did ' + this.count + ' calls to search');
-            this.log.push('ending score ' + best.score);
-            // console.log('best move: ' + best.move + ' score: ' + best.score);
-            return best;
-        },
-
-        search: function(player, board, achievable, cutoff, depth) {
-            var keep = this.log;
-
-            this.log = ['entering, player ' + player +
-                         ' depth ' + depth +
-                        ' achievable ' + achievable +
-                       '  cutoff ' + cutoff];
-            var s = this.searchBody(player, board, achievable, cutoff, depth);
-            this.log.push(['exiting score', s]);
-            keep.push(this.log);
-            this.log = keep;
-            return s;
-        },
-
-        searchBody: function(player, board, achievable, cutoff, depth) {
-            var moves,
-                that = this,
-                opp = opponent(player),
-                s,
-                i, newBoard,
-                best = {score: achievable,
-                        move: 'cutoff',
-                        player: player},
-                newDepth;
-            this.count += 1;
-
-            if(depth === 0) {
-                s = board.isOver(player);
-                if(s.over) {
-                    return s;
-                } else {
-                    return {score: this.fcn(board, player),
-                            move: 'depth reached',
-                            player: player};
-                    }
-            }
-
-            moves = board.legalMoves(player);
-
-            if(depth === this.depth) {
-                // Mix up the order to make the games more unique.
-                my.shuffleArray(moves);
-            }
-
-            if(moves.length === 0) {
-                if(board.anyLegalMove(opponent(player))) {
-                    s = this.search(opponent(player), board, -cutoff,
-                                    -achievable, depth);
-                    return {score: -s.score,
-                            move: 'no move',
-                            child: s,
-                            player: player
-                           };
-                } else {
-                    s = board.isOver(player);
-                    return s;
-                }
-            } else {
-                newDepth = depth - 1;
-                // Simple quiessence search.
-                if(moves.length === 1) {
-                    newDepth = depth;
-                }
-                for(i = 0; i < moves.length; i += 1) {
-                    newBoard = board.makeMove(moves[i], player);
-                    s = that.search(opp, newBoard, -cutoff,
-                                    -best.score, depth - 1);
-                    if(-s.score > best.score) {
-                        best = {
-                            score: -s.score,
-                            move: moves[i],
-                            child: s
-                        };
-                    }
-                    if(best.score >= cutoff) {
-                        break;
-                    }
-                }
-                best.player = player;
-                return best;
-            }
-        }
-
-    };
-    my.AlphaBeta = AlphaBeta;
-    return my;
-}(reversi || {}));
 /* alphabeta6.js */
 /* globals module, console */
 
 var reversi = (function(my) {
     'use strict';
-    // var verbose = false;
+    // var verbose = true;
     function AlphaBeta6(options) {
         this.maxDepth = options.maxDepth || 64;
-        this.maxTime = options.maxTime || 60000; // Just to keep it from running forever
+        // Just to keep it from running forever
+        this.maxTime = options.maxTime || 60000;
         this.fcn = options.scoreFunction;
         this.verbose = options.verbose;
     }
@@ -861,8 +767,16 @@ var reversi = (function(my) {
             var best = this.findMove(board);
             cb(best.move);
         },
-
         findMove: function(board) {
+            try {
+                console.time('findMove');
+                var result = this.findMoveInner(board);
+                return result;
+            } finally {
+                console.timeEnd('findMove');
+            }
+        },
+        findMoveInner: function(board) {
             var best, pv, newBest;
 
             this.count = 0;
@@ -892,16 +806,20 @@ var reversi = (function(my) {
                     }
                 }
             } catch (e) {
-                if(e.timeout) { console.log('timed out...'); }
-                else { throw(e); }
+                if(e.timeout) { console.warn('timed out...'); }
+                else {
+                    // console.groupEnd('findMove');
+                    throw(e);
+                }
             }
+
             if(this.verbose) {
                 console.log('did ' + this.count + ' calls to search ' +
-                           best.score + ' ' + best.move);
+                            best.score + ' ' + best.move);
             }
-            // console.log('player ' + board.player +
-            //             ' best at depth ' + depth + ' score ' +
-            //             best.score + ' move ' + best.move);
+            console.log('%c best move: %d  score: %f  player:%d',
+                        'font-weight: bold', best.move, best.score,
+                        board.player);
             return best;
         },
 
@@ -916,17 +834,17 @@ var reversi = (function(my) {
                         move: 'cutoff',
                         player: player},
                 newDepth;
-
             this.count += 1;
             if(depth === 0) {
                 s = board.isOver(player);
                 if(s.over) {
                     return s;
                 } else {
-                    return {score: this.fcn(board, player),
-                            move: 'depth reached',
-                            player: player,
-                            pv: null};
+                    s = {score: this.fcn(board, player),
+                         move: 'depth reached',
+                         player: player,
+                         pv: null};
+                    return s;
                 }
             }
 
@@ -1007,14 +925,17 @@ var reversi = (function(my) {
     my.AlphaBeta6 = AlphaBeta6;
     return my;
 }(reversi || {}));
-
 /* randomplayer.js */
 /* global module */
 
 var reversi = (function(my) {
     'use strict';
     function RandomPlayer () {
-        this.ab = new my.AlphaBeta(8, my.countDifference);
+        this.ab = new reversi.AlphaBeta6({
+            maxDepth: 8,
+            maxTime: 10000,
+            scoreFunction: my.countDifference,
+            verbose: true});
     }
 
     RandomPlayer.prototype = {
@@ -1025,7 +946,7 @@ var reversi = (function(my) {
             if(board.moveNumber > 52) {
                 this.ab.findMove(board);
             }
-            var moves = board.legalMoves(board.player);
+             var moves = board.legalMoves(board.player);
             my.shuffleArray(moves);
             return {move: moves[0], player: board.player};
         }
@@ -1418,7 +1339,6 @@ var reversi = (function(my) {
             return module.createBayesFactors(cnts,
                                              module.featureSizes);
         });
-
     };
 
     module.BayesScore.prototype = {
@@ -1535,7 +1455,7 @@ var reversi = (function(my) {
 }(reversi || {}));
 
 /* semirandomplayer.js */
-/* globals define */
+/* global console */
 
 var reversi = (function(my) {
     'use strict';
@@ -1554,19 +1474,26 @@ var reversi = (function(my) {
             var moves = board.legalMoves(board.player),
                 N = moves.length,
                 totalWeight = 0,
-                w, i, move, bestMove;
-
+                w, i, move, bestMove, selected;
+            console.group('findMove');
             for(i = 0; i < N; i += 1) {
                 move = this.player.findMove(board.makeMove(moves[i],
                                                            board.player));
-                w = 1/(1+ Math.exp(move.score));
+                w = 1/(1+ Math.exp(-move.score));
                 totalWeight += w;
+                selected = false;
                 if(Math.random() <= w / totalWeight) {
                     bestMove = moves[i];
+                    selected = true;
                 }
+                console.log('move: %s weight %s selected %s total %s',
+                            moves[i], w, selected, totalWeight);
             }
+            console.groupEnd('findMove');
+            console.log('semi-random selected %o', bestMove);
             return {move: bestMove,
                     score: 1};
+
         }
     };
     return my;
@@ -1596,3 +1523,158 @@ var reversi = (function(my) {
     return my;
 }(reversi || {}));
 
+
+var reversi = (function(my) {
+    'use strict';
+    var v2_patterns = {};
+    var base_patterns = [
+        // diag8 only case that is not 8-way symmetric.
+        [18, 27, 36, 45, 54, 63, 72, 81],
+        // diag 5
+        [15, 24, 33, 42, 51],
+        // diag 6
+        [16, 25, 34, 43, 52, 61],
+        // diag 7
+        [17, 26, 35, 44, 53, 62, 71],
+        // row 1
+        [11, 12, 13, 14, 15, 16, 17, 18],
+        // row 2
+        [21, 22, 23, 24, 25, 26, 27, 28],
+        // row 3
+        [31, 32, 33, 34, 35, 36, 37, 38],
+        // row 4
+        [41, 42, 43, 44, 45, 46, 47, 48],
+        // 2x4
+        [11, 12, 13, 14, 21, 22, 23, 24],
+        // 2x5
+        [11, 12, 13, 14, 15, 21, 22, 23, 24, 25],
+        // edge+2x
+        [11, 12, 13, 14, 15, 16, 17, 18, 22, 27]];
+
+    function pow3(x) {
+        var result = 1;
+        if (x > 0) {
+            while (x > 0) {
+                result *= 3;
+                x -= 1;
+            }
+        }
+        return result;
+    }
+
+    function rot90(x) {
+        let r = Math.floor(x / 10),
+            c = x - r * 10;
+        return c*10 + 9-r;
+    }
+    function flip(x) {
+        let r = Math.floor(x / 10),
+            c = x - r * 10;
+        return r*10 + 9 - c;
+    }
+
+
+    function create_feature_indices() {
+        let result = [], p = 0, pat, v, i;
+        for(p = 0; p < base_patterns.length; ++p) {
+            pat = base_patterns[p].slice();
+            v = [];
+            for(i = 0; i < 8; ++i) {
+                if (p === 0 && i === 4) {
+                    // only do four rots of first pat.
+                    break;
+                }
+                // Flip on fourth iteration.
+                if(i === 4) {
+                    pat = pat.map(flip);
+                }
+                v.push(pat.slice());
+                pat = pat.map(rot90);
+            }
+            result.push(v);
+        }
+        return result;
+    }
+    v2_patterns.create_feature_indices = create_feature_indices;
+
+    var all_patterns = create_feature_indices();
+
+    my.create_feature_offsets = function() {
+        let count = 0, sizes = [], offsets = [];
+
+        base_patterns.forEach(p => {
+            let s = pow3(p.length);
+            offsets.push(count);
+            count += s;
+            sizes.push(s);
+        });
+        return [sizes, offsets];
+    };
+
+    var feature_offsets, feature_sizes;
+
+    (function() {
+        var r = my.create_feature_offsets();
+        feature_sizes = r[0];
+        feature_offsets = r[1];
+    }());
+
+    function evaluate(pieces, pattern) {
+        var f = (acc, idx) => acc * 3 + pieces[idx];
+        return pattern.reduce(f, 0);
+    }
+
+    function evaluate_position(pieces) {
+        let result = [];
+        all_patterns.map((patterns, idx) => {
+            let offset = feature_offsets[idx];
+            patterns.forEach(pat => {
+                result.push(evaluate(pieces, pat) + offset);
+            });
+        });
+        return result;
+    }
+    v2_patterns.evaluate_position = evaluate_position;
+    // var verbose = true;
+    my.v2_patterns = v2_patterns;
+    return my;
+}(reversi || {}));
+var reversi = (function(my) {
+    'use strict';
+    var v2_player = {};
+
+    function logistic_eval(weights, keys) {
+        return keys.reduce((acc, key) => acc + weights[key], 0);
+    }
+
+    function Player(weights, depth) {
+        this.weights = weights;
+        this.ab = new reversi.AlphaBeta6({maxDepth: depth,
+                                          scoreFunction: board=>this.score(board),
+                                          verbose: false});
+    }
+
+    Player.prototype = {
+        score: function(board) {
+            var keys = reversi.v2_patterns.evaluate_position(board.pieces()),
+                weights = this.get_weights(board);
+            // keys.forEach(k => { console.log(k + " " + weights[k]); });
+            return logistic_eval(weights, keys);
+        },
+
+        get_weights: function(board) {
+            var idx = Math.floor((board.moveNumber - 1)/ 4);
+            return this.weights[idx];
+        },
+
+        findMove: function(board) {
+            var result = this.ab.findMove(board);
+            console.log('result: (depth %s) %s', this.ab.maxDepth,
+                        result.score);
+            return result;
+        }
+    };
+    v2_player.Player = Player;
+    my.v2_player = v2_player;
+    return my;
+}(reversi || {}));

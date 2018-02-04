@@ -8,28 +8,16 @@ var reversi = (function(my) {
         return learner.score(board);
     }
 
+    function learningPlayer(depth) {
+        return new reversi.v2_player.Player(betas, depth);
+    }
+
     function buildPlayer(midDepth) {
         return new reversi.PhasePlayer([
             [6, new reversi.SemiRandom(
-                new reversi.AlphaBeta6({
-                    maxDepth: 3,
-                    maxTime: 10000,
-                    scoreFunction: scoreFunction,
-                    verbose:true
-                })
-            )],
-            [51, new reversi.AlphaBeta6({
-                maxDepth: midDepth,
-                maxTime: 10000,
-                scoreFunction: scoreFunction,
-                verbose: true
-            })],
-            [61, new reversi.AlphaBeta6({
-                maxDepth: 8,
-                maxTime: 10000,
-                scoreFunction: scoreFunction,
-                verbose: true
-            })]
+                learningPlayer(3))],
+            [51, learningPlayer(midDepth)],
+            [61, learningPlayer(8)]
         ]);
     }
 
@@ -105,6 +93,9 @@ var reversi = (function(my) {
 
         startGame: function() {
             var that = this;
+            document.getElementById('control').textContent = 'Stop';
+            document.getElementById('players').classList.add('running');
+
             this.board = reversi.getInitialBoard();
             this.game = new reversi.Game(this.player1, this.player2,
                                          this.display,
@@ -116,37 +107,56 @@ var reversi = (function(my) {
                                              return !that.isStarted;
                                          }
                                         );
+            function to_standard(m) {
+                return 'abcdefgh'[Math.floor(m/10-1)] + (m % 10);
+            }
+
             this.game.updateMoves = mvs => {
+                // First, add missing moves.
                 var elt = document.createElement('pre'),
                     text = [],
-                    p = 1,
                     count = 0,
-                    prev = 2,
-                    idx = 0, m;
-                while(idx < mvs.length) {
-                    m = mvs[idx];
-                    if(m[1] === 1 || prev === 2) {
+                    new_moves = [],
+                    move_record = [];
+
+                mvs.forEach(m => {
+                    if(new_moves.length === 0 ||
+                       m[1] !== new_moves[new_moves.length - 1][1]) {
+                        new_moves.push(m);
+                    } else {
+                        new_moves.push(['*', 3 - m[1]]);
+                        new_moves.push(m);
+                    }
+                });
+
+                new_moves.forEach(m => {
+                    if (m[1] === 1) {
                         ++count;
                         text.push('\n' + count + '. ');
                     }
-                    if (m[1] === (3-prev)) {
-                        text.push(' ' + Math.floor(m[0]/10) +
-                                  ('abcdefgh'[m[0] % 10 - 1]));
-                        ++idx;
+                    if(m[0] !== '*') {
+                        move_record.push(to_standard(m[0]));
+                        text.push(' ' + to_standard(m[0]));
                     } else {
                         text.push('  *');
                     }
-                    prev = 3-prev;
-                }
+                });
+
                 elt.textContent = text.join('');
-                this.move_list.removeChild(this.move_list.firstChild);
-                this.move_list.appendChild(elt);
+                elt.textContent += '\n\n' + move_record.join('');
+                var div = document.createElement('div');
+                div.textContent = "Move record:";
+
+                div.appendChild(elt);
+                while(this.move_list.firstChild !== null) {
+                    this.move_list.removeChild(this.move_list.firstChild);
+                }
+
+                this.move_list.appendChild(div);
             };
 
             this.status.innerHTML = 'Make a move, or press stop to change settings';
             this.isStarted = true;
-            document.getElementById('control').textContent = 'Stop';
-            document.getElementById('players').classList.add('running');
             this.game.play();
 
         },
