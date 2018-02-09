@@ -1479,15 +1479,15 @@ var reversi = (function(my) {
             for(i = 0; i < N; i += 1) {
                 move = this.player.findMove(board.makeMove(moves[i],
                                                            board.player));
-                w = 1/(1+ Math.exp(-move.score));
+                w = 1/(1+ Math.exp(move.score));
+                w = w * w;
                 totalWeight += w;
                 selected = false;
                 if(Math.random() <= w / totalWeight) {
                     bestMove = moves[i];
                     selected = true;
                 }
-                console.log('move: %s weight %s selected %s total %s',
-                            moves[i], w, selected, totalWeight);
+                console.log('move: %s\nscore: %s\nweight %s\nselected %s\ntotal %s', moves[i], -move.score, w, selected, totalWeight);
             }
             console.groupEnd('findMove');
             console.log('semi-random selected %o', bestMove);
