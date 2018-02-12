@@ -8,15 +8,16 @@ var reversi = (function(my) {
         return learner.score(board);
     }
 
-    function learningPlayer(depth) {
-        return new reversi.v2_player.Player(betas, depth);
+    function learningPlayer(depth, random_weight) {
+        random_weight = random_weight || 0;
+        return new reversi.v2_player.Player(betas, depth, random_weight);
+
     }
 
-    function buildPlayer(midDepth) {
+    function buildPlayer(midDepth, random_weight) {
+        random_weight = random_weight || 0;
         return new reversi.PhasePlayer([
-            [6, new reversi.SemiRandom(
-                learningPlayer(3))],
-            [51, learningPlayer(midDepth)],
+            [51, learningPlayer(midDepth, random_weight)],
             [61, learningPlayer(8)]
         ]);
     }
@@ -30,7 +31,7 @@ var reversi = (function(my) {
         this.board = reversi.getInitialBoard();
         this.display = new reversi.Display(this.canvas, this.board);
         this.player1 = new reversi.UIPlayer(reversi.BLACK, this.display);
-        this.player2 = buildPlayer(2);
+        this.player2 = buildPlayer(2, 0.1);
 
         var node, choices,  i,
             that = this;
@@ -197,7 +198,7 @@ var reversi = (function(my) {
                     } else {
                         alert('bug');
                     }
-                    newP = buildPlayer(depth);
+                    newP = buildPlayer(depth, 0.1);
                 }
                 if(playerNumber === 1) {
                     this.player1 = newP;

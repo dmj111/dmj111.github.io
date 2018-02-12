@@ -783,20 +783,19 @@ var reversi = (function(my) {
             pv = null;
             this.startTime = null;
             best = this.search(board.player, board, -Infinity,
-                               Infinity, 1, pv);
+                               Infinity, 1, pv, []);
+            pv = best.pv;
             this.startTime = new Date();
 
             try  {
                 for(var depth = 2; depth <= this.maxDepth; depth += 1) {
                     this.depth = depth;
                     newBest = this.search(board.player, board, -Infinity,
-                                          Infinity, depth, pv);
+                                          Infinity, depth, pv, []);
                     best = newBest;
-                    if(this.verbose) {
-                        console.log('player ' + board.player +
-                                    ' best at depth ' + depth + ' score ' +
-                                    best.score + ' move ' + best.move);
-                    }
+                    console.log('player ' + board.player +
+                                ' best at depth ' + depth + ' score ' +
+                                best.score.toFixed(5) + ' move ' + best.move);
                     pv = best.pv;
 
                     // TODO: this isn't catch what we think it is catching..
@@ -817,20 +816,20 @@ var reversi = (function(my) {
                 console.log('did ' + this.count + ' calls to search ' +
                             best.score + ' ' + best.move);
             }
-            console.log('%c best move: %d  score: %f  player:%d',
-                        'font-weight: bold', best.move, best.score,
+            console.log('%c best move: %d  score: %s  player:%d',
+                        'font-weight: bold', best.move, (best.score).toFixed(5),
                         board.player);
             return best;
         },
 
 
-        search: function(player, board, achievable, cutoff, depth, pv) {
+        search: function(player, board, achievable, cutoff, depth, pv, seq) {
             var moves,
                 that = this,
                 opp = my.opponent(player),
                 s,
                 i, newBoard,
-                best = {score: achievable,
+                best = {score: -Infinity,
                         move: 'cutoff',
                         player: player},
                 newDepth;
@@ -860,7 +859,7 @@ var reversi = (function(my) {
                 if(pv && pv.length) { pv = pv.slice(1); }
                 if(board.anyLegalMove(my.opponent(player))) {
                     s = this.search(my.opponent(player), board, -cutoff,
-                                    -achievable, depth, pv);
+                                    -achievable, depth, pv, seq);
                     return {score: -s.score,
                             move: 'no move',
                             child: s,
@@ -899,10 +898,16 @@ var reversi = (function(my) {
                 for(i = 0; i < moves.length; i += 1) {
                     newBoard = board.makeMove(moves[i], board.player);
 
+
                     newDepth = depth;
                     if(moves.length === 0) { newDepth = depth; }
+                    seq.push(moves[i]);
                     s = that.search(opp, newBoard, -cutoff,
-                                    -best.score, newDepth - 1, pv);
+                                    -achievable, newDepth - 1, pv, seq);
+                    seq.pop();
+                    if (seq.length == 0) {
+                        console.log('move %s score %s', moves[i], (-s.score).toFixed(5));
+                    }
                     pv = [];
                     if(-s.score > best.score) {
                         best = {
@@ -912,8 +917,11 @@ var reversi = (function(my) {
                             pv: [moves[i]].concat(s.pv),
                             over: s.over
                         };
+                        if (best.score > achievable) {
+                            achievable = best.score;
+                        }
                     }
-                    if(best.score >= cutoff) {
+                    if(achievable >= cutoff) {
                         break;
                     }
                 }
@@ -1647,7 +1655,9 @@ var reversi = (function(my) {
         return keys.reduce((acc, key) => acc + weights[key], 0);
     }
 
-    function Player(weights, depth) {
+    function Player(weights, depth, random_weight) {
+        this.random_weight = random_weight || 0;
+
         this.weights = weights;
         this.ab = new reversi.AlphaBeta6({maxDepth: depth,
                                           scoreFunction: board=>this.score(board),
@@ -1659,7 +1669,7 @@ var reversi = (function(my) {
             var keys = reversi.v2_patterns.evaluate_position(board.pieces()),
                 weights = this.get_weights(board);
             // keys.forEach(k => { console.log(k + " " + weights[k]); });
-            return logistic_eval(weights, keys);
+            return logistic_eval(weights, keys) + Math.random() * this.random_weight;
         },
 
         get_weights: function(board) {
