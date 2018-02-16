@@ -786,7 +786,9 @@ var reversi = (function(my) {
                                Infinity, 1, pv, []);
             pv = best.pv;
             this.startTime = new Date();
-
+            console.log('player ' + board.player +
+                        ' best at depth ' + 1 + ' score ' +
+                        best.score.toFixed(5) + ' move ' + best.move);
             try  {
                 for(var depth = 2; depth <= this.maxDepth; depth += 1) {
                     this.depth = depth;

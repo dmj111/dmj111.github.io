@@ -2,11 +2,6 @@
 
 var reversi = (function(my) {
     'use strict';
-    var learner;
-
-    function scoreFunction(board) {
-        return learner.score(board);
-    }
 
     function learningPlayer(depth, random_weight) {
         random_weight = random_weight || 0;
@@ -221,8 +216,6 @@ var reversi = (function(my) {
 
     window.addEventListener('load', function() {
         // window.reversi = my.reversi;
-        learner = new reversi.bayesScore.BayesScore(reversiLearnerCounts);
-
         var status = document.getElementById('loadStatus');
         status.style.display = 'none';
         window.UI = new UI();
