@@ -1,97 +1,101 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Dave Jones">
-    <title>Quick select | a mingled cup</title>
-    
-            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
-            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
-      <link rel="canonical" href="http://dave.dkjones.org/posts/2014/quick-select.html">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
-
-    
-
-
-
-
-
-    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quick select | a mingled cup</title>
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/html4css1.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://dave.dkjones.org/posts/2014/quick-select.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Dave Jones">
+<link rel="prev" href="alpha-beta-tictactoe.html" title="Alpha-Beta Pruning" type="text/html">
+<link rel="next" href="raytracer.html" title="Raytracer" type="text/html">
+<meta property="og:site_name" content="a mingled cup">
+<meta property="og:title" content="Quick select">
+<meta property="og:url" content="http://dave.dkjones.org/posts/2014/quick-select.html">
+<meta property="og:description" content="Why would a programmer want to write their own sort function?
+First, and most importantly, to learn about algorithms and
+programming.  Also, a language or library sometimes has an inadequate
+sort func">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-03-06T23:25:35-05:00">
+<meta property="article:tag" content="mathjax">
 </head>
 <body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
 <!-- Menubar -->
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid"><!-- This keeps the margins nice -->
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
-        </div><!-- /.navbar-header -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <a class="navbar-brand" href="http://dave.dkjones.org/">
+
+                <span id="blog-title">a mingled cup</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
-                
-                <li><a href="../../archive.html">Archives</a>
-                </li><li><a href="../../stories/">Pages</a>
-                </li><li><a href="../../rss.xml">RSS</a>
+<li>
+<a href="../../archive.html">Archives</a>
+                </li>
+<li>
+<a href="../../stories/">Pages</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS</a>
 
-            </li></ul>
-
-            <ul class="nav navbar-nav navbar-right">
                 
-                
-                    
-    <li>
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
     <a href="quick-select.rst" id="sourcelink">Source</a>
     </li>
 
+                
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-
-<!-- End of Menubar -->
-
-<div class="container">
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
-    <article class="postbox post-text">
-    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
-    
-    <h1 class="p-name" itemprop="headline name">Quick select</h1>
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Quick select</a></h1>
 
-    <hr>
-    <small>
-        Posted: <time class="published dt-published" datetime="2014-03-06T23:25:35-05:00" itemprop="datePublished">2014-03-06 23:25</time>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Dave Jones
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-03-06T23:25:35-05:00" itemprop="datePublished" title="2014-03-06 23:25">2014-03-06 23:25</time></a></p>
+            
+        <p class="sourceline"><a href="quick-select.rst" class="sourcelink">Source</a></p>
+
+        </div>
         
 
-        
-          |  
-        More posts about 
-    <span itemprop="keywords">
-        <a class="tag p-category" href="../../categories/mathjax.html"><span class="badge badge-info">mathjax</span></a>
-    </span>
-
-
-    </small>
-    <hr>
-    <div class="e-content" itemprop="articleBody text">
-    <div><p>Why would a programmer want to write <a class="reference external" href="js-quicksort.html">their own sort function</a>?</p>
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>Why would a programmer want to write <a class="reference external" href="js-quicksort.html">their own sort function</a>?</p>
 <p>First, and most importantly, to learn about algorithms and
 programming.  Also, a language or library sometimes has an inadequate
 sort function for a specific situation.</p>
@@ -105,12 +109,9 @@ element we are looking for.</p>
 <p>The C++ STL contains a <a class="reference external" href="http://www.cplusplus.com/reference/algorithm/partition/">partition</a> function that can do just what we
 want.  Sometimes a language / library doesn't include this
 functionality.</p>
-<p>Quickselect is an <span class="math">\(O(n)\)</span>
- algorithm in the average case, which
-sounds much better than the <span class="math">\(O(n \log n)\)</span>
- case for Quicksort.
-But, once <span class="math">\(n\)</span>
- gets large enough, these two grow at about the
+<p>Quickselect is an <span class="math">\(O(n)\)</span> algorithm in the average case, which
+sounds much better than the <span class="math">\(O(n \log n)\)</span> case for Quicksort.
+But, once <span class="math">\(n\)</span> gets large enough, these two grow at about the
 same rate.  The bigger win is that Quickselect has a lower constant,
 so even though both it and Quicksort grow at about the same rate,
 Quickselect is a few times faster on random data.</p>
@@ -126,33 +127,32 @@ partitioning function on the subarray that contains the middle point.
 </ul>
 <p>We also jump out early instead of breaking the array down to a single
 element, and use insertion sort on the last chunk of the array.</p>
-<pre class="code javascript literal-block">
-<span class="ln"> 1 </span>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
-<span class="ln"> 2 </span>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-<span class="ln"> 3 </span>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
-<span class="ln"> 4 </span>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
-<span class="ln"> 5 </span>            <span class="nx">idxs</span><span class="p">;</span>
-<span class="ln"> 6 </span>
-<span class="ln"> 7 </span>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
-<span class="ln"> 8 </span>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<span class="ln"> 9 </span>
-<span class="ln">10 </span>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<span class="ln">11 </span>                <span class="c1">// search left
-</span><span class="ln">12 </span><span class="c1"></span>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-<span class="ln">13 </span>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<span class="ln">14 </span>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
-<span class="ln">15 </span>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<span class="ln">16 </span>                <span class="c1">// We have contained the element!
-</span><span class="ln">17 </span><span class="c1"></span>                <span class="k">break</span><span class="p">;</span>
-<span class="ln">18 </span>            <span class="p">}</span>
-<span class="ln">19 </span>        <span class="p">}</span>
-<span class="ln">20 </span>
-<span class="ln">21 </span>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<span class="ln">22 </span>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-<span class="ln">23 </span>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
-<span class="ln">24 </span>        <span class="p">}</span>
-<span class="ln">25 </span>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
-<span class="ln">26 </span>    <span class="p">}</span>
+<pre class="code javascript"><a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-6"></a>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-9"></a>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-11"></a>                <span class="c1">// search left</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-16"></a>                <span class="c1">// We have contained the element!</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-17"></a>                <span class="k">break</span><span class="p">;</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-18"></a>            <span class="p">}</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-19"></a>        <span class="p">}</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-20"></a>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-24"></a>        <span class="p">}</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
+<a name="rest_code_514a019aa8d9426c9fbbd3feb70d076b-26"></a>    <span class="p">}</span>
 </pre>
 <p>This function can be generalized to find a different value than the
 center value, or even to find several percentiles at once.</p>
@@ -165,92 +165,86 @@ Chrome.</p>
 <col width="33%">
 <col width="33%">
 </colgroup>
-<thead valign="bottom">
-<tr><th class="head">data type</th>
+<thead valign="bottom"><tr>
+<th class="head">data type</th>
 <th class="head">quick sort</th>
 <th class="head">quick select median</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody valign="top">
-<tr><td>random double</td>
+<tr>
+<td>random double</td>
 <td>0.15</td>
 <td>0.02</td>
 </tr>
-<tr><td>sawtooth <a class="footnote-reference" href="quick-select.html#id2" id="id1">[1]</a></td>
+<tr>
+<td>sawtooth <a class="footnote-reference" href="quick-select.html#id2" id="id1">[1]</a>
+</td>
 <td>0.02</td>
 <td>0.02</td>
 </tr>
-<tr><td>ordered</td>
+<tr>
+<td>ordered</td>
 <td>0.04</td>
 <td>0.02</td>
 </tr>
-<tr><td>reversed</td>
+<tr>
+<td>reversed</td>
 <td>0.05</td>
 <td>0.02</td>
 </tr>
-<tr><td>shuffled</td>
+<tr>
+<td>shuffled</td>
 <td>0.15</td>
 <td>0.03</td>
 </tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
-<colgroup><col class="label"><col></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="quick-select.html#id1">[1]</a></td><td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
-whole way to the end of the array.</td></tr>
-</tbody>
+<colgroup>
+<col class="label">
+<col>
+</colgroup>
+<tbody valign="top"><tr>
+<td class="label"><a class="fn-backref" href="quick-select.html#id1">[1]</a></td>
+<td>The values in the array are 0, 1, 2, 3, 0, 1, 2, 3, … the
+whole way to the end of the array.</td>
+</tr></tbody>
 </table>
 <p>Here is a <a class="reference external" href="../../code/quicksort1/quickselect.test.html">link to the test driver</a> that launches directly into the
-tests.  It runs in Chrome, but hasn't been tested extensively.</p></div>
+tests.  It runs in Chrome, but hasn't been tested extensively.</p>
+</div>
     </div>
-    </div>
-    
-        <ul class="pager">
-            <li class="previous">
-                <a href="alpha-beta-tictactoe.html" rel="prev">← Previous post</a>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/mathjax.html" rel="tag">mathjax</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="alpha-beta-tictactoe.html" rel="prev" title="Alpha-Beta Pruning">Previous post</a>
             </li>
             <li class="next">
-                <a href="raytracer.html" rel="next">Next post →</a>
+                <a href="raytracer.html" rel="next" title="Raytracer">Next post</a>
             </li>
-        </ul>
-
-        
-
-    
-        <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-          tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}
-        });
-        </script>
-        <script src="../../assets/js/mathjax.js"></script>
-
-    </article>
-
-        </div>
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
+        </script></article>
+</div>
         <!--End of body content-->
 
-        <footer>
-            Contents © 2014
+        <footer id="footer">
+            Contents © 2018
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
+            
         </footer>
-    </div>
+</div>
 </div>
 
 
-            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
-
-
-    
-
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
-    
-
-<script type="text/javascript">
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28171814-1']);
@@ -263,6 +257,5 @@ tests.  It runs in Chrome, but hasn't been tested extensively.</p></div>
   })();
 
 </script>
-
 </body>
 </html>

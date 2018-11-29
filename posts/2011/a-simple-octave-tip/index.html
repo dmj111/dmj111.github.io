@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A simple Octave tip | a mingled cup</title>
+<link href="../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.xml">
+<link rel="canonical" href="http://dave.dkjones.org/posts/2011/a-simple-octave-tip/">
+<!--[if lt IE 9]><script src="../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Dave Jones">
+<link rel="prev" href="../posting-from-emacs-with-org2blog-wp/" title="Posting from emacs with org2blog/wp" type="text/html">
+<link rel="next" href="../2011-12-18-stanford-online-classes/" title="Stanford Online Classes" type="text/html">
+<meta property="og:site_name" content="a mingled cup">
+<meta property="og:title" content="A simple Octave tip">
+<meta property="og:url" content="http://dave.dkjones.org/posts/2011/a-simple-octave-tip/">
+<meta property="og:description" content="Matlab and Octave are both great for quickly trying out numeric code,
+especially using linear algebra.  Many times code can be written to
+use the built in matrix operators instead of using loops.  Thi">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2011-11-19T00:00:00-05:00">
+<meta property="article:tag" content="mathjax">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href="http://dave.dkjones.org/">
+
+            <span id="blog-title">a mingled cup</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="index.rst" id="sourcelink" class="nav-link">Source</a>
+    </li>
+
+
+                    
+            </ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100">
+<li class="nav-item">
+<a href="../../../archive.html" class="nav-link">Archives</a>
+                </li>
+<li class="nav-item">
+<a href="../../../stories/" class="nav-link">Pages</a>
+                </li>
+<li class="nav-item">
+<a href="../../../rss.xml" class="nav-link">RSS</a>
+
+                
+            </li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">A simple Octave tip</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Dave Jones
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2011-11-19T00:00:00-05:00" itemprop="datePublished" title="2011-11-19 00:00">2011-11-19 00:00</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<!-- alias : [/posts/2011/2011-11-19-a-simple-octave-tip.html] -->
+<!-- /blog/2011/11/19/a-simple-octave-tip/index.html -->
+<!-- use_mathjax: true -->
+<!-- mathjax tip here -->
+<!-- http://ralsina.com.ar/weblog/posts/math-works-now.txt -->
+<p>Matlab and <a class="reference external" href="http://www.gnu.org/software/octave/">Octave</a> are both great for quickly trying out numeric code,
+especially using linear algebra.  Many times code can be written to
+use the built in matrix operators instead of using loops.  This makes
+the code clearer and faster.  The following examples all use Octave.</p>
+<p>First, consider this formula</p>
+<div class="math">
+\begin{equation*}
+S = \sum_{i=1}^n x_i  y_i
+\end{equation*}
+</div>
+<p><tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> are one dimensional vectors in Octave, so we can find
+<span class="math">\(S\)</span> with this code:</p>
+<pre class="code octave"><a name="rest_code_1aa6a5cb60ca41708eea9adebf1c4f42-1"></a><span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_1aa6a5cb60ca41708eea9adebf1c4f42-2"></a><span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<a name="rest_code_1aa6a5cb60ca41708eea9adebf1c4f42-3"></a><span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+<a name="rest_code_1aa6a5cb60ca41708eea9adebf1c4f42-4"></a>  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="rest_code_1aa6a5cb60ca41708eea9adebf1c4f42-5"></a><span class="k">end</span>
+</pre>
+<p>That code is straight forward.  Octave can do more, though.  The =.*=
+operator does an element by element multiplication over matrices, and
+=sum= adds up the elements in a matrix.  Since our matrices are
+one-dimensional, we can compose these functions to get our result, at
+the cost of creating a temporary matrix.</p>
+<pre class="code octave"><a name="rest_code_cb4f3f17004d40c1a8cb70c545828ff5-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
+</pre>
+<p>Finally, Octave already has a function that does what we want.  The
+formula we are looking at is the dot product of two vectors, so in
+Octave, we can do</p>
+<pre class="code octave"><a name="rest_code_80a411f7a04d4f95a0140a9659d25d45-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre>
+<p>The first attempt is the clearest when you do not know what <tt class="docutils literal">.*</tt>,
+<tt class="docutils literal">sum</tt>, and <tt class="docutils literal">dot</tt> do.  But, once you know what <tt class="docutils literal">sum</tt> and <tt class="docutils literal">dot</tt>
+do, they are much clearer.  Also, they are much faster in Octave than
+the naive loop.</p>
+<p>The next listing shows a test driver to compare the three methods.</p>
+<pre class="code octave"><a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-1"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-2"></a><span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-3"></a>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-4"></a><span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-5"></a>    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-6"></a>    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-7"></a>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-8"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-9"></a>    <span class="nb">tic</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-10"></a>    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-11"></a>    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-12"></a>      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-13"></a>    <span class="k">end</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-14"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-15"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-16"></a>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-17"></a>    <span class="nb">tic</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-18"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-19"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-20"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-21"></a>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-22"></a>    <span class="nb">tic</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-23"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-24"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-25"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_d2b766700a21429da24f66aa5cbccdfb-26"></a>  <span class="k">end</span>
+</pre>
+<p>Running this code gives us the following results.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%">
+<col width="19%">
+<col width="36%">
+<col width="25%">
+</colgroup>
+<thead valign="bottom"><tr>
+<th class="head">method</th>
+<th class="head">size</th>
+<th class="head">result</th>
+<th class="head">time</th>
+</tr></thead>
+<tbody valign="top">
+<tr>
+<td>for</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000744</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000055</td>
+</tr>
+<tr>
+<td>dot</td>
+<td>100</td>
+<td>24.266291</td>
+<td>0.000018</td>
+</tr>
+<tr>
+<td>for</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.007198</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.000016</td>
+</tr>
+<tr>
+<td>dot</td>
+<td>1000</td>
+<td>247.065638</td>
+<td>0.000017</td>
+</tr>
+<tr>
+<td>for</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.074163</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.000083</td>
+</tr>
+<tr>
+<td>dot</td>
+<td>10000</td>
+<td>2507.387623</td>
+<td>0.000029</td>
+</tr>
+<tr>
+<td>for</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.736105</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.000656</td>
+</tr>
+<tr>
+<td>dot</td>
+<td>100000</td>
+<td>25090.247927</td>
+<td>0.000095</td>
+</tr>
+<tr>
+<td>for</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>7.334975</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>0.006773</td>
+</tr>
+<tr>
+<td>dot</td>
+<td>1000000</td>
+<td>249863.296971</td>
+<td>0.001246</td>
+</tr>
+</tbody>
+</table>
+<p>As a general rule, we should always try to use the language and tools,
+instead of doing things ourselves.  Often, this is mostly a matter of
+learning what is available.</p>
+<p>Sometimes, though we want to <em>learn</em> how something works. Then, of
+course, it makes sense to do it ourselves instead of just making a
+call to existing code.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../categories/mathjax/" rel="tag">mathjax</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../posting-from-emacs-with-org2blog-wp/" rel="prev" title="Posting from emacs with org2blog/wp">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../2011-12-18-stanford-online-classes/" rel="next" title="Stanford Online Classes">Next post</a>
+            </li>
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
+        </script></article><!--End of body content--><footer id="footer">
+            Contents © 2018
+<a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
+<a href="http://getnikola.com" rel="nofollow">Nikola</a>
+
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28171814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

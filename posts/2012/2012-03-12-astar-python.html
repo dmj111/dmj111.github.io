@@ -1,91 +1,102 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Dave Jones">
-    <title>A* in Python | a mingled cup</title>
-    
-            <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
-            <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
-      <link rel="canonical" href="http://dave.dkjones.org/posts/2012/2012-03-12-astar-python.html">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A* in Python | a mingled cup</title>
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/html4css1.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://dave.dkjones.org/posts/2012/2012-03-12-astar-python.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Dave Jones">
+<link rel="prev" href="2012-01-25-sieve-in-racket.html" title="Sieve of Eratosthenes in Racket" type="text/html">
+<link rel="next" href="2012-04-24-quicksort-in-d.html" title="Quicksort in D" type="text/html">
+<meta property="og:site_name" content="a mingled cup">
+<meta property="og:title" content="A* in Python">
+<meta property="og:url" content="http://dave.dkjones.org/posts/2012/2012-03-12-astar-python.html">
+<meta property="og:description" content="A* is a directed
+search algorithm.  Given a good heuristic function, it can perform
+much better than a blind breadth-first search.
 
-    
-
-
-
-
-
-    
+A* code
+First, the main algorithm itself.  I like using Python for l">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2012-03-12T00:00:00-04:00">
 </head>
 <body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
 <!-- Menubar -->
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid"><!-- This keeps the margins nice -->
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://dave.dkjones.org/">a mingled cup</a>
-        </div><!-- /.navbar-header -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <a class="navbar-brand" href="http://dave.dkjones.org/">
+
+                <span id="blog-title">a mingled cup</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
-                
-                <li><a href="../../archive.html">Archives</a>
-                </li><li><a href="../../stories/">Pages</a>
-                </li><li><a href="../../rss.xml">RSS</a>
+<li>
+<a href="../../archive.html">Archives</a>
+                </li>
+<li>
+<a href="../../stories/">Pages</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS</a>
 
-            </li></ul>
-
-            <ul class="nav navbar-nav navbar-right">
                 
-                
-                    
-    <li>
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
     <a href="2012-03-12-astar-python.rst" id="sourcelink">Source</a>
     </li>
 
+                
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-
-<!-- End of Menubar -->
-
-<div class="container">
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
-    <article class="postbox post-text">
-    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
-    
-    <h1 class="p-name" itemprop="headline name">A* in Python</h1>
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">A* in Python</a></h1>
 
-    <hr>
-    <small>
-        Posted: <time class="published dt-published" datetime="2012-03-12T00:00:00-04:00" itemprop="datePublished">2012-03-12 00:00</time>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Dave Jones
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2012-03-12T00:00:00-04:00" itemprop="datePublished" title="2012-03-12 00:00">2012-03-12 00:00</time></a></p>
+            
+        <p class="sourceline"><a href="2012-03-12-astar-python.rst" class="sourcelink">Source</a></p>
+
+        </div>
         
 
-        
-
-    </small>
-    <hr>
-    <div class="e-content" itemprop="articleBody text">
-    <div><p><a class="reference external" href="http://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> is a directed
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> is a directed
 search algorithm.  Given a good heuristic function, it can perform
 much better than a blind breadth-first search.</p>
 <div class="section" id="a-code">
@@ -96,42 +107,41 @@ class.  This allows us to write a generic A* function that works on
 many problems.</p>
 <p>(Python is not unique in this.  But it is still fun.)</p>
 <p>Here is the main solving code.</p>
-<pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">heapq</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">heuristic</span><span class="p">):</span>
-    <span class="sd">"""Find the shortest path from START to FINISH."""</span>
-    <span class="n">heap</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="n">link</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># parent node link</span>
-    <span class="n">h</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># heuristic function cache</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># shortest path to a node</span>
-
-    <span class="n">g</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">h</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">link</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-
-
-    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
-    <span class="c"># keep a count of the  number of steps, and avoid an infinite loop.</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-        <span class="n">f</span><span class="p">,</span> <span class="n">junk</span><span class="p">,</span> <span class="n">current</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="n">finish</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">"distance:"</span><span class="p">,</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="s">"steps:"</span><span class="p">,</span> <span class="n">kk</span>
-            <span class="k">return</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="n">kk</span><span class="p">,</span> <span class="n">build_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
-
-        <span class="n">moves</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">get_moves</span><span class="p">()</span>
-        <span class="n">distance</span> <span class="o">=</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">mv</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">mv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">g</span> <span class="ow">or</span> <span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="n">mv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
-                    <span class="n">h</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">heuristic</span><span class="p">(</span><span class="n">mv</span><span class="p">)</span>
-                <span class="n">link</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span>
-                <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="n">mv</span><span class="p">],</span> <span class="o">-</span><span class="n">kk</span><span class="p">,</span> <span class="n">mv</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">"did not find a solution"</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_692fc79759a240b78e24367b7eb7c750-1"></a><span class="kn">import</span> <span class="nn">heapq</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-2"></a><span class="kn">import</span> <span class="nn">math</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-3"></a><span class="kn">import</span> <span class="nn">random</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-4"></a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">heuristic</span><span class="p">):</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-5"></a>    <span class="sd">"""Find the shortest path from START to FINISH."""</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-6"></a>    <span class="n">heap</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-7"></a>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-8"></a>    <span class="n">link</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># parent node link</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-9"></a>    <span class="n">h</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># heuristic function cache</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-10"></a>    <span class="n">g</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># shortest path to a node</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-11"></a>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-12"></a>    <span class="n">g</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-13"></a>    <span class="n">h</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-14"></a>    <span class="n">link</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-15"></a>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-16"></a>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-17"></a>    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-18"></a>    <span class="c1"># keep a count of the  number of steps, and avoid an infinite loop.</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-19"></a>    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-20"></a>        <span class="n">f</span><span class="p">,</span> <span class="n">junk</span><span class="p">,</span> <span class="n">current</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-21"></a>        <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="n">finish</span><span class="p">:</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-22"></a>            <span class="k">print</span> <span class="s2">"distance:"</span><span class="p">,</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="s2">"steps:"</span><span class="p">,</span> <span class="n">kk</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-23"></a>            <span class="k">return</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="n">kk</span><span class="p">,</span> <span class="n">build_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-24"></a>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-25"></a>        <span class="n">moves</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">get_moves</span><span class="p">()</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-26"></a>        <span class="n">distance</span> <span class="o">=</span> <span class="n">g</span><span class="p">[</span><span class="n">current</span><span class="p">]</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-27"></a>        <span class="k">for</span> <span class="n">mv</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-28"></a>            <span class="k">if</span> <span class="n">mv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">g</span> <span class="ow">or</span> <span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-29"></a>                <span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-30"></a>                <span class="k">if</span> <span class="n">mv</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-31"></a>                    <span class="n">h</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">heuristic</span><span class="p">(</span><span class="n">mv</span><span class="p">)</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-32"></a>                <span class="n">link</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-33"></a>                <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">mv</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="n">mv</span><span class="p">],</span> <span class="o">-</span><span class="n">kk</span><span class="p">,</span> <span class="n">mv</span><span class="p">))</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-34"></a>    <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_692fc79759a240b78e24367b7eb7c750-35"></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"did not find a solution"</span><span class="p">)</span>
 </pre>
 <p><tt class="docutils literal">solve</tt> takes two <em>positions</em>, a start and finish, and a heuristic
 function.  The heuristic function must always return a distance that
@@ -163,28 +173,26 @@ time.</p>
 <p>The function <tt class="docutils literal">build_path</tt> reconstructs the path to the solution for
 us.  This is useful for debugging, and because we often want to know
 the path, not just the path length.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">build_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-    <span class="sd">"""
-    Reconstruct the path from start to finish given
-    a dict of parent links.
-
-    """</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">finish</span>
-    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
-    <span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">start</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
-        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">xs</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">xs</span>
+<pre class="code python"><a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-1"></a><span class="k">def</span> <span class="nf">build_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-2"></a>    <span class="sd">"""</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-3"></a><span class="sd">    Reconstruct the path from start to finish given</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-4"></a><span class="sd">    a dict of parent links.</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-5"></a>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-6"></a><span class="sd">    """</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-7"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">finish</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-8"></a>    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-9"></a>    <span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">start</span><span class="p">:</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-10"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-11"></a>        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-12"></a>    <span class="n">xs</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<a name="rest_code_6bc740d041f641b79bdb7ae9706e23e2-13"></a>    <span class="k">return</span> <span class="n">xs</span>
 </pre>
 <p>Here is a heuristic that does nothing, just for testing.  Using this
 heuristic will lead to Dijkstra's algorithm, which is a good, but
 uninformed search algorithm.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">no_heuristic</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-   <span class="sd">"""Dummy heuristic that doesn't do anything"""</span>
-   <span class="k">return</span> <span class="mi">0</span>
+<pre class="code python"><a name="rest_code_8fa3b588f7134be3a988dd41e3b8bd74-1"></a><span class="k">def</span> <span class="nf">no_heuristic</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<a name="rest_code_8fa3b588f7134be3a988dd41e3b8bd74-2"></a>   <span class="sd">"""Dummy heuristic that doesn't do anything"""</span>
+<a name="rest_code_8fa3b588f7134be3a988dd41e3b8bd74-3"></a>   <span class="k">return</span> <span class="mi">0</span>
 </pre>
 </div>
 <div class="section" id="a-grid-example">
@@ -192,38 +200,35 @@ uninformed search algorithm.</p>
 <p>Here is a simple test class where the program must find a path on a
 rectangular grid.  We will assume the grid is infinite, but will also
 hope that our search doesn't go that far off course.</p>
-<pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">GridPosition</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">"""Represent a position on a grid."""</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">"GridPosition(</span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
-
-    <span class="k">def</span> <span class="nf">get_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># There are times when returning this in a shuffled order</span>
-        <span class="c"># would help avoid degenerate cases.  For learning, though,</span>
-        <span class="c"># life is easier if the algorithm behaves predictably.</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-1"></a><span class="k">class</span> <span class="nc">GridPosition</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-2"></a>    <span class="sd">"""Represent a position on a grid."""</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-6"></a>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-7"></a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-8"></a>        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-9"></a>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-10"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-11"></a>        <span class="k">return</span> <span class="s2">"GridPosition(</span><span class="si">%d</span><span class="s2">,</span><span class="si">%d</span><span class="s2">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-12"></a>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-13"></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-14"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-15"></a>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-16"></a>    <span class="k">def</span> <span class="nf">get_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-17"></a>        <span class="c1"># There are times when returning this in a shuffled order</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-18"></a>        <span class="c1"># would help avoid degenerate cases.  For learning, though,</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-19"></a>        <span class="c1"># life is easier if the algorithm behaves predictably.</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-20"></a>        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-21"></a>        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-22"></a>        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_db0d8b7c8e8243399945c0b4168948bc-23"></a>        <span class="k">yield</span> <span class="n">GridPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 </pre>
-<pre class="code python literal-block">
-<span class="n">grid_start</span> <span class="o">=</span> <span class="n">GridPosition</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">grid_end</span> <span class="o">=</span> <span class="n">GridPosition</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_471262f8274f42eeb11ff6535f3f93aa-1"></a><span class="n">grid_start</span> <span class="o">=</span> <span class="n">GridPosition</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_471262f8274f42eeb11ff6535f3f93aa-2"></a><span class="n">grid_end</span> <span class="o">=</span> <span class="n">GridPosition</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
 </pre>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">grid_test_no_heuristic</span><span class="p">():</span>
-   <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">no_heuristic</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_16ac4d441ba149c5a925ff81b2861d10-1"></a><span class="k">def</span> <span class="nf">grid_test_no_heuristic</span><span class="p">():</span>
+<a name="rest_code_16ac4d441ba149c5a925ff81b2861d10-2"></a>   <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">no_heuristic</span><span class="p">)</span>
 </pre>
 <p>This gives us:</p>
 <pre class="literal-block">
@@ -231,16 +236,14 @@ distance: 20 steps: 840
 </pre>
 <p>Now, we can add a heuristic.  An obvious one is to Euclidean distance,
 since the shortest path between two points is a straight line.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">euclidean_h</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
-        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">y</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">f</span>
+<pre class="code python"><a name="rest_code_bc7c616ccc654d0d8b8f9ada2b7be391-1"></a><span class="k">def</span> <span class="nf">euclidean_h</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
+<a name="rest_code_bc7c616ccc654d0d8b8f9ada2b7be391-2"></a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+<a name="rest_code_bc7c616ccc654d0d8b8f9ada2b7be391-3"></a>        <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">y</span>
+<a name="rest_code_bc7c616ccc654d0d8b8f9ada2b7be391-4"></a>        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+<a name="rest_code_bc7c616ccc654d0d8b8f9ada2b7be391-5"></a>    <span class="k">return</span> <span class="n">f</span>
 </pre>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">grid_test_euclidean_heuristic</span><span class="p">():</span>
-    <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">euclidean_h</span><span class="p">(</span><span class="n">grid_end</span><span class="p">))</span>
+<pre class="code python"><a name="rest_code_4f0094ec0c754e6993ee4bc8401763aa-1"></a><span class="k">def</span> <span class="nf">grid_test_euclidean_heuristic</span><span class="p">():</span>
+<a name="rest_code_4f0094ec0c754e6993ee4bc8401763aa-2"></a>    <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">euclidean_h</span><span class="p">(</span><span class="n">grid_end</span><span class="p">))</span>
 </pre>
 <pre class="literal-block">
 distance: 20 steps: 134
@@ -251,16 +254,14 @@ to left, right, up and down, we can use Manhattan distance as the
 heuristic.  In this simple case, Manhattan distance is a perfect
 heuristic.  Adding obstacles, or changing the cost of moving
 through grid points would keep Manhattan from being perfect.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">manhattan_h</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
-   <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
-       <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">y</span>
-       <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span>
-   <span class="k">return</span> <span class="n">f</span>
+<pre class="code python"><a name="rest_code_fccaf4291dc74539a2afa1d9c9d9a497-1"></a><span class="k">def</span> <span class="nf">manhattan_h</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
+<a name="rest_code_fccaf4291dc74539a2afa1d9c9d9a497-2"></a>   <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+<a name="rest_code_fccaf4291dc74539a2afa1d9c9d9a497-3"></a>       <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">goal</span><span class="o">.</span><span class="n">y</span>
+<a name="rest_code_fccaf4291dc74539a2afa1d9c9d9a497-4"></a>       <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span>
+<a name="rest_code_fccaf4291dc74539a2afa1d9c9d9a497-5"></a>   <span class="k">return</span> <span class="n">f</span>
 </pre>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">grid_test_manhattan_heuristic</span><span class="p">():</span>
-    <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">manhattan_h</span><span class="p">(</span><span class="n">grid_end</span><span class="p">))</span>
+<pre class="code python"><a name="rest_code_16b11a1aa2c146e68716f88251113460-1"></a><span class="k">def</span> <span class="nf">grid_test_manhattan_heuristic</span><span class="p">():</span>
+<a name="rest_code_16b11a1aa2c146e68716f88251113460-2"></a>    <span class="n">solve</span><span class="p">(</span><span class="n">grid_start</span><span class="p">,</span> <span class="n">grid_end</span><span class="p">,</span> <span class="n">manhattan_h</span><span class="p">(</span><span class="n">grid_end</span><span class="p">))</span>
 </pre>
 <pre class="literal-block">
 distance: 20 steps: 20
@@ -274,93 +275,89 @@ context of the classic <a class="reference external" href="https://en.wikipedia.
 just eight pieces.</p>
 <p>Here is a class for the block puzzle.  Usually the 15 puzzle is used,
 but the 8 puzzle is a lot faster to solve.</p>
-<pre class="code python literal-block">
-<span class="k">class</span> <span class="nc">BlockPuzzle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">"""Create an nxn block puzzle
-
-        Use XS to initialize to a specific state.
-        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
-        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">)]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_move</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">"BlockPuzzle(</span><span class="si">%d</span><span class="s">, </span><span class="si">%s</span><span class="s">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="s">"</span><span class="si">%2d</span><span class="s">"</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">]</span>
-        <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="n">kk</span><span class="p">:</span><span class="n">kk</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xs</span>
-
-    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">get_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Find the 0 tile, and then generate any moves we</span>
-        <span class="c"># can by sliding another block into its place.</span>
-        <span class="n">tile0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-            <span class="n">j</span> <span class="o">=</span> <span class="n">tile0</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
-            <span class="n">last_move</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">last_move</span> <span class="o">=</span> <span class="n">last_move</span>
-            <span class="k">return</span> <span class="n">result</span>
-
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tile0</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_f0d064dd123b4daea15f97cec327daf6-1"></a><span class="k">class</span> <span class="nc">BlockPuzzle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-3"></a>        <span class="sd">"""Create an nxn block puzzle</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-4"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-5"></a><span class="sd">        Use XS to initialize to a specific state.</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-6"></a><span class="sd">        """</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-9"></a>        <span class="k">if</span> <span class="n">xs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-10"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">)]</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-11"></a>        <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-12"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="o">=</span> <span class="bp">None</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">last_move</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-15"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-16"></a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-17"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-18"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">))</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-19"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hsh</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-20"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-21"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-22"></a>        <span class="k">return</span> <span class="s2">"BlockPuzzle(</span><span class="si">%d</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-23"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-24"></a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-25"></a>        <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"</span><span class="si">%2d</span><span class="s2">"</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">]</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-26"></a>        <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="n">kk</span><span class="p">:</span><span class="n">kk</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)]</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-27"></a>        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-28"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-29"></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-30"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xs</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-31"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-32"></a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-33"></a>        <span class="k">return</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-34"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-35"></a>    <span class="k">def</span> <span class="nf">get_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-36"></a>        <span class="c1"># Find the 0 tile, and then generate any moves we</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-37"></a>        <span class="c1"># can by sliding another block into its place.</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-38"></a>        <span class="n">tile0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-39"></a>        <span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-40"></a>            <span class="n">j</span> <span class="o">=</span> <span class="n">tile0</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-41"></a>            <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-42"></a>            <span class="n">last_move</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-43"></a>            <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-44"></a>            <span class="n">result</span> <span class="o">=</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-45"></a>            <span class="n">result</span><span class="o">.</span><span class="n">last_move</span> <span class="o">=</span> <span class="n">last_move</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-46"></a>            <span class="k">return</span> <span class="n">result</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-47"></a>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-48"></a>        <span class="k">if</span> <span class="n">tile0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-49"></a>            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-50"></a>        <span class="k">if</span> <span class="n">tile0</span> <span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-51"></a>            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-52"></a>        <span class="k">if</span> <span class="n">tile0</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-53"></a>            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-54"></a>        <span class="k">if</span> <span class="n">tile0</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_f0d064dd123b4daea15f97cec327daf6-55"></a>            <span class="k">yield</span> <span class="n">swap</span><span class="p">(</span><span class="n">tile0</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 </pre>
 <p>We also need a way to create a shuffled puzzle.  Here is a generic
 method for shuffling.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">xs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">get_moves</span><span class="p">())</span>
-        <span class="n">position</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">position</span>
+<pre class="code python"><a name="rest_code_3f0445f1a5e2486590c156bc5ee099e5-1"></a><span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<a name="rest_code_3f0445f1a5e2486590c156bc5ee099e5-2"></a>    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_3f0445f1a5e2486590c156bc5ee099e5-3"></a>        <span class="n">xs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">get_moves</span><span class="p">())</span>
+<a name="rest_code_3f0445f1a5e2486590c156bc5ee099e5-4"></a>        <span class="n">position</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<a name="rest_code_3f0445f1a5e2486590c156bc5ee099e5-5"></a>    <span class="k">return</span> <span class="n">position</span>
 </pre>
 <p>Now, we need a heuristic.  The empty heuristic approach will take too
 long here.</p>
 <p>The first, and simplest heuristic is to count how many tiles are out
 of place.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">misplaced_h</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
-    <span class="sd">"""Returns the number of tiles out of place."""</span>
-    <span class="n">n2</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">n2</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n2</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">position</span><span class="o">.</span><span class="n">xs</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kk</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">c</span>
+<pre class="code python"><a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-1"></a><span class="k">def</span> <span class="nf">misplaced_h</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-2"></a>    <span class="sd">"""Returns the number of tiles out of place."""</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-3"></a>    <span class="n">n2</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">n2</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-4"></a>    <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-5"></a>    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n2</span><span class="p">):</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-6"></a>        <span class="k">if</span> <span class="n">position</span><span class="o">.</span><span class="n">xs</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kk</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-7"></a>            <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_b5b740c7345e4d24b397ebc316359f2e-8"></a>    <span class="k">return</span> <span class="n">c</span>
 </pre>
 <p>Here is a sample run</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">test_block_8_misplaced</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">200</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">misplaced_h</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_e494b6ab51be44f7b8740474fe75407a-1"></a><span class="k">def</span> <span class="nf">test_block_8_misplaced</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
+<a name="rest_code_e494b6ab51be44f7b8740474fe75407a-2"></a>    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
+<a name="rest_code_e494b6ab51be44f7b8740474fe75407a-3"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">200</span><span class="p">)</span>
+<a name="rest_code_e494b6ab51be44f7b8740474fe75407a-4"></a>        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_e494b6ab51be44f7b8740474fe75407a-5"></a>        <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">misplaced_h</span><span class="p">)</span>
 </pre>
 <pre class="literal-block">
  0  2  5
@@ -387,26 +384,24 @@ distance: 21 steps: 3008
 <p>Now, another heuristic is to measure the distance that each tile must
 move.  This heuristic is ok, because we only move one tile at a time,
 and we know that each tile must move at least this many steps.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">distance_h</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">n</span>
-    <span class="k">def</span> <span class="nf">row</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="k">def</span> <span class="nf">col</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">%</span> <span class="n">n</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">xs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
-        <span class="n">ir</span><span class="p">,</span><span class="n">ic</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-        <span class="n">xr</span><span class="p">,</span><span class="n">xc</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">score</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ir</span><span class="o">-</span><span class="n">xr</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ic</span><span class="o">-</span><span class="n">xc</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">score</span>
+<pre class="code python"><a name="rest_code_5c70e21558474fafb4266928bc6e71da-1"></a><span class="k">def</span> <span class="nf">distance_h</span><span class="p">(</span><span class="n">position</span><span class="p">):</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-2"></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">n</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-3"></a>    <span class="k">def</span> <span class="nf">row</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">n</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-4"></a>    <span class="k">def</span> <span class="nf">col</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">%</span> <span class="n">n</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-5"></a>    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-6"></a>    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">xs</span><span class="p">):</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-7"></a>        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-8"></a>        <span class="n">ir</span><span class="p">,</span><span class="n">ic</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-9"></a>        <span class="n">xr</span><span class="p">,</span><span class="n">xc</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">col</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-10"></a>        <span class="n">score</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ir</span><span class="o">-</span><span class="n">xr</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ic</span><span class="o">-</span><span class="n">xc</span><span class="p">)</span>
+<a name="rest_code_5c70e21558474fafb4266928bc6e71da-11"></a>    <span class="k">return</span> <span class="n">score</span>
 </pre>
 <p>And another sample run.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">test_block_8_distance</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">200</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">distance_h</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_59b2aec4c1b54183bbfe4037d0ffddf9-1"></a><span class="k">def</span> <span class="nf">test_block_8_distance</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
+<a name="rest_code_59b2aec4c1b54183bbfe4037d0ffddf9-2"></a>    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>
+<a name="rest_code_59b2aec4c1b54183bbfe4037d0ffddf9-3"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">200</span><span class="p">)</span>
+<a name="rest_code_59b2aec4c1b54183bbfe4037d0ffddf9-4"></a>        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_59b2aec4c1b54183bbfe4037d0ffddf9-5"></a>        <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">distance_h</span><span class="p">)</span>
 </pre>
 <pre class="literal-block">
  4  7  2
@@ -434,15 +429,14 @@ distance: 24 steps: 705
 This testing methodology was pretty poor, though.  A more detailed
 analysis would be better, but this writeup is getting long as it is.</p>
 <p>Here is a short sample of one to one comparisons.</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">test_block</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">steps</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="k">print</span> <span class="s">"misplaced"</span><span class="p">,</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">misplaced_h</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">"distance"</span><span class="p">,</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">distance_h</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-1"></a><span class="k">def</span> <span class="nf">test_block</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-2"></a>    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-3"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">steps</span><span class="p">)</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-4"></a>        <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-5"></a>        <span class="k">print</span> <span class="s2">"misplaced"</span><span class="p">,</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-6"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">misplaced_h</span><span class="p">)</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-7"></a>        <span class="k">print</span> <span class="s2">"distance"</span><span class="p">,</span>
+<a name="rest_code_ea07f1721c6348788b4f9dd55c0f0aaf-8"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BlockPuzzle</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">distance_h</span><span class="p">)</span>
 </pre>
 <pre class="literal-block">
  2  6  1
@@ -470,49 +464,35 @@ distance distance: 24 steps: 862
         test_block()
     else:
         print "bad arg", sys.argv -->
-</div></div>
+</div>
+</div>
     </div>
-    </div>
-    
-        <ul class="pager">
-            <li class="previous">
-                <a href="2012-01-25-sieve-in-racket.html" rel="prev">← Previous post</a>
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="previous">
+                <a href="2012-01-25-sieve-in-racket.html" rel="prev" title="Sieve of Eratosthenes in Racket">Previous post</a>
             </li>
             <li class="next">
-                <a href="2012-04-24-quicksort-in-d.html" rel="next">Next post →</a>
+                <a href="2012-04-24-quicksort-in-d.html" rel="next" title="Quicksort in D">Next post</a>
             </li>
-        </ul>
-
-        
-
-    
-
-    </article>
-
-        </div>
+        </ul></nav></aside></article>
+</div>
         <!--End of body content-->
 
-        <footer>
-            Contents © 2014
+        <footer id="footer">
+            Contents © 2018
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
+            
         </footer>
-    </div>
+</div>
 </div>
 
 
-            <script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
-
-
-    
-
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
-    
-
-<script type="text/javascript">
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-28171814-1']);
@@ -525,6 +505,5 @@ distance distance: 24 steps: 862
   })();
 
 </script>
-
 </body>
 </html>
