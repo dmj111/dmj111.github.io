@@ -102,20 +102,20 @@ class PrettyLog():
     <div>
 <p>From the Python <a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages">logging documentation</a>,
 we can send an arbitrary object into a log message call.</p>
-<pre class="code python"><a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-1"></a><span class="kn">import</span> <span class="nn">pprint</span>
-<a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-2"></a>
-<a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-3"></a><span class="k">class</span> <span class="nc">PrettyLog</span><span class="p">():</span>
-<a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-<a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span>
-<a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-6"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a name="rest_code_2bfcd5e91bcb4affb7c47124a2d3daba-7"></a>        <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-1"></a><span class="kn">import</span> <span class="nn">pprint</span>
+<a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-2"></a>
+<a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-3"></a><span class="k">class</span> <span class="nc">PrettyLog</span><span class="p">():</span>
+<a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span>
+<a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-6"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_b402cfdb0a31478ab89ca7525c0ac177-7"></a>        <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
 </pre>
 <p>Then, in the code, we can use it with <tt class="docutils literal">logging</tt>.</p>
-<pre class="code python"><a name="rest_code_aee54c45d47b4051a475b467f742541d-1"></a><span class="kn">import</span> <span class="nn">logging</span>
-<a name="rest_code_aee54c45d47b4051a475b467f742541d-2"></a>
-<a name="rest_code_aee54c45d47b4051a475b467f742541d-3"></a><span class="c1"># ...</span>
-<a name="rest_code_aee54c45d47b4051a475b467f742541d-4"></a>
-<a name="rest_code_aee54c45d47b4051a475b467f742541d-5"></a><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">PrettyLog</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+<pre class="code python"><a name="rest_code_a65f047d17904f148686e249e2b6e016-1"></a><span class="kn">import</span> <span class="nn">logging</span>
+<a name="rest_code_a65f047d17904f148686e249e2b6e016-2"></a>
+<a name="rest_code_a65f047d17904f148686e249e2b6e016-3"></a><span class="c1"># ...</span>
+<a name="rest_code_a65f047d17904f148686e249e2b6e016-4"></a>
+<a name="rest_code_a65f047d17904f148686e249e2b6e016-5"></a><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">PrettyLog</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 </pre>
 <p>The string isn't created until it is needed, so if the logging level
 is not high enough, the only method call is the creation of the

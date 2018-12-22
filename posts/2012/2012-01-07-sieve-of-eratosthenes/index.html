@@ -107,97 +107,97 @@ little farther by only generating the odd prime numbers.</p>
 <p>First, here is a helper function to take an array of integers, and
 return a new array that contains only the non-zero values.  This
 will be useful later in all of the sieve functions.</p>
-<pre class="code ocaml"><a name="rest_code_b4d28c961dc14dfb8894073316d20927-1"></a><span class="c">(* return a new array of the non-zero items *)</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-2"></a><span class="k">let</span> <span class="n">filter_non_zeros</span> <span class="n">ar</span> <span class="o">=</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-3"></a>  <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">fold_left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">count</span> <span class="n">x</span> <span class="o">-&gt;</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-4"></a>    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">count</span><span class="o">)</span> <span class="mi">0</span> <span class="n">ar</span> <span class="k">in</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-5"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">count</span> <span class="mi">0</span> <span class="k">in</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-6"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">go</span> <span class="n">idx</span> <span class="n">jdx</span> <span class="o">=</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-7"></a>    <span class="k">if</span> <span class="n">jdx</span> <span class="o">=</span> <span class="n">count</span> <span class="k">then</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-8"></a>      <span class="n">result</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-9"></a>    <span class="k">else</span> <span class="k">if</span> <span class="n">ar</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-10"></a>      <span class="n">go</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">jdx</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-11"></a>    <span class="k">else</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-12"></a>      <span class="o">(</span><span class="n">result</span><span class="o">.(</span><span class="n">jdx</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">ar</span><span class="o">.(</span><span class="n">idx</span><span class="o">);</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-13"></a>       <span class="n">go</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">jdx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-14"></a>  <span class="k">in</span>
-<a name="rest_code_b4d28c961dc14dfb8894073316d20927-15"></a>  <span class="n">go</span> <span class="mi">0</span> <span class="mi">0</span>
+<pre class="code ocaml"><a name="rest_code_10955a012e864d438498eedd701db236-1"></a><span class="c">(* return a new array of the non-zero items *)</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-2"></a><span class="k">let</span> <span class="n">filter_non_zeros</span> <span class="n">ar</span> <span class="o">=</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-3"></a>  <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">fold_left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">count</span> <span class="n">x</span> <span class="o">-&gt;</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-4"></a>    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">count</span><span class="o">)</span> <span class="mi">0</span> <span class="n">ar</span> <span class="k">in</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-5"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">count</span> <span class="mi">0</span> <span class="k">in</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-6"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">go</span> <span class="n">idx</span> <span class="n">jdx</span> <span class="o">=</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-7"></a>    <span class="k">if</span> <span class="n">jdx</span> <span class="o">=</span> <span class="n">count</span> <span class="k">then</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-8"></a>      <span class="n">result</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-9"></a>    <span class="k">else</span> <span class="k">if</span> <span class="n">ar</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-10"></a>      <span class="n">go</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">jdx</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-11"></a>    <span class="k">else</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-12"></a>      <span class="o">(</span><span class="n">result</span><span class="o">.(</span><span class="n">jdx</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">ar</span><span class="o">.(</span><span class="n">idx</span><span class="o">);</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-13"></a>       <span class="n">go</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">jdx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-14"></a>  <span class="k">in</span>
+<a name="rest_code_10955a012e864d438498eedd701db236-15"></a>  <span class="n">go</span> <span class="mi">0</span> <span class="mi">0</span>
 </pre>
 <p>Next, the straightforward sieve, first written to use recursion
 instead of loops. Loops are not necessary in languages like OCaml, but
 sometimes they are nicer than the recursion, depending on the problem.</p>
-<pre class="code ocaml"><a name="rest_code_28151ec122284135b0941552f4297704-1"></a><span class="c">(* Sieve of eratosthenes, using all recursion for the looping *)</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-2"></a><span class="k">let</span> <span class="n">sieve</span> <span class="n">n</span> <span class="o">=</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-3"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-4"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-5"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-6"></a>
-<a name="rest_code_28151ec122284135b0941552f4297704-7"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">idx</span> <span class="o">=</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-8"></a>    <span class="k">if</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stop_index</span> <span class="k">then</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-9"></a>      <span class="bp">()</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-10"></a>    <span class="k">else</span> <span class="k">if</span> <span class="n">result</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-11"></a>      <span class="c">(* not prime *)</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-12"></a>      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-13"></a>    <span class="k">else</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-14"></a>      <span class="k">let</span> <span class="k">rec</span> <span class="n">clear</span> <span class="n">j</span> <span class="o">=</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-15"></a>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">then</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-16"></a>          <span class="o">(</span><span class="n">result</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-17"></a>           <span class="n">clear</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">idx</span><span class="o">));</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-18"></a>      <span class="k">in</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-19"></a>      <span class="n">clear</span> <span class="o">(</span><span class="n">idx</span> <span class="o">*</span> <span class="n">idx</span><span class="o">);</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-20"></a>      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-21"></a>  <span class="k">in</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-22"></a>  <span class="n">loop</span> <span class="mi">2</span><span class="o">;</span>
-<a name="rest_code_28151ec122284135b0941552f4297704-23"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
+<pre class="code ocaml"><a name="rest_code_6501c602807942f6aeb07bf076491b3f-1"></a><span class="c">(* Sieve of eratosthenes, using all recursion for the looping *)</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-2"></a><span class="k">let</span> <span class="n">sieve</span> <span class="n">n</span> <span class="o">=</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-3"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-4"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-5"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-6"></a>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-7"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">idx</span> <span class="o">=</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-8"></a>    <span class="k">if</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stop_index</span> <span class="k">then</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-9"></a>      <span class="bp">()</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-10"></a>    <span class="k">else</span> <span class="k">if</span> <span class="n">result</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-11"></a>      <span class="c">(* not prime *)</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-12"></a>      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-13"></a>    <span class="k">else</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-14"></a>      <span class="k">let</span> <span class="k">rec</span> <span class="n">clear</span> <span class="n">j</span> <span class="o">=</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-15"></a>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">then</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-16"></a>          <span class="o">(</span><span class="n">result</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-17"></a>           <span class="n">clear</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">idx</span><span class="o">));</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-18"></a>      <span class="k">in</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-19"></a>      <span class="n">clear</span> <span class="o">(</span><span class="n">idx</span> <span class="o">*</span> <span class="n">idx</span><span class="o">);</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-20"></a>      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-21"></a>  <span class="k">in</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-22"></a>  <span class="n">loop</span> <span class="mi">2</span><span class="o">;</span>
+<a name="rest_code_6501c602807942f6aeb07bf076491b3f-23"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
 </pre>
 <p>This function creates an array of potential prime numbers.  Then, it
 walks through the array, looking for the next prime.  When a new prime
 is found, the function clears all of the multiples of the prime in the
 rest of the array.</p>
 <p>Next is a function that moves the inner most recursion into a loop.</p>
-<pre class="code ocaml"><a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-1"></a><span class="c">(* Sieve of Eratosthenes, moving the inner loop into a loop *)</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-2"></a><span class="k">let</span> <span class="n">sieve2</span> <span class="n">n</span> <span class="o">=</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-3"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-4"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-5"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-6"></a>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-7"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">idx</span> <span class="o">=</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-8"></a>    <span class="k">if</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stop_index</span> <span class="k">then</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-9"></a>      <span class="bp">()</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-10"></a>    <span class="k">else</span> <span class="k">if</span> <span class="n">result</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-11"></a>      <span class="c">(* not prime *)</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-12"></a>      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-13"></a>    <span class="k">else</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-14"></a>      <span class="o">(</span><span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">idx</span> <span class="o">*</span> <span class="n">idx</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-15"></a>       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">do</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-16"></a>         <span class="o">(</span><span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-17"></a>          <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">idx</span><span class="o">);</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-18"></a>       <span class="k">done</span><span class="o">;</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-19"></a>       <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-20"></a>  <span class="k">in</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-21"></a>  <span class="n">loop</span> <span class="mi">2</span><span class="o">;</span>
-<a name="rest_code_82e9fe30d9fa48d595526d98a9fcd06a-22"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
+<pre class="code ocaml"><a name="rest_code_ec01b25314134196872fde94ea12a759-1"></a><span class="c">(* Sieve of Eratosthenes, moving the inner loop into a loop *)</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-2"></a><span class="k">let</span> <span class="n">sieve2</span> <span class="n">n</span> <span class="o">=</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-3"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-4"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-5"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-6"></a>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-7"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">idx</span> <span class="o">=</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-8"></a>    <span class="k">if</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stop_index</span> <span class="k">then</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-9"></a>      <span class="bp">()</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-10"></a>    <span class="k">else</span> <span class="k">if</span> <span class="n">result</span><span class="o">.(</span><span class="n">idx</span><span class="o">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-11"></a>      <span class="c">(* not prime *)</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-12"></a>      <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-13"></a>    <span class="k">else</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-14"></a>      <span class="o">(</span><span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">idx</span> <span class="o">*</span> <span class="n">idx</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-15"></a>       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">do</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-16"></a>         <span class="o">(</span><span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-17"></a>          <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">idx</span><span class="o">);</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-18"></a>       <span class="k">done</span><span class="o">;</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-19"></a>       <span class="n">loop</span> <span class="o">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-20"></a>  <span class="k">in</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-21"></a>  <span class="n">loop</span> <span class="mi">2</span><span class="o">;</span>
+<a name="rest_code_ec01b25314134196872fde94ea12a759-22"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
 </pre>
 <p>That function takes the same time as the first one, and is just a difference
 in style.</p>
 <p>Next is a function that does away with the recursion altogether.</p>
-<pre class="code ocaml"><a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-1"></a><span class="c">(* Sieve of Eratosthenes, using all loops instead of recursion *)</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-2"></a><span class="k">let</span> <span class="n">sieve3</span> <span class="n">n</span> <span class="o">=</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-3"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-4"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-5"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-6"></a>  <span class="k">let</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">2</span> <span class="k">in</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-7"></a>  <span class="k">while</span> <span class="o">!</span><span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">stop_index</span> <span class="k">do</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-8"></a>    <span class="k">if</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-9"></a>      <span class="o">(</span><span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="o">!</span><span class="n">idx</span> <span class="k">in</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-10"></a>       <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-11"></a>       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">do</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-12"></a>         <span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-13"></a>         <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">p</span><span class="o">;</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-14"></a>       <span class="k">done</span><span class="o">);</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-15"></a>    <span class="n">idx</span> <span class="o">:=</span> <span class="o">!</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-16"></a>  <span class="k">done</span><span class="o">;</span>
-<a name="rest_code_5025081bb5ef423e8d96dfd908a282a0-17"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
+<pre class="code ocaml"><a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-1"></a><span class="c">(* Sieve of Eratosthenes, using all loops instead of recursion *)</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-2"></a><span class="k">let</span> <span class="n">sieve3</span> <span class="n">n</span> <span class="o">=</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-3"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-4"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-5"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-6"></a>  <span class="k">let</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">2</span> <span class="k">in</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-7"></a>  <span class="k">while</span> <span class="o">!</span><span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">stop_index</span> <span class="k">do</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-8"></a>    <span class="k">if</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-9"></a>      <span class="o">(</span><span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="o">!</span><span class="n">idx</span> <span class="k">in</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-10"></a>       <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-11"></a>       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">do</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-12"></a>         <span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-13"></a>         <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">p</span><span class="o">;</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-14"></a>       <span class="k">done</span><span class="o">);</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-15"></a>    <span class="n">idx</span> <span class="o">:=</span> <span class="o">!</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-16"></a>  <span class="k">done</span><span class="o">;</span>
+<a name="rest_code_a85e01d79fe040a3adf8a1414cd95de5-17"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
 </pre>
 <p>Finally, the last method only generates the odd primes.  We can ignore
 even numbers right from the start, and halve the memory and timing
@@ -206,45 +206,45 @@ indexing correctly, but it isn't too bad.</p>
 <!-- To get the indexing right, first we have that index \(i\) is for the -->
 <!-- value \(p = 2 i + 1\).  The square of \(p\) is -->
 <!-- \(p^2 = (2 i + 1) ^2 = 4 i ^2 + 4 i + 1 = (2 i + 1)(2 i -->
-<pre class="code ocaml"><a name="rest_code_c7853726712640c6b0b034f99f3e659f-1"></a><span class="c">(* This one ignores the even numbers entirely, so it is about</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-2"></a><span class="c">   twice as fast now *)</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-3"></a><span class="k">let</span> <span class="n">sieve4</span> <span class="n">n</span> <span class="o">=</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-4"></a>  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-5"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="n">m</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-6"></a>  <span class="c">(* Remeber that 2 is a prime *)</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-7"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">2</span><span class="o">;</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-8"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-9"></a>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-10"></a>  <span class="k">let</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">1</span> <span class="k">in</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-11"></a>  <span class="k">while</span> <span class="o">!</span><span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">stop_index</span> <span class="k">do</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-12"></a>    <span class="k">if</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-13"></a>      <span class="c">(* 2 * idx + 1 is the next prime.  Now</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-14"></a><span class="c">         remove its multiples.</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-15"></a><span class="c">         We want to start at p*p, and step by p.</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-16"></a><span class="c">         for example, If idx is 1, then p is 3.</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-17"></a><span class="c">         To get result(i) = 9, we need i to be 4.</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-18"></a><span class="c">         If idx is 2, and p = 5, then to get</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-19"></a><span class="c">         result(i) = 25, we need i to be 12.</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-20"></a><span class="c">         So, we can move out by idx * p, then step by p</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-21"></a><span class="c">      *)</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-22"></a>      <span class="o">(</span><span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-23"></a>       <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(!</span><span class="n">idx</span> <span class="o">*</span> <span class="o">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span> <span class="k">in</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-24"></a>       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="k">do</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-25"></a>         <span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-26"></a>         <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">p</span><span class="o">;</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-27"></a>       <span class="k">done</span><span class="o">);</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-28"></a>    <span class="n">idx</span> <span class="o">:=</span> <span class="o">!</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-29"></a>  <span class="k">done</span><span class="o">;</span>
-<a name="rest_code_c7853726712640c6b0b034f99f3e659f-30"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
+<pre class="code ocaml"><a name="rest_code_cea406be5eee4140832f1eda67c3b8de-1"></a><span class="c">(* This one ignores the even numbers entirely, so it is about</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-2"></a><span class="c">   twice as fast now *)</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-3"></a><span class="k">let</span> <span class="n">sieve4</span> <span class="n">n</span> <span class="o">=</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-4"></a>  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-5"></a>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">init</span> <span class="n">m</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-6"></a>  <span class="c">(* Remeber that 2 is a prime *)</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-7"></a>  <span class="n">result</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">2</span><span class="o">;</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-8"></a>  <span class="k">let</span> <span class="n">stop_index</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="o">(</span><span class="n">sqrt</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">)</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-9"></a>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-10"></a>  <span class="k">let</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">1</span> <span class="k">in</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-11"></a>  <span class="k">while</span> <span class="o">!</span><span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">stop_index</span> <span class="k">do</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-12"></a>    <span class="k">if</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="k">then</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-13"></a>      <span class="c">(* 2 * idx + 1 is the next prime.  Now</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-14"></a><span class="c">         remove its multiples.</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-15"></a><span class="c">         We want to start at p*p, and step by p.</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-16"></a><span class="c">         for example, If idx is 1, then p is 3.</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-17"></a><span class="c">         To get result(i) = 9, we need i to be 4.</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-18"></a><span class="c">         If idx is 2, and p = 5, then to get</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-19"></a><span class="c">         result(i) = 25, we need i to be 12.</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-20"></a><span class="c">         So, we can move out by idx * p, then step by p</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-21"></a><span class="c">      *)</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-22"></a>      <span class="o">(</span><span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">result</span><span class="o">.(!</span><span class="n">idx</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-23"></a>       <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(!</span><span class="n">idx</span> <span class="o">*</span> <span class="o">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span> <span class="k">in</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-24"></a>       <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="k">do</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-25"></a>         <span class="n">result</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-26"></a>         <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="n">p</span><span class="o">;</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-27"></a>       <span class="k">done</span><span class="o">);</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-28"></a>    <span class="n">idx</span> <span class="o">:=</span> <span class="o">!</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-29"></a>  <span class="k">done</span><span class="o">;</span>
+<a name="rest_code_cea406be5eee4140832f1eda67c3b8de-30"></a>  <span class="n">filter_non_zeros</span> <span class="n">result</span>
 </pre>
 <p>And finally, a test driver.</p>
-<pre class="code ocaml"><a name="rest_code_6cfc3b0b206a481fa5def49735d50249-1"></a><span class="k">let</span> <span class="n">main</span> <span class="n">sieve_fcn</span> <span class="o">=</span>
-<a name="rest_code_6cfc3b0b206a481fa5def49735d50249-2"></a>  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">15485863</span> <span class="k">in</span>
-<a name="rest_code_6cfc3b0b206a481fa5def49735d50249-3"></a>  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="o">(</span><span class="n">sieve_fcn</span> <span class="n">n</span><span class="o">)</span> <span class="k">in</span>
-<a name="rest_code_6cfc3b0b206a481fa5def49735d50249-4"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"number of primes less than %d: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="n">n</span> <span class="n">m</span><span class="o">;</span>
-<a name="rest_code_6cfc3b0b206a481fa5def49735d50249-5"></a><span class="o">;;</span>
-<a name="rest_code_6cfc3b0b206a481fa5def49735d50249-6"></a>
-<a name="rest_code_6cfc3b0b206a481fa5def49735d50249-7"></a><span class="n">main</span> <span class="n">sieve4</span><span class="o">;;</span>
+<pre class="code ocaml"><a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-1"></a><span class="k">let</span> <span class="n">main</span> <span class="n">sieve_fcn</span> <span class="o">=</span>
+<a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-2"></a>  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">15485863</span> <span class="k">in</span>
+<a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-3"></a>  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="o">(</span><span class="n">sieve_fcn</span> <span class="n">n</span><span class="o">)</span> <span class="k">in</span>
+<a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-4"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"number of primes less than %d: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="n">n</span> <span class="n">m</span><span class="o">;</span>
+<a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-5"></a><span class="o">;;</span>
+<a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-6"></a>
+<a name="rest_code_5ea40b06110648c8a1882d28adc45cf6-7"></a><span class="n">main</span> <span class="n">sieve4</span><span class="o">;;</span>
 </pre>
 </div>
     </div>

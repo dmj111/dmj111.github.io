@@ -102,8 +102,8 @@ insertion sort for sorting small subfiles instead of making as many
 recursive calls to quicksort.  Second, we select the pivot using the
 "median of three" method instead of picking the middle element as the
 pivot.</p>
-<pre class="code d"><a name="rest_code_38d3428f2da34acdac59781537869838-1"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">algorithm</span><span class="p">;</span>
-<a name="rest_code_38d3428f2da34acdac59781537869838-2"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
+<pre class="code d"><a name="rest_code_a470d0e5139344099ab22c5bfaf7338b-1"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">algorithm</span><span class="p">;</span>
+<a name="rest_code_a470d0e5139344099ab22c5bfaf7338b-2"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
 </pre>
 <p>For the partioning, we first select the median of the first, last, and
 middle elements of the target array.  The steps of doing this affect
@@ -120,21 +120,21 @@ the return value by one, since we are sending <tt class="docutils literal">array
 <p>This is a place where the array slicing may be more confusing then
 using explicit indices for the range we want to partition. Trying that
 approach may be an interesting experiment to learn which is easier.</p>
-<pre class="code d"><a name="rest_code_ef6634777d9642469bbb0e9083b11c96-1"></a><span class="kt">ulong</span> <span class="n">medianOfThreePartition</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-2"></a>  <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="mi">2</span><span class="p">);</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-3"></a>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-4"></a>  <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-5"></a>  <span class="kt">ulong</span> <span class="n">j</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="mi">2</span><span class="p">;</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-6"></a>  <span class="kt">ulong</span> <span class="n">k</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-7"></a>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-8"></a>  <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-9"></a>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-10"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="p">}</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-11"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span> <span class="p">}</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-12"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="p">}</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-13"></a>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-14"></a>  <span class="k">return</span> <span class="mi">1</span> <span class="p">+</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span> <span class="p">..</span> <span class="n">k</span><span class="p">]);</span>
-<a name="rest_code_ef6634777d9642469bbb0e9083b11c96-15"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-1"></a><span class="kt">ulong</span> <span class="n">medianOfThreePartition</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-2"></a>  <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="mi">2</span><span class="p">);</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-3"></a>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-4"></a>  <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-5"></a>  <span class="kt">ulong</span> <span class="n">j</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="mi">2</span><span class="p">;</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-6"></a>  <span class="kt">ulong</span> <span class="n">k</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-7"></a>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-8"></a>  <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-9"></a>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-10"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="p">}</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-11"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span> <span class="p">}</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-12"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span> <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="p">}</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-13"></a>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-14"></a>  <span class="k">return</span> <span class="mi">1</span> <span class="p">+</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span> <span class="p">..</span> <span class="n">k</span><span class="p">]);</span>
+<a name="rest_code_3d299ae33d9f42b795499c4ed4f3bfb6-15"></a><span class="p">}</span>
 </pre>
 <!-- .. code:: d
 
@@ -340,17 +340,17 @@ approach may be an interesting experiment to learn which is easier.</p>
 is pretty straightforward, but we are swapping the item to move it
 into place.  If we knew we were sorting something cheap to copy, there
 may be a more efficient way to do that.  Maybe.</p>
-<pre class="code d"><a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-1"></a><span class="kt">void</span> <span class="n">insertionsort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-2"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">j</span><span class="p">;</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-3"></a>    <span class="c1">// array[0..j] is already sorted, so insert array[j] into the</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-4"></a>    <span class="c1">// right place.</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-5"></a>    <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="n">j</span><span class="p">;</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-6"></a>    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">&amp;&amp;</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-7"></a>      <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-8"></a>      <span class="p">--</span><span class="n">i</span><span class="p">;</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-9"></a>    <span class="p">}</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-10"></a>  <span class="p">}</span>
-<a name="rest_code_f63f2ca0e55249ba9d892eaf5b9fa5ef-11"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-1"></a><span class="kt">void</span> <span class="n">insertionsort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-2"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">j</span><span class="p">;</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-3"></a>    <span class="c1">// array[0..j] is already sorted, so insert array[j] into the</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-4"></a>    <span class="c1">// right place.</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-5"></a>    <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="n">j</span><span class="p">;</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-6"></a>    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">&amp;&amp;</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-7"></a>      <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-8"></a>      <span class="p">--</span><span class="n">i</span><span class="p">;</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-9"></a>    <span class="p">}</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-10"></a>  <span class="p">}</span>
+<a name="rest_code_6c57f3acd0ef43bd8b2e4557d98d7d7d-11"></a><span class="p">}</span>
 </pre>
 <!-- .. code:: d
 
@@ -378,21 +378,21 @@ may be a more efficient way to do that.  Maybe.</p>
 <p>Here is the new quicksort function.  We have a lower limit on the size
 of arrays that we will pass on to the <tt class="docutils literal">medianOfThree</tt> function.  For
 anything smaller, we call <tt class="docutils literal">insertionsort</tt>.</p>
-<pre class="code d"><a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-1"></a><span class="n">T</span><span class="p">[]</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-2"></a>  <span class="k">const</span> <span class="kt">ulong</span> <span class="n">RECURSION_LIMIT</span> <span class="p">=</span> <span class="mi">30</span><span class="p">;</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-3"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="n">RECURSION_LIMIT</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-4"></a>    <span class="c1">// Move the middle element to the end to act as the pivot.</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-5"></a>    <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[$/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-6"></a>    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">medianOfThreePartition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-7"></a>    <span class="c1">// Index p is in position, so now recursively sort the other two</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-8"></a>    <span class="c1">// halves of the array.</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-9"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">]);</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-10"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="p">$]);</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-11"></a>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-12"></a>    <span class="n">insertionsort</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-13"></a>  <span class="p">}</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-14"></a>  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
-<a name="rest_code_b690ef1a8aa84b57a5152097bf6ba6e1-15"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-1"></a><span class="n">T</span><span class="p">[]</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-2"></a>  <span class="k">const</span> <span class="kt">ulong</span> <span class="n">RECURSION_LIMIT</span> <span class="p">=</span> <span class="mi">30</span><span class="p">;</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-3"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="n">RECURSION_LIMIT</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-4"></a>    <span class="c1">// Move the middle element to the end to act as the pivot.</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-5"></a>    <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[$/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-6"></a>    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">medianOfThreePartition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-7"></a>    <span class="c1">// Index p is in position, so now recursively sort the other two</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-8"></a>    <span class="c1">// halves of the array.</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-9"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">]);</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-10"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="p">$]);</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-11"></a>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-12"></a>    <span class="n">insertionsort</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-13"></a>  <span class="p">}</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-14"></a>  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<a name="rest_code_c60ef53fc94649e6a76b3479ef5a333b-15"></a><span class="p">}</span>
 </pre>
 <!--  -->
 <!-- .. code:: d
