@@ -113,15 +113,15 @@ other specialized templates fill in the details.</p>
 into the base, we can put a block in <tt class="docutils literal">base.tmpl</tt>, and then set the
 values in the block in <tt class="docutils literal">post.tmpl</tt>.</p>
 <p>In <tt class="docutils literal">base.tmpl</tt>:</p>
-<pre class="code mako"><a name="rest_code_db5682c4d69b4fa7a346c32af7f85151-1"></a><span class="cp">&lt;%</span><span class="nb">block</span> <span class="na">name=</span><span class="s">"extra_information"</span><span class="cp">&gt;&lt;/%</span><span class="nb">block</span><span class="cp">&gt;</span><span class="x"></span>
+<pre class="code mako"><a name="rest_code_69d5009f2af04fd1b54804abb1e88cdb-1"></a><span class="cp">&lt;%</span><span class="nb">block</span> <span class="na">name=</span><span class="s">"extra_information"</span><span class="cp">&gt;&lt;/%</span><span class="nb">block</span><span class="cp">&gt;</span><span class="x"></span>
 </pre>
 <p>In <tt class="docutils literal">post.tmpl</tt>:</p>
-<pre class="code mako"><a name="rest_code_c3d54ef958654579a95ef67eec141c3a-1"></a><span class="cp">&lt;%</span><span class="nb">block</span> <span class="na">name=</span><span class="s">"extra_information"</span><span class="cp">&gt;</span>
-<a name="rest_code_c3d54ef958654579a95ef67eec141c3a-2"></a><span class="cp">%</span> <span class="k">if</span> <span class="n">post</span><span class="o">.</span><span class="n">meta</span><span class="p">(</span><span class="s1">'use_extra_data'</span><span class="p">):</span><span class="x"></span>
-<a name="rest_code_c3d54ef958654579a95ef67eec141c3a-3"></a><span class="x">   &lt;h2&gt;  We have extra data!! &lt;/h2&gt;</span>
-<a name="rest_code_c3d54ef958654579a95ef67eec141c3a-4"></a><span class="x">   Doing some special stuff here.</span>
-<a name="rest_code_c3d54ef958654579a95ef67eec141c3a-5"></a><span class="cp">%</span><span class="k"> endif</span><span class="x"></span>
-<a name="rest_code_c3d54ef958654579a95ef67eec141c3a-6"></a><span class="cp">&lt;/%</span><span class="nb">block</span><span class="cp">&gt;</span><span class="x"></span>
+<pre class="code mako"><a name="rest_code_bf2873fdba164d428060b1efbe9772ef-1"></a><span class="cp">&lt;%</span><span class="nb">block</span> <span class="na">name=</span><span class="s">"extra_information"</span><span class="cp">&gt;</span>
+<a name="rest_code_bf2873fdba164d428060b1efbe9772ef-2"></a><span class="cp">%</span> <span class="k">if</span> <span class="n">post</span><span class="o">.</span><span class="n">meta</span><span class="p">(</span><span class="s1">'use_extra_data'</span><span class="p">):</span><span class="x"></span>
+<a name="rest_code_bf2873fdba164d428060b1efbe9772ef-3"></a><span class="x">   &lt;h2&gt;  We have extra data!! &lt;/h2&gt;</span>
+<a name="rest_code_bf2873fdba164d428060b1efbe9772ef-4"></a><span class="x">   Doing some special stuff here.</span>
+<a name="rest_code_bf2873fdba164d428060b1efbe9772ef-5"></a><span class="cp">%</span><span class="k"> endif</span><span class="x"></span>
+<a name="rest_code_bf2873fdba164d428060b1efbe9772ef-6"></a><span class="cp">&lt;/%</span><span class="nb">block</span><span class="cp">&gt;</span><span class="x"></span>
 </pre>
 <p>The data in <tt class="docutils literal">post.meta</tt> comes from the meta data in the post file:</p>
 <pre class="literal-block">
@@ -143,7 +143,7 @@ for getting better quotation marks. -->
                 <a href="../c-quicksort/" rel="next" title="C quicksort">Next post</a>
             </li>
         </ul></nav></aside></article><!--End of body content--><footer id="footer">
-            Contents © 2018
+            Contents © 2019
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

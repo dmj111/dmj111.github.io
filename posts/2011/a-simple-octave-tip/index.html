@@ -113,55 +113,55 @@ S = \sum_{i=1}^n x_i  y_i
 </div>
 <p><tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> are one dimensional vectors in Octave, so we can find
 <span class="math">\(S\)</span> with this code:</p>
-<pre class="code octave"><a name="rest_code_7301f85e7496428aa9bbe2bf9ecd9be6-1"></a><span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_7301f85e7496428aa9bbe2bf9ecd9be6-2"></a><span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<a name="rest_code_7301f85e7496428aa9bbe2bf9ecd9be6-3"></a><span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-<a name="rest_code_7301f85e7496428aa9bbe2bf9ecd9be6-4"></a>  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<a name="rest_code_7301f85e7496428aa9bbe2bf9ecd9be6-5"></a><span class="k">end</span>
+<pre class="code octave"><a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-1"></a><span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-2"></a><span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-3"></a><span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-4"></a>  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-5"></a><span class="k">end</span>
 </pre>
 <p>That code is straight forward.  Octave can do more, though.  The =.*=
 operator does an element by element multiplication over matrices, and
 =sum= adds up the elements in a matrix.  Since our matrices are
 one-dimensional, we can compose these functions to get our result, at
 the cost of creating a temporary matrix.</p>
-<pre class="code octave"><a name="rest_code_39dc05ba0ed84dd6ad82e49fea1a3647-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
+<pre class="code octave"><a name="rest_code_40d0f1760a7a48c8a9227ff124bd8f2f-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
 </pre>
 <p>Finally, Octave already has a function that does what we want.  The
 formula we are looking at is the dot product of two vectors, so in
 Octave, we can do</p>
-<pre class="code octave"><a name="rest_code_cef6c1c01a8246d8a9295dccdaba3835-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<pre class="code octave"><a name="rest_code_43df25fa90624a39acaad3806e45c703-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre>
 <p>The first attempt is the clearest when you do not know what <tt class="docutils literal">.*</tt>,
 <tt class="docutils literal">sum</tt>, and <tt class="docutils literal">dot</tt> do.  But, once you know what <tt class="docutils literal">sum</tt> and <tt class="docutils literal">dot</tt>
 do, they are much clearer.  Also, they are much faster in Octave than
 the naive loop.</p>
 <p>The next listing shows a test driver to compare the three methods.</p>
-<pre class="code octave"><a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-1"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-2"></a><span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-3"></a>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-4"></a><span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-5"></a>    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-6"></a>    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-7"></a>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-8"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-9"></a>    <span class="nb">tic</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-10"></a>    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-11"></a>    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-12"></a>      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-13"></a>    <span class="k">end</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-14"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-15"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-16"></a>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-17"></a>    <span class="nb">tic</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-18"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-19"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-20"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-21"></a>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-22"></a>    <span class="nb">tic</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-23"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-24"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-25"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
-<a name="rest_code_e7ecc106df3c42feb4392ec6b1bd8726-26"></a>  <span class="k">end</span>
+<pre class="code octave"><a name="rest_code_22d859d18ca34d06841a490d4730b72e-1"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-2"></a><span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-3"></a>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-4"></a><span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-5"></a>    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-6"></a>    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-7"></a>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-8"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-9"></a>    <span class="nb">tic</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-10"></a>    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-11"></a>    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-12"></a>      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-13"></a>    <span class="k">end</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-14"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-15"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-16"></a>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-17"></a>    <span class="nb">tic</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-18"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-19"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-20"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-21"></a>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-22"></a>    <span class="nb">tic</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-23"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-24"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-25"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_22d859d18ca34d06841a490d4730b72e-26"></a>  <span class="k">end</span>
 </pre>
 <p>Running this code gives us the following results.</p>
 <table border="1" class="docutils">
@@ -291,7 +291,7 @@ call to existing code.</p>
         </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script></article><!--End of body content--><footer id="footer">
-            Contents © 2018
+            Contents © 2019
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

@@ -141,20 +141,20 @@ review the changes before publishing.</p>
 parameter the path to the directory that I want to index.  Then, it
 finds all of the <tt class="docutils literal">.org</tt> files, grabs their titles, and inserts them
 into the current buffer.</p>
-<pre class="code scm"><a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-1"></a><span class="p">(</span><span class="nf">defun</span> <span class="nv">org-dblock-write:my-get-posts</span> <span class="p">(</span><span class="nf">params</span><span class="p">)</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-2"></a>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">path</span> <span class="p">(</span><span class="nf">plist-get</span> <span class="nv">params</span> <span class="nv">:path</span><span class="p">)))</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-3"></a>    <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">files</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-4"></a>           <span class="p">(</span><span class="nf">mapcar</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">f</span><span class="p">)</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-5"></a>                     <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">file-name-as-directory</span> <span class="nv">path</span><span class="p">)</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-6"></a>                             <span class="nv">f</span><span class="p">))</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-7"></a>                   <span class="p">(</span><span class="nf">directory-files</span> <span class="nv">path</span> <span class="nv">nil</span> <span class="s">"\.*org$"</span><span class="p">))))</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-8"></a>      <span class="p">(</span><span class="nf">setq</span> <span class="nv">files</span> <span class="p">(</span><span class="nf">nreverse</span> <span class="nv">files</span><span class="p">))</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-9"></a>      <span class="p">(</span><span class="nf">dolist</span> <span class="p">(</span><span class="nf">file</span> <span class="nv">files</span><span class="p">)</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-10"></a>        <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">title</span> <span class="p">(</span><span class="nf">org-publish-find-title</span> <span class="nv">file</span><span class="p">)))</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-11"></a>          <span class="p">(</span><span class="nf">message</span> <span class="nv">file</span><span class="p">)</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-12"></a>          <span class="p">(</span><span class="nf">message</span> <span class="nv">title</span><span class="p">)</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-13"></a>          <span class="p">(</span><span class="nf">insert</span> <span class="p">(</span><span class="nf">format</span> <span class="s">" - [[file:%s][%s]]"</span> <span class="nv">file</span> <span class="nv">title</span><span class="p">))</span>
-<a name="rest_code_57e4517ab1be42d5bd0477d76cb6fab3-14"></a>          <span class="p">(</span><span class="nf">newline</span><span class="p">))))))</span>
+<pre class="code scm"><a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-1"></a><span class="p">(</span><span class="nf">defun</span> <span class="nv">org-dblock-write:my-get-posts</span> <span class="p">(</span><span class="nf">params</span><span class="p">)</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-2"></a>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">path</span> <span class="p">(</span><span class="nf">plist-get</span> <span class="nv">params</span> <span class="nv">:path</span><span class="p">)))</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-3"></a>    <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">files</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-4"></a>           <span class="p">(</span><span class="nf">mapcar</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">f</span><span class="p">)</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-5"></a>                     <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">file-name-as-directory</span> <span class="nv">path</span><span class="p">)</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-6"></a>                             <span class="nv">f</span><span class="p">))</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-7"></a>                   <span class="p">(</span><span class="nf">directory-files</span> <span class="nv">path</span> <span class="nv">nil</span> <span class="s">"\.*org$"</span><span class="p">))))</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-8"></a>      <span class="p">(</span><span class="nf">setq</span> <span class="nv">files</span> <span class="p">(</span><span class="nf">nreverse</span> <span class="nv">files</span><span class="p">))</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-9"></a>      <span class="p">(</span><span class="nf">dolist</span> <span class="p">(</span><span class="nf">file</span> <span class="nv">files</span><span class="p">)</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-10"></a>        <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">title</span> <span class="p">(</span><span class="nf">org-publish-find-title</span> <span class="nv">file</span><span class="p">)))</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-11"></a>          <span class="p">(</span><span class="nf">message</span> <span class="nv">file</span><span class="p">)</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-12"></a>          <span class="p">(</span><span class="nf">message</span> <span class="nv">title</span><span class="p">)</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-13"></a>          <span class="p">(</span><span class="nf">insert</span> <span class="p">(</span><span class="nf">format</span> <span class="s">" - [[file:%s][%s]]"</span> <span class="nv">file</span> <span class="nv">title</span><span class="p">))</span>
+<a name="rest_code_11a74a87de3d403cb4f7ea35d1c8d4ed-14"></a>          <span class="p">(</span><span class="nf">newline</span><span class="p">))))))</span>
 </pre>
 <p>To use the code, I put blocks that look like this one into my
 <tt class="docutils literal">index.org</tt> file.</p>
@@ -187,7 +187,7 @@ constantly updating the stamp.</li>
                 <a href="../pretty-print-log-python/" rel="next" title="Pretty print logging in Python">Next post</a>
             </li>
         </ul></nav></aside></article><!--End of body content--><footer id="footer">
-            Contents © 2018
+            Contents © 2019
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

@@ -7,27 +7,27 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://dave.dkjones.org/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/2011/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/2012/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/2013/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/2014/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/archive.html</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/assets/charter/webfonts/charter_bold-demo.html</loc>
@@ -47,71 +47,71 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2011/11/03/posting-from-emacs-with-org2blog-wp/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2011/11/19/a-simple-octave-tip/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2011/12/18/ants-ai-challenge/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2011/12/18/ipython-on-mac-os-x/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2011/12/18/stanford-online-classes/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/01/05/extended-euclids-method/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/01/05/trying-out-a-static-site/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/01/06/generating-dynamic-content-for-org-mode/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/01/07/sieve-of-eratosthenes/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/01/08/old-blog/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/01/25/sieve-in-racket/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/03/12/astar-python/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/04/24/quicksort-in-d/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2012/04/26/modified-quicksort/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2013/01/02/blog-process-with-org/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/blog/2013/01/02/updating-emacs-packages/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/categories/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/categories/mathjax.html</loc>
@@ -119,7 +119,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/categories/mathjax/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/code/quicksort1/quickselect.test.html</loc>
@@ -131,43 +131,43 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/bitcoin/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/reversi/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/spirals/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/spirals2/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/demos/tictactoe/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/galleries/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/galleries/raytrace/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/index-1.html</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/index-2.html</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/letrec_interp/interpreter.html</loc>
@@ -175,7 +175,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/listings/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/listings/.f.html</loc>
@@ -183,15 +183,15 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/listings/test.py.html</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/pages/about/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/pages/password/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/2011-12-18-ipython-on-mac-os-x.html</loc>
@@ -199,7 +199,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/2011-12-18-ipython-on-mac-os-x/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/2011-12-18-stanford-online-classes.html</loc>
@@ -207,7 +207,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/2011-12-18-stanford-online-classes/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/a-simple-octave-tip.html</loc>
@@ -215,7 +215,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/a-simple-octave-tip/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/ants-ai-challenge.html</loc>
@@ -223,7 +223,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/ants-ai-challenge/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/posting-from-emacs-with-org2blog-wp.html</loc>
@@ -231,7 +231,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2011/posting-from-emacs-with-org2blog-wp/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-05-extended-euclids-method.html</loc>
@@ -239,7 +239,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-05-extended-euclids-method/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-05-trying-out-a-static-site.html</loc>
@@ -247,7 +247,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-05-trying-out-a-static-site/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-06-generating-dynamic-content-for-org-mode.html</loc>
@@ -255,7 +255,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-06-generating-dynamic-content-for-org-mode/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes.html</loc>
@@ -263,7 +263,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-07-sieve-of-eratosthenes/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-08-old-blog.html</loc>
@@ -271,7 +271,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-08-old-blog/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-25-sieve-in-racket.html</loc>
@@ -279,7 +279,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-01-25-sieve-in-racket/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-03-12-astar-python.html</loc>
@@ -287,7 +287,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-03-12-astar-python/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-04-24-quicksort-in-d.html</loc>
@@ -295,7 +295,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-04-24-quicksort-in-d/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-04-26-modified-quicksort.html</loc>
@@ -303,7 +303,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2012/2012-04-26-modified-quicksort/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/2013-01-02-blog-process-with-org.html</loc>
@@ -311,7 +311,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/2013-01-02-blog-process-with-org/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/2013-01-02-updating-emacs-packages.html</loc>
@@ -319,7 +319,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/2013-01-02-updating-emacs-packages/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/c-quicksort.html</loc>
@@ -327,7 +327,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/c-quicksort/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/customizing-nikola.html</loc>
@@ -335,7 +335,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/customizing-nikola/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/eopl-in-js.html</loc>
@@ -343,7 +343,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/eopl-in-js/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/pretty-print-log-python.html</loc>
@@ -351,7 +351,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/pretty-print-log-python/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/prime-sieve-in-js.html</loc>
@@ -359,7 +359,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2013/prime-sieve-in-js/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/alpha-beta-tictactoe.html</loc>
@@ -367,7 +367,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/alpha-beta-tictactoe/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/coffee-notes.html</loc>
@@ -375,7 +375,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/coffee-notes/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/js-quicksort-update.html</loc>
@@ -383,7 +383,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/js-quicksort-update/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/js-quicksort.html</loc>
@@ -391,7 +391,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/js-quicksort/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/nonrecursive-dfs.html</loc>
@@ -399,7 +399,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/nonrecursive-dfs/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/quick-select.html</loc>
@@ -407,7 +407,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/quick-select/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/raytracer.html</loc>
@@ -415,7 +415,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/raytracer/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/reversi.html</loc>
@@ -423,7 +423,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/posts/2014/reversi/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/prime_demo/primes.html</loc>
@@ -431,7 +431,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/404.html</loc>
@@ -439,7 +439,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/404/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/about.html</loc>
@@ -447,7 +447,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/about/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/booklist.html</loc>
@@ -455,7 +455,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/booklist/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/line-length.html</loc>
@@ -463,11 +463,11 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/line-length/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/matrixsort/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/password.html</loc>
@@ -475,7 +475,7 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/password/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/password_new.html</loc>
@@ -483,6 +483,6 @@
  </url>
  <url>
   <loc>http://dave.dkjones.org/stories/password_new/</loc>
-  <lastmod>2018-12-22T15:21:00Z</lastmod>
+  <lastmod>2019-01-27T18:38:00Z</lastmod>
  </url>
 </urlset>

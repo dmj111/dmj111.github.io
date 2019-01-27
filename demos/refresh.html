@@ -1,19 +1,16 @@
 <html>
-  <head>
-  </head>
   <body>
-    Use this page to force a page load over http so chrome can take
-    you to captive portals in public wifi.  Click the link to get a
-    fresh page from cache.
-    <div id='linkdiv'></div>
-  </body>
-  <script>
-    var linkdiv = document.getElementById('linkdiv');
-    var a = document.createElement('a');
-    var date = Date.now();
-    var linkText = document.createTextNode('click to refresh : ' + date);
-    a.appendChild(linkText);
-    a.href = "refresh.html?q=" + encodeURIComponent(date);
-    linkdiv.appendChild(a);
+    <p>
+      Use this page to force chrome to load a page over HTTP to sign into
+      public wifi with captive portals.
+    <p>
+      <a id='example_link' href='http://example.com'> Click here </a>
+      if the page does not automatically load, 
+    <script>
+      var a = document.getElementById('example_link');
+      var date = Date.now();
+      a.href = "http://example.com/?q=" + encodeURIComponent(date);
+      // window.location.href = a.href;
   </script>
+  </body>
 </html>
