@@ -21,7 +21,6 @@ especially using linear algebra.  Many times code can be written to
 use the built in matrix operators instead of using loops.  Thi">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2011-11-19T00:00:00-05:00">
-<meta property="article:tag" content="mathjax">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -78,10 +77,11 @@ use the built in matrix operators instead of using loops.  Thi">
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">A simple Octave tip</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -98,7 +98,6 @@ use the built in matrix operators instead of using loops.  Thi">
     <div>
 <!-- alias : [/posts/2011/2011-11-19-a-simple-octave-tip.html] -->
 <!-- /blog/2011/11/19/a-simple-octave-tip/index.html -->
-<!-- use_mathjax: true -->
 <!-- mathjax tip here -->
 <!-- http://ralsina.com.ar/weblog/posts/math-works-now.txt -->
 <p>Matlab and <a class="reference external" href="http://www.gnu.org/software/octave/">Octave</a> are both great for quickly trying out numeric code,
@@ -111,162 +110,162 @@ the code clearer and faster.  The following examples all use Octave.</p>
 S = \sum_{i=1}^n x_i  y_i
 \end{equation*}
 </div>
-<p><tt class="docutils literal">x</tt> and <tt class="docutils literal">y</tt> are one dimensional vectors in Octave, so we can find
+<p><code class="docutils literal">x</code> and <code class="docutils literal">y</code> are one dimensional vectors in Octave, so we can find
 <span class="math">\(S\)</span> with this code:</p>
-<pre class="code octave"><a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-1"></a><span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-2"></a><span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-3"></a><span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
-<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-4"></a>  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<a name="rest_code_dfd52c68df484642b4bb3404e2c3f3f2-5"></a><span class="k">end</span>
+<pre class="code octave"><a name="rest_code_0aff3a0913154b8b978eb355b3e64f83-1"></a><span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_0aff3a0913154b8b978eb355b3e64f83-2"></a><span class="n">N</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<a name="rest_code_0aff3a0913154b8b978eb355b3e64f83-3"></a><span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+<a name="rest_code_0aff3a0913154b8b978eb355b3e64f83-4"></a>  <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="rest_code_0aff3a0913154b8b978eb355b3e64f83-5"></a><span class="k">end</span>
 </pre>
 <p>That code is straight forward.  Octave can do more, though.  The =.*=
 operator does an element by element multiplication over matrices, and
 =sum= adds up the elements in a matrix.  Since our matrices are
 one-dimensional, we can compose these functions to get our result, at
 the cost of creating a temporary matrix.</p>
-<pre class="code octave"><a name="rest_code_40d0f1760a7a48c8a9227ff124bd8f2f-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
+<pre class="code octave"><a name="rest_code_52ce09ff039147e1a86091e7206bf43d-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">)</span>
 </pre>
 <p>Finally, Octave already has a function that does what we want.  The
 formula we are looking at is the dot product of two vectors, so in
 Octave, we can do</p>
-<pre class="code octave"><a name="rest_code_43df25fa90624a39acaad3806e45c703-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<pre class="code octave"><a name="rest_code_68e9b1ce0c6f4e2d89fdb5c50b23496c-1"></a><span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre>
-<p>The first attempt is the clearest when you do not know what <tt class="docutils literal">.*</tt>,
-<tt class="docutils literal">sum</tt>, and <tt class="docutils literal">dot</tt> do.  But, once you know what <tt class="docutils literal">sum</tt> and <tt class="docutils literal">dot</tt>
+<p>The first attempt is the clearest when you do not know what <code class="docutils literal">.*</code>,
+<code class="docutils literal">sum</code>, and <code class="docutils literal">dot</code> do.  But, once you know what <code class="docutils literal">sum</code> and <code class="docutils literal">dot</code>
 do, they are much clearer.  Also, they are much faster in Octave than
 the naive loop.</p>
 <p>The next listing shows a test driver to compare the three methods.</p>
-<pre class="code octave"><a name="rest_code_22d859d18ca34d06841a490d4730b72e-1"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-2"></a><span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-3"></a>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-4"></a><span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-5"></a>    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-6"></a>    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-7"></a>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-8"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-9"></a>    <span class="nb">tic</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-10"></a>    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-11"></a>    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-12"></a>      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-13"></a>    <span class="k">end</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-14"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-15"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-16"></a>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-17"></a>    <span class="nb">tic</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-18"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-19"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-20"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-21"></a>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-22"></a>    <span class="nb">tic</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-23"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-24"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-25"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
-<a name="rest_code_22d859d18ca34d06841a490d4730b72e-26"></a>  <span class="k">end</span>
+<pre class="code octave"><a name="rest_code_d73afa128a68408994c3bacb4bab85c8-1"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">"\n||||\n| method | size| result | time |\n"</span><span class="p">)</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-2"></a><span class="n">fmt</span> <span class="p">=</span> <span class="s">"| %s | %d | %f | %f |\n"</span><span class="p">;</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-3"></a>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-4"></a><span class="k">for</span> <span class="n">SIZE</span> <span class="p">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100000</span><span class="p">,</span><span class="mi">1000000</span><span class="p">]</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-5"></a>    <span class="n">x</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-6"></a>    <span class="n">y</span> <span class="p">=</span> <span class="nb">rand</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-7"></a>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-8"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="s">"|---\n"</span><span class="p">)</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-9"></a>    <span class="nb">tic</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-10"></a>    <span class="n">S</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-11"></a>    <span class="k">for</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">SIZE</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-12"></a>      <span class="n">S</span> <span class="o">+=</span> <span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-13"></a>    <span class="k">end</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-14"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-15"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"for"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-16"></a>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-17"></a>    <span class="nb">tic</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-18"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">.*</span> <span class="n">y</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-19"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-20"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"sum"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-21"></a>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-22"></a>    <span class="nb">tic</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-23"></a>    <span class="n">S</span> <span class="p">=</span> <span class="nb">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-24"></a>    <span class="n">t1</span> <span class="p">=</span> <span class="nb">toc</span><span class="p">;</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-25"></a>    <span class="nb">fprintf</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="s">"dot"</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">t1</span><span class="p">);</span>
+<a name="rest_code_d73afa128a68408994c3bacb4bab85c8-26"></a>  <span class="k">end</span>
 </pre>
 <p>Running this code gives us the following results.</p>
-<table border="1" class="docutils">
+<table>
 <colgroup>
-<col width="19%">
-<col width="19%">
-<col width="36%">
-<col width="25%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 36%">
+<col style="width: 25%">
 </colgroup>
-<thead valign="bottom"><tr>
-<th class="head">method</th>
-<th class="head">size</th>
-<th class="head">result</th>
-<th class="head">time</th>
+<thead><tr>
+<th class="head"><p>method</p></th>
+<th class="head"><p>size</p></th>
+<th class="head"><p>result</p></th>
+<th class="head"><p>time</p></th>
 </tr></thead>
-<tbody valign="top">
+<tbody>
 <tr>
-<td>for</td>
-<td>100</td>
-<td>24.266291</td>
-<td>0.000744</td>
+<td><p>for</p></td>
+<td><p>100</p></td>
+<td><p>24.266291</p></td>
+<td><p>0.000744</p></td>
 </tr>
 <tr>
-<td>sum</td>
-<td>100</td>
-<td>24.266291</td>
-<td>0.000055</td>
+<td><p>sum</p></td>
+<td><p>100</p></td>
+<td><p>24.266291</p></td>
+<td><p>0.000055</p></td>
 </tr>
 <tr>
-<td>dot</td>
-<td>100</td>
-<td>24.266291</td>
-<td>0.000018</td>
+<td><p>dot</p></td>
+<td><p>100</p></td>
+<td><p>24.266291</p></td>
+<td><p>0.000018</p></td>
 </tr>
 <tr>
-<td>for</td>
-<td>1000</td>
-<td>247.065638</td>
-<td>0.007198</td>
+<td><p>for</p></td>
+<td><p>1000</p></td>
+<td><p>247.065638</p></td>
+<td><p>0.007198</p></td>
 </tr>
 <tr>
-<td>sum</td>
-<td>1000</td>
-<td>247.065638</td>
-<td>0.000016</td>
+<td><p>sum</p></td>
+<td><p>1000</p></td>
+<td><p>247.065638</p></td>
+<td><p>0.000016</p></td>
 </tr>
 <tr>
-<td>dot</td>
-<td>1000</td>
-<td>247.065638</td>
-<td>0.000017</td>
+<td><p>dot</p></td>
+<td><p>1000</p></td>
+<td><p>247.065638</p></td>
+<td><p>0.000017</p></td>
 </tr>
 <tr>
-<td>for</td>
-<td>10000</td>
-<td>2507.387623</td>
-<td>0.074163</td>
+<td><p>for</p></td>
+<td><p>10000</p></td>
+<td><p>2507.387623</p></td>
+<td><p>0.074163</p></td>
 </tr>
 <tr>
-<td>sum</td>
-<td>10000</td>
-<td>2507.387623</td>
-<td>0.000083</td>
+<td><p>sum</p></td>
+<td><p>10000</p></td>
+<td><p>2507.387623</p></td>
+<td><p>0.000083</p></td>
 </tr>
 <tr>
-<td>dot</td>
-<td>10000</td>
-<td>2507.387623</td>
-<td>0.000029</td>
+<td><p>dot</p></td>
+<td><p>10000</p></td>
+<td><p>2507.387623</p></td>
+<td><p>0.000029</p></td>
 </tr>
 <tr>
-<td>for</td>
-<td>100000</td>
-<td>25090.247927</td>
-<td>0.736105</td>
+<td><p>for</p></td>
+<td><p>100000</p></td>
+<td><p>25090.247927</p></td>
+<td><p>0.736105</p></td>
 </tr>
 <tr>
-<td>sum</td>
-<td>100000</td>
-<td>25090.247927</td>
-<td>0.000656</td>
+<td><p>sum</p></td>
+<td><p>100000</p></td>
+<td><p>25090.247927</p></td>
+<td><p>0.000656</p></td>
 </tr>
 <tr>
-<td>dot</td>
-<td>100000</td>
-<td>25090.247927</td>
-<td>0.000095</td>
+<td><p>dot</p></td>
+<td><p>100000</p></td>
+<td><p>25090.247927</p></td>
+<td><p>0.000095</p></td>
 </tr>
 <tr>
-<td>for</td>
-<td>1000000</td>
-<td>249863.296971</td>
-<td>7.334975</td>
+<td><p>for</p></td>
+<td><p>1000000</p></td>
+<td><p>249863.296971</p></td>
+<td><p>7.334975</p></td>
 </tr>
 <tr>
-<td>sum</td>
-<td>1000000</td>
-<td>249863.296971</td>
-<td>0.006773</td>
+<td><p>sum</p></td>
+<td><p>1000000</p></td>
+<td><p>249863.296971</p></td>
+<td><p>0.006773</p></td>
 </tr>
 <tr>
-<td>dot</td>
-<td>1000000</td>
-<td>249863.296971</td>
-<td>0.001246</td>
+<td><p>dot</p></td>
+<td><p>1000000</p></td>
+<td><p>249863.296971</p></td>
+<td><p>0.001246</p></td>
 </tr>
 </tbody>
 </table>
@@ -278,17 +277,14 @@ course, it makes sense to do it ourselves instead of just making a
 call to existing code.</p>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
-<li><a class="tag p-category" href="../../../categories/mathjax/" rel="tag">mathjax</a></li>
-        </ul>
-<ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
                 <a href="../posting-from-emacs-with-org2blog-wp/" rel="prev" title="Posting from emacs with org2blog/wp">Previous post</a>
             </li>
             <li class="next">
                 <a href="../2011-12-18-stanford-online-classes/" rel="next" title="Stanford Online Classes">Next post</a>
             </li>
-        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script></article><!--End of body content--><footer id="footer">
             Contents © 2019
@@ -296,15 +292,13 @@ call to existing code.</p>
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

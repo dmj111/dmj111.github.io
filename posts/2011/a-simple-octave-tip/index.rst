@@ -1,13 +1,12 @@
 .. link:
 .. description:
-.. tags: mathjax
+.. has_math: true
 .. title: A simple Octave tip
 .. date: 2011-11-19
 .. slug: a-simple-octave-tip
 
 ..   alias : [/posts/2011/2011-11-19-a-simple-octave-tip.html]
 ..            /blog/2011/11/19/a-simple-octave-tip/index.html
-..   use_mathjax: true
 
 .. mathjax tip here
 ..  http://ralsina.com.ar/weblog/posts/math-works-now.txt

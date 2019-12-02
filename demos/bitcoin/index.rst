@@ -18,7 +18,7 @@ the ``C0`` value.  At the end, it reports the mean of the ``C0``'s.
 
 .. raw:: html
 
-         <button id='runButton' type='button' class='btn btn-default'>Run</button>
+         <button id='runButton' type='button' class='btn btn-outline-dark'>Run</button>
 
 
 .. raw:: html
@@ -52,9 +52,8 @@ the ``C0`` value.  At the end, it reports the mean of the ``C0``'s.
 
 .. raw:: html
 
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script src="bitcoin.js"></script>
-        <script src="bitcoin.d3.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="bitcoin.d3.js" type="module"></script>
 
 
 

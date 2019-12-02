@@ -22,7 +22,6 @@ Euclid's method find the greatest common divisor for two numbers.  The
 greatest common divisor">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2012-01-05T08:00:00-05:00">
-<meta property="article:tag" content="mathjax">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -79,10 +78,11 @@ greatest common divisor">
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Extended Euclid's Method</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -115,81 +115,81 @@ am + bn = \gcd(m,n)
 Knuth's book, and it is written longer than it needs to be to make the
 names clearer.  Also, this is an example of replacing a loop with
 recursion.</p>
-<pre class="code ocaml"><a name="rest_code_eadb46929f054d89bbe627407ca621e3-1"></a><span class="k">let</span> <span class="n">euclid_extended</span> <span class="n">m</span> <span class="n">n</span> <span class="o">=</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-2"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">a</span> <span class="n">b</span> <span class="n">a'</span> <span class="n">b'</span> <span class="n">c</span> <span class="n">d</span> <span class="o">=</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-3"></a>    <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="n">d</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-4"></a>    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">d</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-5"></a>    <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"| %d | %d | %d | %d | %d | %d|</span><span class="se">\n</span><span class="s2">"</span> <span class="n">a</span> <span class="n">a'</span> <span class="n">b</span> <span class="n">b'</span> <span class="n">c</span> <span class="n">d</span><span class="o">;</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-6"></a>    <span class="k">if</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-7"></a>      <span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span><span class="n">d</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-8"></a>    <span class="k">else</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-9"></a>       <span class="k">let</span> <span class="n">c_new</span> <span class="o">=</span> <span class="n">d</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-10"></a>       <span class="k">let</span> <span class="n">d_new</span> <span class="o">=</span> <span class="n">r</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-11"></a>       <span class="k">let</span> <span class="n">a_new</span> <span class="o">=</span> <span class="n">a'</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">a</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-12"></a>       <span class="k">let</span> <span class="n">a'_new</span> <span class="o">=</span> <span class="n">a</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-13"></a>       <span class="k">let</span> <span class="n">b_new</span> <span class="o">=</span> <span class="n">b'</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">b</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-14"></a>       <span class="k">let</span> <span class="n">b'_new</span> <span class="o">=</span> <span class="n">b</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-15"></a>       <span class="n">loop</span> <span class="n">a_new</span> <span class="n">b_new</span> <span class="n">a'_new</span> <span class="n">b'_new</span> <span class="n">c_new</span> <span class="n">d_new</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-16"></a>  <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-17"></a>  <span class="n">loop</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="n">m</span> <span class="n">n</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-18"></a>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-19"></a><span class="k">let</span> <span class="n">test</span><span class="bp">()</span> <span class="o">=</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-20"></a>  <span class="k">let</span> <span class="n">m</span><span class="o">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1769</span><span class="o">,</span> <span class="mi">551</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-21"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"| a| a' | b | b' | c| d|</span><span class="se">\n</span><span class="s2">|---</span><span class="se">\n</span><span class="s2">"</span><span class="o">;</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-22"></a>  <span class="k">let</span> <span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">euclid_extended</span> <span class="n">m</span> <span class="n">n</span> <span class="k">in</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-23"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"a %d:  b: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="n">a</span> <span class="n">b</span><span class="o">;</span>
-<a name="rest_code_eadb46929f054d89bbe627407ca621e3-24"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"test result: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">m</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">n</span><span class="o">);</span>
+<pre class="code ocaml"><a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-1"></a><span class="k">let</span> <span class="n">euclid_extended</span> <span class="n">m</span> <span class="n">n</span> <span class="o">=</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-2"></a>  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">a</span> <span class="n">b</span> <span class="n">a'</span> <span class="n">b'</span> <span class="n">c</span> <span class="n">d</span> <span class="o">=</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-3"></a>    <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="n">d</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-4"></a>    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">d</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-5"></a>    <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"| %d | %d | %d | %d | %d | %d|</span><span class="se">\n</span><span class="s2">"</span> <span class="n">a</span> <span class="n">a'</span> <span class="n">b</span> <span class="n">b'</span> <span class="n">c</span> <span class="n">d</span><span class="o">;</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-6"></a>    <span class="k">if</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-7"></a>      <span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span><span class="n">d</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-8"></a>    <span class="k">else</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-9"></a>       <span class="k">let</span> <span class="n">c_new</span> <span class="o">=</span> <span class="n">d</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-10"></a>       <span class="k">let</span> <span class="n">d_new</span> <span class="o">=</span> <span class="n">r</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-11"></a>       <span class="k">let</span> <span class="n">a_new</span> <span class="o">=</span> <span class="n">a'</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">a</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-12"></a>       <span class="k">let</span> <span class="n">a'_new</span> <span class="o">=</span> <span class="n">a</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-13"></a>       <span class="k">let</span> <span class="n">b_new</span> <span class="o">=</span> <span class="n">b'</span> <span class="o">-</span> <span class="n">q</span> <span class="o">*</span> <span class="n">b</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-14"></a>       <span class="k">let</span> <span class="n">b'_new</span> <span class="o">=</span> <span class="n">b</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-15"></a>       <span class="n">loop</span> <span class="n">a_new</span> <span class="n">b_new</span> <span class="n">a'_new</span> <span class="n">b'_new</span> <span class="n">c_new</span> <span class="n">d_new</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-16"></a>  <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-17"></a>  <span class="n">loop</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="n">m</span> <span class="n">n</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-18"></a>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-19"></a><span class="k">let</span> <span class="n">test</span><span class="bp">()</span> <span class="o">=</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-20"></a>  <span class="k">let</span> <span class="n">m</span><span class="o">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1769</span><span class="o">,</span> <span class="mi">551</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-21"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"| a| a' | b | b' | c| d|</span><span class="se">\n</span><span class="s2">|---</span><span class="se">\n</span><span class="s2">"</span><span class="o">;</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-22"></a>  <span class="k">let</span> <span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">euclid_extended</span> <span class="n">m</span> <span class="n">n</span> <span class="k">in</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-23"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"a %d:  b: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="n">a</span> <span class="n">b</span><span class="o">;</span>
+<a name="rest_code_295cf4e60ea04ba7a501da323e5a970b-24"></a>  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">"test result: %d</span><span class="se">\n</span><span class="s2">"</span> <span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">m</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">n</span><span class="o">);</span>
 </pre>
 <p>Running the code produces the following table.</p>
-<table border="1" class="docutils">
+<table>
 <colgroup>
-<col width="12%">
-<col width="12%">
-<col width="19%">
-<col width="15%">
-<col width="23%">
-<col width="19%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 19%">
+<col style="width: 15%">
+<col style="width: 23%">
+<col style="width: 19%">
 </colgroup>
-<thead valign="bottom"><tr>
-<th class="head">a</th>
-<th class="head">a'</th>
-<th class="head">b</th>
-<th class="head">b'</th>
-<th class="head">c</th>
-<th class="head">d</th>
+<thead><tr>
+<th class="head"><p>a</p></th>
+<th class="head"><p>a'</p></th>
+<th class="head"><p>b</p></th>
+<th class="head"><p>b'</p></th>
+<th class="head"><p>c</p></th>
+<th class="head"><p>d</p></th>
 </tr></thead>
-<tbody valign="top">
+<tbody>
 <tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>1769</td>
-<td>551</td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1769</p></td>
+<td><p>551</p></td>
 </tr>
 <tr>
-<td>1</td>
-<td>0</td>
-<td>-3</td>
-<td>1</td>
-<td>551</td>
-<td>116</td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>-3</p></td>
+<td><p>1</p></td>
+<td><p>551</p></td>
+<td><p>116</p></td>
 </tr>
 <tr>
-<td>-4</td>
-<td>1</td>
-<td>13</td>
-<td>-3</td>
-<td>116</td>
-<td>87</td>
+<td><p>-4</p></td>
+<td><p>1</p></td>
+<td><p>13</p></td>
+<td><p>-3</p></td>
+<td><p>116</p></td>
+<td><p>87</p></td>
 </tr>
 <tr>
-<td>5</td>
-<td>-4</td>
-<td>-16</td>
-<td>13</td>
-<td>87</td>
-<td>29</td>
+<td><p>5</p></td>
+<td><p>-4</p></td>
+<td><p>-16</p></td>
+<td><p>13</p></td>
+<td><p>87</p></td>
+<td><p>29</p></td>
 </tr>
 </tbody>
 </table>
@@ -200,17 +200,14 @@ table in his book, but some people, like me, don't really learn
 something until they have done it themselves.</p>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
-<li><a class="tag p-category" href="../../../categories/mathjax/" rel="tag">mathjax</a></li>
-        </ul>
-<ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
                 <a href="../2012-01-05-trying-out-a-static-site/" rel="prev" title="Trying out a static web site">Previous post</a>
             </li>
             <li class="next">
                 <a href="../2012-01-06-generating-dynamic-content-for-org-mode/" rel="next" title="Generating dynamic content for org mode">Next post</a>
             </li>
-        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script></article><!--End of body content--><footer id="footer">
             Contents © 2019
@@ -218,15 +215,13 @@ something until they have done it themselves.</p>
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

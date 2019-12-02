@@ -1,6 +1,6 @@
 .. link:
 .. description:
-.. tags: mathjax 
+.. has_math: true
 .. title: Sieve of Eratosthenes
 .. date: 2012-01-07 8:00
 

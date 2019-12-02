@@ -82,10 +82,11 @@ class PrettyLog():
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Pretty print logging in Python</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -102,24 +103,24 @@ class PrettyLog():
     <div>
 <p>From the Python <a class="reference external" href="http://docs.python.org/3.3/howto/logging.html#using-arbitrary-objects-as-messages">logging documentation</a>,
 we can send an arbitrary object into a log message call.</p>
-<pre class="code python"><a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-1"></a><span class="kn">import</span> <span class="nn">pprint</span>
-<a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-2"></a>
-<a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-3"></a><span class="k">class</span> <span class="nc">PrettyLog</span><span class="p">():</span>
-<a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-<a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span>
-<a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-6"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a name="rest_code_2b695852cfcb482bbfdb16fb2296bfb0-7"></a>        <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-1"></a><span class="kn">import</span> <span class="nn">pprint</span>
+<a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-2"></a>
+<a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-3"></a><span class="k">class</span> <span class="nc">PrettyLog</span><span class="p">():</span>
+<a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span>
+<a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-6"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_8e90e5da947b49b4a8ba47c332f28bc2-7"></a>        <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
 </pre>
-<p>Then, in the code, we can use it with <tt class="docutils literal">logging</tt>.</p>
-<pre class="code python"><a name="rest_code_215442a7fa614be3a5112320c2dba40a-1"></a><span class="kn">import</span> <span class="nn">logging</span>
-<a name="rest_code_215442a7fa614be3a5112320c2dba40a-2"></a>
-<a name="rest_code_215442a7fa614be3a5112320c2dba40a-3"></a><span class="c1"># ...</span>
-<a name="rest_code_215442a7fa614be3a5112320c2dba40a-4"></a>
-<a name="rest_code_215442a7fa614be3a5112320c2dba40a-5"></a><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">PrettyLog</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+<p>Then, in the code, we can use it with <code class="docutils literal">logging</code>.</p>
+<pre class="code python"><a name="rest_code_5dc3033cf039429796e51e4088ec1e88-1"></a><span class="kn">import</span> <span class="nn">logging</span>
+<a name="rest_code_5dc3033cf039429796e51e4088ec1e88-2"></a>
+<a name="rest_code_5dc3033cf039429796e51e4088ec1e88-3"></a><span class="c1"># ...</span>
+<a name="rest_code_5dc3033cf039429796e51e4088ec1e88-4"></a>
+<a name="rest_code_5dc3033cf039429796e51e4088ec1e88-5"></a><span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">PrettyLog</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 </pre>
 <p>The string isn't created until it is needed, so if the logging level
 is not high enough, the only method call is the creation of the
-<tt class="docutils literal">PrettyLog</tt> object.</p>
+<code class="docutils literal">PrettyLog</code> object.</p>
 </div>
     </div>
     <aside class="postpromonav"><nav><ul class="pager hidden-print">
@@ -135,15 +136,13 @@ is not high enough, the only method call is the creation of the
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

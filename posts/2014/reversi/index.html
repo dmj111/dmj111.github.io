@@ -78,10 +78,11 @@ ugly, the c">
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Reversi in JavaScript, again</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -108,17 +109,17 @@ it so it can display on an HTML canvas, and a person can play against
 it on the canvas.</p>
 <p>Some of the stuff going on here is:</p>
 <ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Alpha-beta_pruning">Alpha-Beta</a> game tree searching</p></li>
+<li><p>Position evaluation using features from <a class="reference external" href="https://skatgame.net/mburo/log.html">Logistello</a></p></li>
 <li>
-<a class="reference external" href="https://en.wikipedia.org/wiki/Alpha-beta_pruning">Alpha-Beta</a> game tree searching</li>
-<li>Position evaluation using features from <a class="reference external" href="https://skatgame.net/mburo/log.html">Logistello</a>
-</li>
-<li>Learning via <a class="reference external" href="https://en.wikipedia.org/wiki/Arthur_Samuel">Samuel's</a> strategy of using the look-ahead to train
-the evaluation function<ul>
-<li>Using a <a class="reference external" href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Classifier</a> instead of Logistic Regression</li>
+<p>Learning via <a class="reference external" href="https://en.wikipedia.org/wiki/Arthur_Samuel">Samuel's</a> strategy of using the look-ahead to train
+the evaluation function</p>
+<ul>
+<li><p>Using a <a class="reference external" href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Classifier</a> instead of Logistic Regression</p></li>
 </ul>
 </li>
-<li>Some HTML5 stuff, like application caching, and maybe a webworker in
-the future.</li>
+<li><p>Some HTML5 stuff, like application caching, and maybe a webworker in
+the future.</p></li>
 </ul>
 </div>
     </div>
@@ -135,15 +136,13 @@ the future.</li>
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

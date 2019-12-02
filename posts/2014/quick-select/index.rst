@@ -1,5 +1,5 @@
 .. title: Quick select
-.. tags: mathjax
+.. has_math: true
 .. date: 2014/03/06 23:25:35
 
 .. |--| unicode:: U+2013   .. en dash

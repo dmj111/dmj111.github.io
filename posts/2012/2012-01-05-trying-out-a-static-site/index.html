@@ -22,7 +22,6 @@ to get away from worrying about stuff.
 Here is what I want to put in">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2012-01-05T08:00:00-05:00">
-<meta property="article:tag" content="mathjax">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -79,10 +78,11 @@ Here is what I want to put in">
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Trying out a static web site</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -103,15 +103,15 @@ to get away from worrying about stuff.</p>
 <p>Here is what I want to put in my posts:</p>
 <blockquote>
 <ul class="simple">
-<li><code>for(int ii = 0; ii &lt; 99; ++ii)</code></li>
-<li><span class="math">\(\LaTeX\)</span></li>
-<li>generated images</li>
+<li><p><code>for(int ii = 0; ii &lt; 99; ++ii)</code></p></li>
+<li><p><span class="math">\(\LaTeX\)</span></p></li>
+<li><p>generated images</p></li>
 </ul>
 </blockquote>
 <p>Here are the tools I want to use to edit the posts:</p>
 <blockquote>
 <ul class="simple">
-<li><a class="reference external" href="https://www.gnu.org/software/emacs/">Emacs</a></li>
+<li><p><a class="reference external" href="https://www.gnu.org/software/emacs/">Emacs</a></p></li>
 </ul>
 </blockquote>
 <p>Octopress seems nice, but I don't want all of the ruby dependencies
@@ -121,17 +121,14 @@ from someone I met at the Strange Loop conference this year.  I have
 shamelessly stolen his layout, and am trying it out here.</p>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
-<li><a class="tag p-category" href="../../../categories/mathjax/" rel="tag">mathjax</a></li>
-        </ul>
-<ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
                 <a href="../../2011/ants-ai-challenge/" rel="prev" title="Ants AI Challenge">Previous post</a>
             </li>
             <li class="next">
                 <a href="../2012-01-05-extended-euclids-method/" rel="next" title="Extended Euclid's Method">Next post</a>
             </li>
-        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script></article><!--End of body content--><footer id="footer">
             Contents © 2019
@@ -139,15 +136,13 @@ shamelessly stolen his layout, and am trying it out here.</p>
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

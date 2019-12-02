@@ -78,10 +78,11 @@ First, we need to import the std.algorithm library for the s">
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Quicksort in D</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -101,13 +102,13 @@ Language</a> . Here is a toy quicksort, with some
 uninformed comments about D.</p>
 <p>First, we need to import the std.algorithm library for the swap
 function, and the stdio libraray for printing stuff out.</p>
-<pre class="code d"><a name="rest_code_dd6ca6f88a934893b1f435010bf55804-1"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">algorithm</span><span class="p">;</span>
-<a name="rest_code_dd6ca6f88a934893b1f435010bf55804-2"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
+<pre class="code d"><a name="rest_code_9626ba7c122c4f169af1e2d0307a1496-1"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">algorithm</span><span class="p">;</span>
+<a name="rest_code_9626ba7c122c4f169af1e2d0307a1496-2"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
 </pre>
 <p>Next, we have the partition function.  This shows several things.
 First, it is templatized on type, though not on comparison function.
-The <tt class="docutils literal">(T)</tt> in <tt class="docutils literal"><span class="pre">partition(T)(...)</span></tt> marks the function as a template
-on <tt class="docutils literal">T</tt>.</p>
+The <code class="docutils literal">(T)</code> in <code class="docutils literal"><span class="pre">partition(T)(...)</span></code> marks the function as a template
+on <code class="docutils literal">T</code>.</p>
 <p>This code also shows is how D handles arrays.  D is aware of array
 slices, so we can recurse on parts of the array, instead of passing in
 an array and begin / end indices.  This may only be sugar, but it
@@ -115,171 +116,171 @@ allows stricted error checking in non-release mode, as the D arrays
 are bounds checked.</p>
 <p>The partition function uses the last element of the array as the
 pivot.  The partition function
-walks two indices, <tt class="docutils literal">i</tt> and <tt class="docutils literal">j</tt>, from the beginning and the end of the
-array.  The condition is that <tt class="docutils literal">array[x]</tt> is less than or equal to the
-pivot when x is less or equal to i, and <tt class="docutils literal">array[x]</tt> is greater than the
+walks two indices, <code class="docutils literal">i</code> and <code class="docutils literal">j</code>, from the beginning and the end of the
+array.  The condition is that <code class="docutils literal">array[x]</code> is less than or equal to the
+pivot when x is less or equal to i, and <code class="docutils literal">array[x]</code> is greater than the
 pivot when x is greater or equal to j.  At the end, we swap the pivot
 out to where it belongs.</p>
-<pre class="code d"><a name="rest_code_605d38544a24492ba7da40365c752ae5-1"></a><span class="kt">ulong</span> <span class="n">partition</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-2"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-3"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-4"></a>  <span class="k">auto</span> <span class="n">pivot</span> <span class="p">=</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">];</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-5"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-6"></a>  <span class="c1">// We are going to increment i, and decrement j in each iteration of</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-7"></a>  <span class="c1">// the while loop before using them.  So, they must start at the</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-8"></a>  <span class="c1">// location before where we really want them to be.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-9"></a>  <span class="c1">//</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-10"></a>  <span class="c1">// This seems inconvenient, but it cleans up the possible ending</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-11"></a>  <span class="c1">// conditions of the while loop.  The ulong cannot really hold a</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-12"></a>  <span class="c1">// negative number, so this -1 requires special care in the while</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-13"></a>  <span class="c1">// loop.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-14"></a>  <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="p">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-15"></a>  <span class="kt">ulong</span> <span class="n">j</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-16"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-17"></a>  <span class="c1">// If i == -1, it will wrap around to a really big postive number.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-18"></a>  <span class="c1">// So, include a test for it here.  The only time it should be</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-19"></a>  <span class="c1">// tested is the first iteration, while i still is -1, and the last</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-20"></a>  <span class="c1">// iteration, when i &gt;= j.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-21"></a>  <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">||</span> <span class="n">i</span> <span class="p">==</span> <span class="p">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-22"></a>    <span class="c1">// Find the next element from the start that is larger or equal to</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-23"></a>    <span class="c1">// the pivot element.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-24"></a>    <span class="c1">//</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-25"></a>    <span class="c1">// The pivot at the the end of the array is a sentinel, so we</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-26"></a>    <span class="c1">// needn't check for overrunning this array in direction.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-27"></a>    <span class="n">i</span> <span class="p">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-28"></a>    <span class="k">while</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-29"></a>      <span class="n">i</span> <span class="p">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-30"></a>    <span class="p">}</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-31"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-32"></a>    <span class="c1">// Find the next element from the end that is less than or equal</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-33"></a>    <span class="c1">// to the pivot.  We must guard against running past the i'th</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-34"></a>    <span class="c1">// element, since we could have an array that was all greater than</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-35"></a>    <span class="c1">// the pivot.  If j was 0 before this, things would be bad.  That</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-36"></a>    <span class="c1">// is why the function asserts that the length be more than 1.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-37"></a>    <span class="n">j</span> <span class="p">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-38"></a>    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">&amp;&amp;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-39"></a>      <span class="n">j</span> <span class="p">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-40"></a>    <span class="p">}</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-41"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-42"></a>    <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-43"></a>      <span class="c1">// Swap the values pointed at by i and j.  Now, array[x] for x</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-44"></a>      <span class="c1">// &lt;= i is &lt;= pivot, and array[x] for x &gt;= j is &gt;= pivot.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-45"></a>      <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-46"></a>    <span class="p">}</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-47"></a>  <span class="p">}</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-48"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-49"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-50"></a>  <span class="c1">// We know i &gt;= j.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-51"></a>  <span class="c1">// 1) If i was incremented to be equal to j, then</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-52"></a>  <span class="c1">//  i = j = array.length - 1, and array[i] is the only element &gt;=</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-53"></a>  <span class="c1">//  pivot.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-54"></a>  <span class="c1">// 2) Or, i was incremented to j, and array[j] &gt;= pivot from the</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-55"></a>  <span class="c1">//    previous iteration.  In this case, array[j] &gt;= pivot.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-56"></a>  <span class="c1">// 3) Or, i was incremented so that array[i] &gt;= pivot, then j was</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-57"></a>  <span class="c1">//    decremented till j == i.  So, array[i] &gt;= pivot.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-58"></a>  <span class="c1">/// So, array[i] is always greater than or equal to the pivot after</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-59"></a>  <span class="c1">// the while loop.  And, array[i-1] is less than or equal to pivot,</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-60"></a>  <span class="c1">// if i &gt; 0.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-61"></a>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-62"></a>  <span class="c1">// Swap the pivot into the right place.  Everything to the left is</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-63"></a>  <span class="c1">// &lt;= pivot.  Every thing to the right is &gt;= pivot.</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-64"></a>  <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-65"></a>  <span class="c1">// Return the pivot location</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-66"></a>  <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-<a name="rest_code_605d38544a24492ba7da40365c752ae5-67"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-1"></a><span class="kt">ulong</span> <span class="n">partition</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-2"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-3"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-4"></a>  <span class="k">auto</span> <span class="n">pivot</span> <span class="p">=</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">];</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-5"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-6"></a>  <span class="c1">// We are going to increment i, and decrement j in each iteration of</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-7"></a>  <span class="c1">// the while loop before using them.  So, they must start at the</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-8"></a>  <span class="c1">// location before where we really want them to be.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-9"></a>  <span class="c1">//</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-10"></a>  <span class="c1">// This seems inconvenient, but it cleans up the possible ending</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-11"></a>  <span class="c1">// conditions of the while loop.  The ulong cannot really hold a</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-12"></a>  <span class="c1">// negative number, so this -1 requires special care in the while</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-13"></a>  <span class="c1">// loop.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-14"></a>  <span class="kt">ulong</span> <span class="n">i</span> <span class="p">=</span> <span class="p">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-15"></a>  <span class="kt">ulong</span> <span class="n">j</span> <span class="p">=</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-16"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-17"></a>  <span class="c1">// If i == -1, it will wrap around to a really big postive number.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-18"></a>  <span class="c1">// So, include a test for it here.  The only time it should be</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-19"></a>  <span class="c1">// tested is the first iteration, while i still is -1, and the last</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-20"></a>  <span class="c1">// iteration, when i &gt;= j.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-21"></a>  <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">||</span> <span class="n">i</span> <span class="p">==</span> <span class="p">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-22"></a>    <span class="c1">// Find the next element from the start that is larger or equal to</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-23"></a>    <span class="c1">// the pivot element.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-24"></a>    <span class="c1">//</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-25"></a>    <span class="c1">// The pivot at the the end of the array is a sentinel, so we</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-26"></a>    <span class="c1">// needn't check for overrunning this array in direction.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-27"></a>    <span class="n">i</span> <span class="p">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-28"></a>    <span class="k">while</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-29"></a>      <span class="n">i</span> <span class="p">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-30"></a>    <span class="p">}</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-31"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-32"></a>    <span class="c1">// Find the next element from the end that is less than or equal</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-33"></a>    <span class="c1">// to the pivot.  We must guard against running past the i'th</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-34"></a>    <span class="c1">// element, since we could have an array that was all greater than</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-35"></a>    <span class="c1">// the pivot.  If j was 0 before this, things would be bad.  That</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-36"></a>    <span class="c1">// is why the function asserts that the length be more than 1.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-37"></a>    <span class="n">j</span> <span class="p">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-38"></a>    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">&amp;&amp;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-39"></a>      <span class="n">j</span> <span class="p">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-40"></a>    <span class="p">}</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-41"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-42"></a>    <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-43"></a>      <span class="c1">// Swap the values pointed at by i and j.  Now, array[x] for x</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-44"></a>      <span class="c1">// &lt;= i is &lt;= pivot, and array[x] for x &gt;= j is &gt;= pivot.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-45"></a>      <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-46"></a>    <span class="p">}</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-47"></a>  <span class="p">}</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-48"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-49"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-50"></a>  <span class="c1">// We know i &gt;= j.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-51"></a>  <span class="c1">// 1) If i was incremented to be equal to j, then</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-52"></a>  <span class="c1">//  i = j = array.length - 1, and array[i] is the only element &gt;=</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-53"></a>  <span class="c1">//  pivot.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-54"></a>  <span class="c1">// 2) Or, i was incremented to j, and array[j] &gt;= pivot from the</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-55"></a>  <span class="c1">//    previous iteration.  In this case, array[j] &gt;= pivot.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-56"></a>  <span class="c1">// 3) Or, i was incremented so that array[i] &gt;= pivot, then j was</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-57"></a>  <span class="c1">//    decremented till j == i.  So, array[i] &gt;= pivot.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-58"></a>  <span class="c1">/// So, array[i] is always greater than or equal to the pivot after</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-59"></a>  <span class="c1">// the while loop.  And, array[i-1] is less than or equal to pivot,</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-60"></a>  <span class="c1">// if i &gt; 0.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-61"></a>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-62"></a>  <span class="c1">// Swap the pivot into the right place.  Everything to the left is</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-63"></a>  <span class="c1">// &lt;= pivot.  Every thing to the right is &gt;= pivot.</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-64"></a>  <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-65"></a>  <span class="c1">// Return the pivot location</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-66"></a>  <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<a name="rest_code_08a974de4d8248b6a3b1dc7680cb7462-67"></a><span class="p">}</span>
 </pre>
-<p>D has some nice unittest capabilities.  Code in a <tt class="docutils literal">unittest</tt> section
-is only compiled with the <tt class="docutils literal"><span class="pre">-unittest</span></tt> compile flag, and it is run
+<p>D has some nice unittest capabilities.  Code in a <code class="docutils literal">unittest</code> section
+is only compiled with the <code class="docutils literal"><span class="pre">-unittest</span></code> compile flag, and it is run
 every time the code is executed.  There is no way to forget to run it
-then.  Unless, of course, it isn't compiled with the <tt class="docutils literal"><span class="pre">-unittest</span></tt>
+then.  Unless, of course, it isn't compiled with the <code class="docutils literal"><span class="pre">-unittest</span></code>
 flag...</p>
 <p>For example,</p>
-<pre class="code sh"><a name="rest_code_f3f827075a1e41e2917c73f129ce5fee-1"></a>dmd quicksort.d -unittest
-<a name="rest_code_f3f827075a1e41e2917c73f129ce5fee-2"></a>./quicksort <span class="c1"># runs the tests</span>
+<pre class="code sh"><a name="rest_code_8f63d46759fa4b178027195fbe0f225b-1"></a>dmd quicksort.d -unittest
+<a name="rest_code_8f63d46759fa4b178027195fbe0f225b-2"></a>./quicksort <span class="c1"># runs the tests</span>
 </pre>
 <p>So, lets add some tests for the partition function.  Imagine, if you
 wish, that the tests were written before the code.</p>
-<pre class="code d"><a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-1"></a><span class="k">unittest</span> <span class="p">{</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-2"></a>  <span class="c1">/// Check that the partitioning is correct.</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-3"></a>  <span class="k">auto</span> <span class="n">check_partition</span> <span class="p">=</span> <span class="k">function</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-4"></a>    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-5"></a>    <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-6"></a>      <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;=</span> <span class="n">array</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-7"></a>    <span class="p">}</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-8"></a>    <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-9"></a>      <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;=</span> <span class="n">array</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-10"></a>    <span class="p">}</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-11"></a>  <span class="p">};</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-12"></a>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-13"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-14"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-15"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-16"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-17"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-18"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-19"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-20"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-21"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-22"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-23"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-24"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-25"></a>  <span class="n">data</span><span class="p">[]</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// set all values to 10</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-26"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-27"></a>  <span class="n">writeln</span><span class="p">(</span><span class="s">"partition tests passed"</span><span class="p">);</span>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-28"></a>
-<a name="rest_code_108cd81e72f14f5c8dc0914e4355cc71-29"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_475ac975f3c14113bc77e7af144929af-1"></a><span class="k">unittest</span> <span class="p">{</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-2"></a>  <span class="c1">/// Check that the partitioning is correct.</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-3"></a>  <span class="k">auto</span> <span class="n">check_partition</span> <span class="p">=</span> <span class="k">function</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-4"></a>    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-5"></a>    <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-6"></a>      <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&lt;=</span> <span class="n">array</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-7"></a>    <span class="p">}</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-8"></a>    <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-9"></a>      <span class="k">assert</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;=</span> <span class="n">array</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-10"></a>    <span class="p">}</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-11"></a>  <span class="p">};</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-12"></a>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-13"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-14"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-15"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-16"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-17"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-18"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-19"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-20"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-21"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-22"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-23"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-24"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-25"></a>  <span class="n">data</span><span class="p">[]</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// set all values to 10</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-26"></a>  <span class="n">check_partition</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-27"></a>  <span class="n">writeln</span><span class="p">(</span><span class="s">"partition tests passed"</span><span class="p">);</span>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-28"></a>
+<a name="rest_code_475ac975f3c14113bc77e7af144929af-29"></a><span class="p">}</span>
 </pre>
 <p>These lightweight tests are nice to have inline with the code.  More
 involved tests might not be appropriate here, but tests that are so
 easy to write make it hard to justify skipping tests.  Not that we
 should justify skipping tests anyways.</p>
-<p>A nice statement in those tests was an array expression. <tt class="docutils literal">data[] = 10</tt>
-sets all of the entries of <tt class="docutils literal">data</tt> to <tt class="docutils literal">10</tt>.  Arrays in D are much more
+<p>A nice statement in those tests was an array expression. <code class="docutils literal">data[] = 10</code>
+sets all of the entries of <code class="docutils literal">data</code> to <code class="docutils literal">10</code>.  Arrays in D are much more
 first class citizens then vectors are in C++.</p>
-<p>After the <tt class="docutils literal">partition</tt> function, the rest of quicksort is easy.  We
+<p>After the <code class="docutils literal">partition</code> function, the rest of quicksort is easy.  We
 partition the data, and recursively sort each partition.  At each
 step, we are removing the partition element from the array, so we know
 that the total length of the subarrays is always decreasing.</p>
-<pre class="code d"><a name="rest_code_12cbdb144e03496d8a81b44377097cfc-1"></a><span class="n">T</span><span class="p">[]</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-2"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-3"></a>    <span class="c1">// Move the middle element to the end to act as the pivot.</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-4"></a>    <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[$/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-5"></a>    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-6"></a>    <span class="c1">// Index p is in position, so now recursively sort the other two</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-7"></a>    <span class="c1">// halves of the array.</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-8"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">]);</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-9"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="p">$]);</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-10"></a>  <span class="p">}</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-11"></a>  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
-<a name="rest_code_12cbdb144e03496d8a81b44377097cfc-12"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-1"></a><span class="n">T</span><span class="p">[]</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-2"></a>  <span class="k">if</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span> <span class="p">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-3"></a>    <span class="c1">// Move the middle element to the end to act as the pivot.</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-4"></a>    <span class="n">swap</span><span class="p">(</span><span class="n">array</span><span class="p">[$/</span><span class="mi">2</span><span class="p">],</span> <span class="n">array</span><span class="p">[$-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-5"></a>    <span class="k">auto</span> <span class="n">p</span> <span class="p">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-6"></a>    <span class="c1">// Index p is in position, so now recursively sort the other two</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-7"></a>    <span class="c1">// halves of the array.</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-8"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span> <span class="p">..</span> <span class="n">p</span><span class="p">]);</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-9"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">p</span> <span class="p">+</span> <span class="mi">1</span> <span class="p">..</span> <span class="p">$]);</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-10"></a>  <span class="p">}</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-11"></a>  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<a name="rest_code_19431f0d7d5e46f4ace6bc2809b1005d-12"></a><span class="p">}</span>
 </pre>
 <p>Again, we can write some unittests to make sure that things seem fine.</p>
-<pre class="code d"><a name="rest_code_9ad5ca2216644f12875a9218009b1058-1"></a><span class="kt">void</span> <span class="n">checkSorted</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-2"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-3"></a>     <span class="k">assert</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-4"></a>  <span class="p">}</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-5"></a><span class="p">}</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-6"></a>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-7"></a><span class="k">unittest</span> <span class="p">{</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-8"></a>  <span class="k">auto</span> <span class="n">check</span> <span class="p">=</span> <span class="k">function</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-9"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-10"></a>    <span class="n">checkSorted</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-11"></a>  <span class="p">};</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-12"></a>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-13"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-14"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-15"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-16"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-17"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[];</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-18"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-19"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-20"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-21"></a>  <span class="n">data</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-22"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-23"></a>    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">data</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="n">i</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-24"></a>  <span class="p">}</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-25"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9ad5ca2216644f12875a9218009b1058-26"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_0c520fccefb341f7ad045206ed587c38-1"></a><span class="kt">void</span> <span class="n">checkSorted</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-2"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">1</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-3"></a>     <span class="k">assert</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-4"></a>  <span class="p">}</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-5"></a><span class="p">}</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-6"></a>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-7"></a><span class="k">unittest</span> <span class="p">{</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-8"></a>  <span class="k">auto</span> <span class="n">check</span> <span class="p">=</span> <span class="k">function</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-9"></a>    <span class="n">quicksort</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-10"></a>    <span class="n">checkSorted</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-11"></a>  <span class="p">};</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-12"></a>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-13"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-14"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-15"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-16"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-17"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[];</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-18"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-19"></a>  <span class="n">data</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-20"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-21"></a>  <span class="n">data</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-22"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-23"></a>    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">data</span><span class="p">.</span><span class="n">length</span> <span class="p">-</span> <span class="n">i</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-24"></a>  <span class="p">}</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-25"></a>  <span class="n">check</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_0c520fccefb341f7ad045206ed587c38-26"></a><span class="p">}</span>
 </pre>
 <p>Finally, we would like some timings to see how we are doing.  In the
 process of writing this code, it was wrong several times.  The results
@@ -299,50 +300,50 @@ information.  These tests are one shot timing tests, without any
 statistical validity.  Another convenience here is the literal number
 notation.  Underscores can be used in a number to make it read easier,
 without affecting its value.</p>
-<pre class="code d"><a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-1"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">datetime</span><span class="p">;</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-2"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-3"></a><span class="kt">void</span> <span class="n">timeSort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-4"></a>  <span class="n">StopWatch</span> <span class="n">sw</span><span class="p">;</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-5"></a>  <span class="n">sw</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-6"></a>  <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-7"></a>  <span class="c1">// sort(array);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-8"></a>  <span class="n">sw</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-9"></a>  <span class="n">writeln</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="s">"  "</span><span class="p">,</span> <span class="n">sw</span><span class="p">.</span><span class="n">peek</span><span class="p">().</span><span class="n">msecs</span><span class="p">);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-10"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-11"></a>  <span class="c1">// Also, make sure its right!</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-12"></a>  <span class="n">checkSorted</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-13"></a><span class="p">}</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-14"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-15"></a><span class="kt">int</span><span class="p">[]</span> <span class="n">MakeOrderedData</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-16"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-17"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-18"></a>    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// cast(int)(-i);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-19"></a>  <span class="p">}</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-20"></a>  <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-21"></a><span class="p">}</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-22"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-23"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-24"></a><span class="kt">int</span><span class="p">[]</span> <span class="n">MakeReversedData</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-25"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="n">MakeOrderedData</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-26"></a>  <span class="n">data</span><span class="p">.</span><span class="n">reverse</span><span class="p">();</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-27"></a>  <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-28"></a><span class="p">}</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-29"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-30"></a>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-31"></a><span class="kt">void</span> <span class="n">runTimings</span><span class="p">()</span> <span class="p">{</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-32"></a>  <span class="k">auto</span> <span class="n">sizes</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-33"></a>                <span class="mi">1_000_000</span><span class="p">,</span> <span class="mi">10_000_000</span><span class="p">];</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-34"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">s</span><span class="p">;</span> <span class="n">sizes</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-35"></a>    <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="n">MakeReversedData</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-36"></a>    <span class="n">timeSort</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-37"></a>  <span class="p">}</span>
-<a name="rest_code_f7a4298d86f44d8cbe250ba7171e7c99-38"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-1"></a><span class="k">import</span> <span class="n">std</span><span class="p">.</span><span class="n">datetime</span><span class="p">;</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-2"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-3"></a><span class="kt">void</span> <span class="n">timeSort</span><span class="p">(</span><span class="n">T</span><span class="p">)(</span><span class="n">T</span><span class="p">[]</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-4"></a>  <span class="n">StopWatch</span> <span class="n">sw</span><span class="p">;</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-5"></a>  <span class="n">sw</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-6"></a>  <span class="n">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-7"></a>  <span class="c1">// sort(array);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-8"></a>  <span class="n">sw</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-9"></a>  <span class="n">writeln</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="s">"  "</span><span class="p">,</span> <span class="n">sw</span><span class="p">.</span><span class="n">peek</span><span class="p">().</span><span class="n">msecs</span><span class="p">);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-10"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-11"></a>  <span class="c1">// Also, make sure its right!</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-12"></a>  <span class="n">checkSorted</span><span class="p">(</span><span class="n">array</span><span class="p">);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-13"></a><span class="p">}</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-14"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-15"></a><span class="kt">int</span><span class="p">[]</span> <span class="n">MakeOrderedData</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-16"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-17"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">;</span> <span class="mi">0</span> <span class="p">..</span> <span class="n">data</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-18"></a>    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// cast(int)(-i);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-19"></a>  <span class="p">}</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-20"></a>  <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-21"></a><span class="p">}</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-22"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-23"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-24"></a><span class="kt">int</span><span class="p">[]</span> <span class="n">MakeReversedData</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-25"></a>  <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="n">MakeOrderedData</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-26"></a>  <span class="n">data</span><span class="p">.</span><span class="n">reverse</span><span class="p">();</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-27"></a>  <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-28"></a><span class="p">}</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-29"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-30"></a>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-31"></a><span class="kt">void</span> <span class="n">runTimings</span><span class="p">()</span> <span class="p">{</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-32"></a>  <span class="k">auto</span> <span class="n">sizes</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-33"></a>                <span class="mi">1_000_000</span><span class="p">,</span> <span class="mi">10_000_000</span><span class="p">];</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-34"></a>  <span class="k">foreach</span><span class="p">(</span><span class="n">s</span><span class="p">;</span> <span class="n">sizes</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-35"></a>    <span class="k">auto</span> <span class="n">data</span> <span class="p">=</span> <span class="n">MakeReversedData</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-36"></a>    <span class="n">timeSort</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-37"></a>  <span class="p">}</span>
+<a name="rest_code_e56565e0cca34c79bf36f02797dae9e5-38"></a><span class="p">}</span>
 </pre>
 <p>Finally, a main function.</p>
-<pre class="code d"><a name="rest_code_fa8f1cdc9ae3474dac1a68294e803617-1"></a><span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-<a name="rest_code_fa8f1cdc9ae3474dac1a68294e803617-2"></a>  <span class="n">runTimings</span><span class="p">();</span>
-<a name="rest_code_fa8f1cdc9ae3474dac1a68294e803617-3"></a>  <span class="n">writeln</span><span class="p">(</span><span class="s">"done"</span><span class="p">);</span>
-<a name="rest_code_fa8f1cdc9ae3474dac1a68294e803617-4"></a><span class="p">}</span>
+<pre class="code d"><a name="rest_code_5b120eb0e317467689d128a99099d3a3-1"></a><span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+<a name="rest_code_5b120eb0e317467689d128a99099d3a3-2"></a>  <span class="n">runTimings</span><span class="p">();</span>
+<a name="rest_code_5b120eb0e317467689d128a99099d3a3-3"></a>  <span class="n">writeln</span><span class="p">(</span><span class="s">"done"</span><span class="p">);</span>
+<a name="rest_code_5b120eb0e317467689d128a99099d3a3-4"></a><span class="p">}</span>
 </pre>
 <!-- http://comments.gmane.org/gmane.emacs.orgmode/45278
 #+begin_src sh :var TANGLED=(org-babel-tangle) :tangle no :exports none
@@ -362,35 +363,35 @@ without affecting its value.</p>
 |      done |       |        | -->
 <p>And here are some timing results.</p>
 <blockquote>
-<table border="1" class="docutils">
+<table>
 <colgroup>
-<col width="43%">
-<col width="57%">
+<col style="width: 43%">
+<col style="width: 57%">
 </colgroup>
-<thead valign="bottom"><tr>
-<th class="head">size</th>
-<th class="head">milliseconds</th>
+<thead><tr>
+<th class="head"><p>size</p></th>
+<th class="head"><p>milliseconds</p></th>
 </tr></thead>
-<tbody valign="top">
+<tbody>
 <tr>
-<td>1000</td>
-<td>0</td>
+<td><p>1000</p></td>
+<td><p>0</p></td>
 </tr>
 <tr>
-<td>10000</td>
-<td>0</td>
+<td><p>10000</p></td>
+<td><p>0</p></td>
 </tr>
 <tr>
-<td>100000</td>
-<td>6</td>
+<td><p>100000</p></td>
+<td><p>6</p></td>
 </tr>
 <tr>
-<td>1000000</td>
-<td>74</td>
+<td><p>1000000</p></td>
+<td><p>74</p></td>
 </tr>
 <tr>
-<td>10000000</td>
-<td>837</td>
+<td><p>10000000</p></td>
+<td><p>837</p></td>
 </tr>
 </tbody>
 </table>
@@ -410,15 +411,13 @@ without affecting its value.</p>
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

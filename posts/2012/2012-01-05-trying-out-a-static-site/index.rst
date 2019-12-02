@@ -1,6 +1,6 @@
 .. link:
 .. description:
-.. tags: mathjax
+.. has_math: true
 .. title: Trying out a static web site
 .. date: 2012-01-05 08:00
 

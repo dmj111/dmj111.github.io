@@ -1,6 +1,6 @@
 .. link:
 .. description:
-.. tags: mathjax
+.. has_math: true
 .. title: Extended Euclid's Method
 .. date: 2012-01-05 8:00
 

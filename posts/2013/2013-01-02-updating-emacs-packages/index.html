@@ -79,10 +79,11 @@ repositories I use.
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Updating Emacs packages</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Dave Jones
             </span></p>
             <p class="dateline">
@@ -100,14 +101,14 @@ repositories I use.
 <p>I use ELPA, Marmalade, and MELPA to manage Emacs extensions.</p>
 <p>This block of elisp in my config file adds all of the package
 repositories I use.</p>
-<pre class="code scm"><a name="rest_code_a61e22c4331b458aa3294679ab822902-1"></a><span class="p">(</span><span class="nf">setq</span> <span class="nv">package-archives</span>
-<a name="rest_code_a61e22c4331b458aa3294679ab822902-2"></a>      <span class="o">'</span><span class="p">((</span><span class="s">"gnu"</span> <span class="o">.</span> <span class="s">"http://elpa.gnu.org/packages/"</span><span class="p">)</span>
-<a name="rest_code_a61e22c4331b458aa3294679ab822902-3"></a>        <span class="p">(</span><span class="s">"marmalade"</span> <span class="o">.</span> <span class="s">"http://marmalade-repo.org/packages/"</span><span class="p">)</span>
-<a name="rest_code_a61e22c4331b458aa3294679ab822902-4"></a>        <span class="p">(</span><span class="s">"melpa"</span> <span class="o">.</span> <span class="s">"http://melpa.milkbox.net/packages/"</span><span class="p">)))</span>
+<pre class="code scm"><a name="rest_code_235e64c58a0844e499781fcf680edd84-1"></a><span class="p">(</span><span class="nf">setq</span> <span class="nv">package-archives</span>
+<a name="rest_code_235e64c58a0844e499781fcf680edd84-2"></a>      <span class="o">'</span><span class="p">((</span><span class="s">"gnu"</span> <span class="o">.</span> <span class="s">"http://elpa.gnu.org/packages/"</span><span class="p">)</span>
+<a name="rest_code_235e64c58a0844e499781fcf680edd84-3"></a>        <span class="p">(</span><span class="s">"marmalade"</span> <span class="o">.</span> <span class="s">"http://marmalade-repo.org/packages/"</span><span class="p">)</span>
+<a name="rest_code_235e64c58a0844e499781fcf680edd84-4"></a>        <span class="p">(</span><span class="s">"melpa"</span> <span class="o">.</span> <span class="s">"http://melpa.milkbox.net/packages/"</span><span class="p">)))</span>
 </pre>
-<p>Occasionally, I must run <tt class="docutils literal"><span class="pre">M-x</span> <span class="pre">package-list-packages</span></tt> to update then
-pacakge listing.  This creates a <tt class="docutils literal">*Packages*</tt> buffer that shows the
-available and installed packages.  In this buffer, type <tt class="docutils literal">U</tt> to mark
+<p>Occasionally, I must run <code class="docutils literal"><span class="pre">M-x</span> <span class="pre">package-list-packages</span></code> to update then
+pacakge listing.  This creates a <code class="docutils literal">*Packages*</code> buffer that shows the
+available and installed packages.  In this buffer, type <code class="docutils literal">U</code> to mark
 the upgradeable packages.  (note, plan to restart emacs after this
 process...)  Emacs will ask for confirmation on the installation of
 the new packages, then confirmation on the deletion of the old
@@ -127,15 +128,13 @@ packages.</p>
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
             
+            
         </footer>
 </div>
 </div>
 
 
-        <script src="../../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates --><script>
+        <script src="../../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {
