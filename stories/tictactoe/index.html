@@ -3,20 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Demo pages | a mingled cup</title>
-<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<title>Tic-tac-toe | a mingled cup</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
-<link rel="canonical" href="http://dave.dkjones.org/demos/">
-<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Dave Jones">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://dave.dkjones.org/stories/tictactoe/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Dave Jones">
 <meta property="og:site_name" content="a mingled cup">
-<meta property="og:title" content="Demo pages">
-<meta property="og:url" content="http://dave.dkjones.org/demos/">
-<meta property="og:description" content="Spirals
-Spirals2
-Reversi">
+<meta property="og:title" content="Tic-tac-toe">
+<meta property="og:url" content="http://dave.dkjones.org/stories/tictactoe/">
+<meta property="og:description" content="Player 1
+        
+            Human
+            Easy
+            Medium
+            Hard
+            Impossible
+        
+    
+
+    
+        Player 2
+        
+            Human
+            Easy
+       ">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2019-12-15T00:00:00-05:00">
 </head>
@@ -54,13 +67,13 @@ Reversi">
 </header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
             <ul class="navbar-nav nav-fill d-flex w-100">
 <li class="nav-item">
-<a href="../archive.html" class="nav-link">Archives</a>
+<a href="../../archive.html" class="nav-link">Archives</a>
                 </li>
 <li class="nav-item">
-<a href="../stories/" class="nav-link">Pages</a>
+<a href="../" class="nav-link">Pages</a>
                 </li>
 <li class="nav-item">
-<a href="../rss.xml" class="nav-link">RSS</a>
+<a href="../../rss.xml" class="nav-link">RSS</a>
 
                 
             </li>
@@ -76,17 +89,56 @@ Reversi">
         
         
         
-<article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Demo pages</a></h1>
+<article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Tic-tac-toe</a></h1>
 
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <ul class="simple">
-<li><p><a class="reference external" href="spirals/">Spirals</a></p></li>
-<li><p><a class="reference external" href="spirals2/">Spirals2</a></p></li>
-<li><p><a class="reference external" href="reversi/">Reversi</a></p></li>
-</ul>
+    <div>
+<link rel="stylesheet" href="tictactoe.css" type="text/css">
+<div id="p1" class="pchoice">
+        Player 1
+        <div class="choices">
+            <button type="button" class="btn btn-light player selected">Human</button>
+            <button type="button" class="btn btn-light player">Easy</button>
+            <button type="button" class="btn btn-light player">Medium</button>
+            <button type="button" class="btn btn-light player">Hard</button>
+            <button type="button" class="btn btn-light player">Impossible</button>
+        </div>
+    </div>
+
+    <div id="p2" class="pchoice">
+        Player 2
+        <div class="choices">
+            <button type="button" class="btn btn-light player ">Human</button>
+            <button type="button" class="btn btn-light player">Easy</button>
+            <button type="button" class="btn btn-light player selected">Medium</button>
+            <button type="button" class="btn btn-light player">Hard</button>
+            <button type="button" class="btn btn-light player">Impossible</button>
+        </div>
+    </div>
+    <div class="h-space"></div>
+    <div>
+        <button id="start" type="button" class="btn btn-light">
+            Start
+        </button>
+        <button id="stop" type="button" class="btn btn-light">
+            Stop
+        </button>
+
+    </div>
+    <h4 id="status"></h4>
+    <div class="h-space"></div>
+    <div id="board">
+        <canvas id="tictacboard" class="board-canvas" width="500" height="500"></canvas>
 </div>
+
+<script type="module">
+import {run} from "./tictactoe.js";
+window.addEventListener('load', run);
+</script>
+</div>
+    </div>
     
 
 </article><!--End of body content--><footer id="footer">
@@ -101,7 +153,7 @@ Reversi">
 </div>
 
 
-        <script src="../assets/js/all-nocdn.js"></script><script>
+        <script src="../../assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
         captions: function(element) {

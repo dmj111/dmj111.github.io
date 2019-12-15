@@ -89,7 +89,7 @@ Finally, the JavaScript version.
 
 .. This injects the code into the text
 
-.. include:: posts/2013/prime_code.js
+.. include:: files/code/prime_code.js
    :code: js
 
 
@@ -109,27 +109,12 @@ prime should be 15,485,863.
 
    <div></div>
 
-.. Inject the javascript code from the file
-
-.. raw:: html
-
-   <script type="text/javascript">
-
-.. this injects the code as code
-
-.. raw:: html
-   :file: posts/2013/prime_code.js
-
-.. raw:: html
-
-   </script>
-
-
 .. The gui javascript code...
 
 .. raw:: html
 
-   <script type="text/javascript">
+   <script type="module">
+   import * as primes from "/code/prime_code.js";
    window.addEventListener('load', function() {
        var elem = document.getElementById("test_prime");
        var prime_ui_fcn = function () {

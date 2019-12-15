@@ -6,3 +6,4 @@
 - `About <about.html>`_ me
 - JavaScript `Demos </demos/>`_
 - `Bitcoin Monte-Carlo </demos/bitcoin/>`_
+- `Tic-tac-toe <tictactoe/>`_
