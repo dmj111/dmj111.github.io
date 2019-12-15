@@ -266,46 +266,27 @@ class Game {
 
 class GameController {
     constructor() {
-        var that = this,
-            node, choices;
-
         this.display = new Display();
         this.p1 = new UIPlayer(this.display);
         this.p2 = new MiniMax(4);
         this.status = document.getElementById('status');
 
-        // Set up the buttons for picking the players.
-        node = document.getElementById('p1');
-        choices = node.getElementsByClassName('player');
-
+        const that = this;
 
         function setupNode(pnum, player, node) {
-            node.onclick = function(/*event*/) {
-                that.selectPlayer(pnum, player, node);
-            };
+            node.onclick = () => that.selectPlayer(pnum, player, node);
         }
 
-        for(let i = 0; i < choices.length; i += 1) {
-            setupNode(1, choices[i].textContent,
-                      choices[i]);
-        }
+        // Set up the buttons for picking the players.
+        let choices = document.querySelectorAll('#p1 .player');
+        Array.from(choices).forEach(x => setupNode(1, x.textContent, x));
 
-        node = document.getElementById('p2');
-        choices = node.getElementsByClassName('player');
-
-        for(let i = 0; i < choices.length; i += 1) {
-            setupNode(2, choices[i].textContent,
-                      choices[i]);
-        }
+        choices = document.querySelectorAll('#p2 .player');
+        Array.from(choices).forEach(x => setupNode(2, x.textContent, x));
 
         // Setup the buttons for starting/stopping the game.
-        document.getElementById('start').onclick = function() {
-            that.startGame();
-        };
-        document.getElementById('stop').onclick = function() {
-            that.stopGame();
-        };
-
+        document.getElementById('start').onclick = () => this.startGame();
+        document.getElementById('stop').onclick = () => this.stopGame();
         this.startGame();
     }
     startGame() {
@@ -324,8 +305,10 @@ class GameController {
             }, this.display);
         setTimeout(() => this.game.play(), 10);
     }
+
     // Stop the game (mainly so the user can change the settings.)
     stopGame() {
+        this.display.cb = () => {};
         this.status.innerText = 'Shall we play a game?';
         this.game = new Game(this.p1, this.p2, () => {}, this.display);
         this.game.isStarted = false;
@@ -478,32 +461,38 @@ class Display {
 }
 
 // Allow a 'human' player to interact with the game.
-function Human(name) {
-    this.cb = null;
-    this.board = null;
-    this.name = name;
+class Human {
+    constructor(name) {
+        this.cb = null;
+        this.board = null;
+        this.name = name;
+    }
+    getMove(board, cb) {
+        console.log('move requested from player: ' + this.name);
+        this.board = board;
+        this.cb = cb;
+    }
 }
-Human.prototype.getMove = function (board, cb) {
-    console.log('move requested from player: ' + this.name);
-    this.board = board;
-    this.cb = cb;
-};
+
+module_objects.Human = Human;
 
 // Allow a 'human' player to interact with the game.
-function UIPlayer(display) {
-    this.display = display;
-    this.board = null;
-    this.name = name;
-}
+class UIPlayer {
+    constructor(display) {
+        this.display = display;
+        this.board = null;
+        this.name = name;
+    }
 
-UIPlayer.prototype.getMove = function (board, cb) {
-    console.log('move requested from player: ' + this.name);
-    this.display.cb = (r, c) => {
-        console.log('got move ' + r + ' ' + c);
-        cb(new Move(r, c));
-        this.display.cb = null;
-    };
-};
+    getMove (board, cb) {
+        console.log('move requested from player: ' + this.name);
+        this.display.cb = (r, c) => {
+            console.log('got move ' + r + ' ' + c);
+            cb(new Move(r, c));
+            this.display.cb = null;
+        };
+    }
+}
 
 // A player that just picks random moves.
 class Random {
