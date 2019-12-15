@@ -10,7 +10,7 @@
 
 
 
-.. mm alias : [/posts/2011/2011-11-03-posting-from-emacs-with-org2blog-wp.html]
+.. mm alias : [/posts/2011/2011-11-03-posting-from-emacs-with-org2blog-wp/]
 .. mm alias : [/blog/2011/11/03/posting-from-emacs-with-org2blog-wp/]
 
 
@@ -37,4 +37,3 @@ is pretty awesome.
 Code and latex snippets show up from org2blog too!  I am fine with the
 default formatting, but I imagine this stuff could be tweaked to look
 however I wanted.
-

@@ -9,7 +9,7 @@ I have written quicksort in the past_ mostly to learn how it works and
 to play with optimization.  (Because most of the time... I just want
 to call the system sort.)
 
-.. _past: /posts/2012/2012-04-24-quicksort-in-d.html
+.. _past: /posts/2012/2012-04-24-quicksort-in-d/
 
 Sometimes, knowing how this works helps with other problems, like
 sorting vectors, where we can do better than a full comparison on each

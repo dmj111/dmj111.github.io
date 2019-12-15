@@ -204,7 +204,7 @@ hooks for sub-classes to use.</p>
                 </div>
             </header><div class="p-summary entry-summary">
                     <div>
-<p>The code in <a class="reference external" href="posts/2014/js-quicksort-update/js-quicksort.html">this post</a> was a quicksort that used the less than
+<p>The code in <a class="reference external" href="posts/2014/js-quicksort/">this post</a> was a quicksort that used the less than
 operator for comparison.  Here are some times of quicksort using a
 comparison function the same way the <code class="docutils literal">Array.sort</code> works.</p>
 <p>The times are quite a bit slower, and I need to dig into it further.
@@ -310,7 +310,7 @@ now I am doing it in JavaScript to see what is possible.</p>
                 </div>
             </header><div class="p-summary entry-summary">
                     <div>
-<p>Why would a programmer want to write <a class="reference external" href="posts/2014/js-quicksort.html">their own sort function</a>?</p>
+<p>Why would a programmer want to write <a class="reference external" href="posts/2014/js-quicksort/">their own sort function</a>?</p>
 <p>First, and most importantly, to learn about algorithms and
 programming.  Also, a language or library sometimes has an inadequate
 sort function for a specific situation.</p>
@@ -342,32 +342,32 @@ partitioning function on the subarray that contains the middle point.
 </ul>
 <p>We also jump out early instead of breaking the array down to a single
 element, and use insertion sort on the last chunk of the array.</p>
-<pre class="code javascript"><a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-6"></a>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-9"></a>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-11"></a>                <span class="c1">// search left</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-16"></a>                <span class="c1">// We have contained the element!</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-17"></a>                <span class="k">break</span><span class="p">;</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-18"></a>            <span class="p">}</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-19"></a>        <span class="p">}</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-20"></a>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-24"></a>        <span class="p">}</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
-<a name="rest_code_b6379ef56d704fb6b9a41b7c672ec57c-26"></a>    <span class="p">}</span>
+<pre class="code javascript"><a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-6"></a>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-9"></a>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-11"></a>                <span class="c1">// search left</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-16"></a>                <span class="c1">// We have contained the element!</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-17"></a>                <span class="k">break</span><span class="p">;</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-18"></a>            <span class="p">}</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-19"></a>        <span class="p">}</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-20"></a>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-24"></a>        <span class="p">}</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
+<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-26"></a>    <span class="p">}</span>
 </pre>
 <p>This function can be generalized to find a different value than the
 center value, or even to find several percentiles at once.</p>
@@ -472,7 +472,7 @@ Peter Norvig's Reversi code from Lisp to JavaScript.</p>
 ugly, the code doesn't do any feature detection or graceful
 degradation. Though I would like to make it pretty solid, the purpose
 of this was to test out JavaScript for algorithmic work, not so much
-for the front-end work.  <a class="reference external" href="demos/reversi/index.html">Check it out here</a>.</p>
+for the front-end work.  <a class="reference external" href="demos/reversi/">Check it out here</a>.</p>
 <p>In this version, I have used Dr. Norvig's data structures, but wrapped
 it so it can display on an HTML canvas, and a person can play against
 it on the canvas.</p>

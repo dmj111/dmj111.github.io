@@ -11,7 +11,7 @@ degradation. Though I would like to make it pretty solid, the purpose
 of this was to test out JavaScript for algorithmic work, not so much
 for the front-end work.  `Check it out here`_.
 
-.. _`Check it out here`: /demos/reversi/index.html
+.. _`Check it out here`: /demos/reversi/
 
 In this version, I have used Dr. Norvig's data structures, but wrapped
 it so it can display on an HTML canvas, and a person can play against

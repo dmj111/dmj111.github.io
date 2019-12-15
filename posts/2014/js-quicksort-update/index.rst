@@ -11,7 +11,7 @@ The code in `this post`_ was a quicksort that used the less than
 operator for comparison.  Here are some times of quicksort using a
 comparison function the same way the ``Array.sort`` works.
 
-.. _`this post`: js-quicksort.html
+.. _`this post`: /posts/2014/js-quicksort/
 
 The times are quite a bit slower, and I need to dig into it further.
 These are the means of five runs each on one million values.  Some of

@@ -83,4 +83,4 @@ __ /code/quicksort1/quickselect.test.html
 
 
 .. _Quickselect : https://en.wikipedia.org/wiki/Quickselect
-.. _`their own sort function`: /posts/2014/js-quicksort.html
+.. _`their own sort function`: /posts/2014/js-quicksort/

@@ -5,7 +5,7 @@
 .. date: 2011-11-19
 .. slug: a-simple-octave-tip
 
-..   alias : [/posts/2011/2011-11-19-a-simple-octave-tip.html]
+..   alias : [/posts/2011/2011-11-19-a-simple-octave-tip/]
 ..            /blog/2011/11/19/a-simple-octave-tip/index.html
 
 .. mathjax tip here
@@ -21,8 +21,8 @@ the code clearer and faster.  The following examples all use Octave.
 First, consider this formula
 
 .. math::
-   
-  S = \sum_{i=1}^n x_i  y_i 
+
+  S = \sum_{i=1}^n x_i  y_i
 
 
 ``x`` and ``y`` are one dimensional vectors in Octave, so we can find
@@ -44,7 +44,7 @@ one-dimensional, we can compose these functions to get our result, at
 the cost of creating a temporary matrix.
 
 .. code:: octave
-          
+
      S = sum(x .* y)
 
 
@@ -53,7 +53,7 @@ formula we are looking at is the dot product of two vectors, so in
 Octave, we can do
 
 .. code:: octave
-   
+
    S = dot(x, y)
 
 
@@ -69,7 +69,7 @@ The next listing shows a test driver to compare the three methods.
      fprintf("\n||||\n| method | size| result | time |\n")
      fmt = "| %s | %d | %f | %f |\n";
 
-     for SIZE = [100, 1000,10000,100000,1000000]  
+     for SIZE = [100, 1000,10000,100000,1000000]
          x = rand(SIZE, 1);
          y = rand(SIZE, 1);
 
@@ -99,27 +99,27 @@ Running this code gives us the following results.
 
 
 =======  =======  =============  =========
- method     size     result      time  
+ method     size     result      time
 =======  =======  =============  =========
- for         100      24.266291  0.000744 
- sum         100      24.266291  0.000055 
- dot         100      24.266291  0.000018 
+ for         100      24.266291  0.000744
+ sum         100      24.266291  0.000055
+ dot         100      24.266291  0.000018
 
- for        1000     247.065638  0.007198 
- sum        1000     247.065638  0.000016 
- dot        1000     247.065638  0.000017 
+ for        1000     247.065638  0.007198
+ sum        1000     247.065638  0.000016
+ dot        1000     247.065638  0.000017
 
- for       10000    2507.387623  0.074163 
- sum       10000    2507.387623  0.000083 
- dot       10000    2507.387623  0.000029 
+ for       10000    2507.387623  0.074163
+ sum       10000    2507.387623  0.000083
+ dot       10000    2507.387623  0.000029
 
- for      100000   25090.247927  0.736105 
- sum      100000   25090.247927  0.000656 
- dot      100000   25090.247927  0.000095 
+ for      100000   25090.247927  0.736105
+ sum      100000   25090.247927  0.000656
+ dot      100000   25090.247927  0.000095
 
- for     1000000  249863.296971  7.334975 
- sum     1000000  249863.296971  0.006773 
- dot     1000000  249863.296971  0.001246 
+ for     1000000  249863.296971  7.334975
+ sum     1000000  249863.296971  0.006773
+ dot     1000000  249863.296971  0.001246
 
 =======  =======  =============  =========
 
@@ -130,5 +130,3 @@ learning what is available.
 Sometimes, though we want to *learn* how something works. Then, of
 course, it makes sense to do it ourselves instead of just making a
 call to existing code.
-
-
