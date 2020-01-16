@@ -487,9 +487,9 @@ class UIPlayer {
     getMove (board, cb) {
         console.log('move requested from player: ' + this.name);
         this.display.cb = (r, c) => {
+            this.display.cb = null;
             console.log('got move ' + r + ' ' + c);
             cb(new Move(r, c));
-            this.display.cb = null;
         };
     }
 }
