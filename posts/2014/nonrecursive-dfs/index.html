@@ -153,31 +153,31 @@ processed.</p></li>
 <li><p>So, step 2 is the post-order step.</p></li>
 </ul>
 <p>Finally, here is some code</p>
-<pre class="code python"><a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-1"></a><span class="k">class</span> <span class="nc">DFS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">adj</span><span class="p">):</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">adj</span> <span class="o">=</span> <span class="n">adj</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-9"></a>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-10"></a>    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-11"></a>        <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-12"></a>        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-13"></a>            <span class="n">u</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-14"></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-15"></a>                <span class="k">continue</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-16"></a>            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-18"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">+=</span> <span class="mi">1</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-19"></a>            <span class="k">else</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-20"></a>                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-21"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-22"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">+=</span> <span class="mi">1</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-23"></a>                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-24"></a>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-25"></a>                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-1"></a><span class="k">class</span> <span class="nc">DFS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">adj</span><span class="p">):</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">adj</span> <span class="o">=</span> <span class="n">adj</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-9"></a>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-10"></a>    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-11"></a>        <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-12"></a>        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-13"></a>            <span class="n">u</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-14"></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-15"></a>                <span class="k">continue</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-16"></a>            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-18"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-19"></a>            <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-20"></a>                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-21"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-22"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-23"></a>                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-24"></a>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-25"></a>                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre>
 <p>This code only handles starting a search tree from a specific vertex.
 To search the entire graph, the <code class="docutils literal">dfs</code> method needs to be called for
@@ -191,7 +191,7 @@ hooks for sub-classes to use.</p>
                 <a href="../coffee-notes/" rel="prev" title="Coffee Notes">Previous post</a>
             </li>
         </ul></nav></aside></article><!--End of body content--><footer id="footer">
-            Contents © 2019
+            Contents © 2020
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

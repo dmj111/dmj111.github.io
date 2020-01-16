@@ -129,32 +129,32 @@ partitioning function on the subarray that contains the middle point.
 </ul>
 <p>We also jump out early instead of breaking the array down to a single
 element, and use insertion sort on the last chunk of the array.</p>
-<pre class="code javascript"><a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-6"></a>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-9"></a>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-11"></a>                <span class="c1">// search left</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-16"></a>                <span class="c1">// We have contained the element!</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-17"></a>                <span class="k">break</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-18"></a>            <span class="p">}</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-19"></a>        <span class="p">}</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-20"></a>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-24"></a>        <span class="p">}</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-26"></a>    <span class="p">}</span>
+<pre class="code javascript"><a name="rest_code_5847d71a730643d292150e8bf0284902-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-6"></a>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-9"></a>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-11"></a>                <span class="c1">// search left</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-16"></a>                <span class="c1">// We have contained the element!</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-17"></a>                <span class="k">break</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-18"></a>            <span class="p">}</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-19"></a>        <span class="p">}</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-20"></a>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-24"></a>        <span class="p">}</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-26"></a>    <span class="p">}</span>
 </pre>
 <p>This function can be generalized to find a different value than the
 center value, or even to find several percentiles at once.</p>
@@ -221,7 +221,7 @@ tests.  It runs in Chrome, but hasn't been tested extensively.</p>
         </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script></article><!--End of body content--><footer id="footer">
-            Contents © 2019
+            Contents © 2020
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

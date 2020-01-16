@@ -111,34 +111,34 @@ type can be specified to make the performance faster.  This is my
 favorite part so far -- they can generate vectors instead of lists,
 which we will see in this code.</p>
 <p>Without further delay, here is a learning attempt with Racket.</p>
-<pre class="code rkt"><a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-1"></a><span class="kn">#lang </span><span class="nn">racket</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-2"></a>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-3"></a><span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="n">sieve</span> <span class="n">n</span><span class="p">)</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-4"></a>  <span class="p">(</span><span class="k">let*</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-5"></a>      <span class="p">((</span><span class="n">limit</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">inexact-&gt;exact</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="n">n</span><span class="p">))))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-6"></a>                        <span class="mi">2</span><span class="p">)))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-7"></a>       <span class="p">(</span><span class="n">m</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="n">n</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-8"></a>       <span class="p">(</span><span class="n">ar</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="n">m</span> <span class="mi">1</span><span class="p">)))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-9"></a>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-10"></a>    <span class="c1">;; element 0 is really for number 1, so we do not</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-11"></a>    <span class="c1">;; want to drop its multiples.</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-12"></a>    <span class="p">(</span><span class="k">for</span> <span class="p">([</span><span class="n">i</span> <span class="p">(</span><span class="nb">in-range</span> <span class="mi">1</span> <span class="n">limit</span><span class="p">)])</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-13"></a>         <span class="p">(</span><span class="k">when</span> <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">vector-ref</span> <span class="n">ar</span> <span class="n">i</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-14"></a>           <span class="p">(</span><span class="k">let</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-15"></a>               <span class="p">((</span><span class="n">p</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="n">i</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-16"></a>             <span class="p">(</span><span class="k">for</span> <span class="p">([</span><span class="n">j</span> <span class="p">(</span><span class="nb">in-range</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">+</span> <span class="n">p</span> <span class="mi">1</span><span class="p">)</span> <span class="n">i</span><span class="p">)</span> <span class="n">m</span> <span class="n">p</span><span class="p">)])</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-17"></a>                  <span class="p">(</span><span class="nb">vector-set!</span> <span class="n">ar</span> <span class="n">j</span> <span class="mi">0</span><span class="p">)))))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-18"></a>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-19"></a>    <span class="c1">;; Collect all of the non-zero elements</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-20"></a>    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="n">result</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-21"></a>           <span class="p">(</span><span class="k">for/vector</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-22"></a>            <span class="p">([(</span><span class="n">x</span> <span class="n">i</span><span class="p">)</span> <span class="p">(</span><span class="nb">in-indexed</span> <span class="p">(</span><span class="nb">in-vector</span> <span class="n">ar</span><span class="p">))]</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-23"></a>             <span class="kd">#:when</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="n">x</span> <span class="mi">0</span><span class="p">))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-24"></a>            <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="n">i</span><span class="p">)))))</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-25"></a>      <span class="c1">;; now, set the first element to 2, since it is</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-26"></a>      <span class="c1">;; currently holding 1.</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-27"></a>      <span class="p">(</span><span class="nb">vector-set!</span> <span class="n">result</span> <span class="mi">0</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_54bd1f4ca2de4577b2c92cce3230ab87-28"></a>      <span class="n">result</span><span class="p">)))</span>
+<pre class="code rkt"><a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-1"></a><span class="kn">#lang </span><span class="nn">racket</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-2"></a>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-3"></a><span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="n">sieve</span> <span class="n">n</span><span class="p">)</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-4"></a>  <span class="p">(</span><span class="k">let*</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-5"></a>      <span class="p">((</span><span class="n">limit</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">inexact-&gt;exact</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="n">n</span><span class="p">))))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-6"></a>                        <span class="mi">2</span><span class="p">)))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-7"></a>       <span class="p">(</span><span class="n">m</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="n">n</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-8"></a>       <span class="p">(</span><span class="n">ar</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="n">m</span> <span class="mi">1</span><span class="p">)))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-9"></a>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-10"></a>    <span class="c1">;; element 0 is really for number 1, so we do not</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-11"></a>    <span class="c1">;; want to drop its multiples.</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-12"></a>    <span class="p">(</span><span class="k">for</span> <span class="p">([</span><span class="n">i</span> <span class="p">(</span><span class="nb">in-range</span> <span class="mi">1</span> <span class="n">limit</span><span class="p">)])</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-13"></a>         <span class="p">(</span><span class="k">when</span> <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">vector-ref</span> <span class="n">ar</span> <span class="n">i</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-14"></a>           <span class="p">(</span><span class="k">let</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-15"></a>               <span class="p">((</span><span class="n">p</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="n">i</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-16"></a>             <span class="p">(</span><span class="k">for</span> <span class="p">([</span><span class="n">j</span> <span class="p">(</span><span class="nb">in-range</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">+</span> <span class="n">p</span> <span class="mi">1</span><span class="p">)</span> <span class="n">i</span><span class="p">)</span> <span class="n">m</span> <span class="n">p</span><span class="p">)])</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-17"></a>                  <span class="p">(</span><span class="nb">vector-set!</span> <span class="n">ar</span> <span class="n">j</span> <span class="mi">0</span><span class="p">)))))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-18"></a>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-19"></a>    <span class="c1">;; Collect all of the non-zero elements</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-20"></a>    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="n">result</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-21"></a>           <span class="p">(</span><span class="k">for/vector</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-22"></a>            <span class="p">([(</span><span class="n">x</span> <span class="n">i</span><span class="p">)</span> <span class="p">(</span><span class="nb">in-indexed</span> <span class="p">(</span><span class="nb">in-vector</span> <span class="n">ar</span><span class="p">))]</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-23"></a>             <span class="kd">#:when</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="n">x</span> <span class="mi">0</span><span class="p">))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-24"></a>            <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="n">i</span><span class="p">)))))</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-25"></a>      <span class="c1">;; now, set the first element to 2, since it is</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-26"></a>      <span class="c1">;; currently holding 1.</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-27"></a>      <span class="p">(</span><span class="nb">vector-set!</span> <span class="n">result</span> <span class="mi">0</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_0ecc4aa5c3e444a69a9b000ae1b6857d-28"></a>      <span class="n">result</span><span class="p">)))</span>
 </pre>
 <p>As it stands, this code runs about five times slower than the compiled
 OCaml, but I am not sure if I am running it in under the JIT compiler
@@ -155,7 +155,7 @@ as the compiled OCaml code.</p>
                 <a href="../2012-03-12-astar-python/" rel="next" title="A* in Python">Next post</a>
             </li>
         </ul></nav></aside></article><!--End of body content--><footer id="footer">
-            Contents © 2019
+            Contents © 2020
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

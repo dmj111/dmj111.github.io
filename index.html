@@ -138,31 +138,31 @@ processed.</p></li>
 <li><p>So, step 2 is the post-order step.</p></li>
 </ul>
 <p>Finally, here is some code</p>
-<pre class="code python"><a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-1"></a><span class="k">class</span> <span class="nc">DFS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">adj</span><span class="p">):</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">adj</span> <span class="o">=</span> <span class="n">adj</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-9"></a>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-10"></a>    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-11"></a>        <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-12"></a>        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-13"></a>            <span class="n">u</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-14"></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-15"></a>                <span class="k">continue</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-16"></a>            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-18"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">+=</span> <span class="mi">1</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-19"></a>            <span class="k">else</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-20"></a>                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-21"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-22"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">+=</span> <span class="mi">1</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-23"></a>                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-24"></a>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<a name="rest_code_e934e2ffe13247d7a9a3de6275d8caa7-25"></a>                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-1"></a><span class="k">class</span> <span class="nc">DFS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">adj</span><span class="p">):</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">adj</span> <span class="o">=</span> <span class="n">adj</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">]</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-9"></a>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-10"></a>    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-11"></a>        <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-12"></a>        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-13"></a>            <span class="n">u</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-14"></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-15"></a>                <span class="k">continue</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-16"></a>            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-17"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-18"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">post_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-19"></a>            <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-20"></a>                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-21"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-22"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pre_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-23"></a>                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-24"></a>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a name="rest_code_950cd78d956b4325a40c1877bff3a6b5-25"></a>                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre>
 <p>This code only handles starting a search tree from a specific vertex.
 To search the entire graph, the <code class="docutils literal">dfs</code> method needs to be called for
@@ -342,32 +342,32 @@ partitioning function on the subarray that contains the middle point.
 </ul>
 <p>We also jump out early instead of breaking the array down to a single
 element, and use insertion sort on the last chunk of the array.</p>
-<pre class="code javascript"><a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-6"></a>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-9"></a>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-11"></a>                <span class="c1">// search left</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-16"></a>                <span class="c1">// We have contained the element!</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-17"></a>                <span class="k">break</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-18"></a>            <span class="p">}</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-19"></a>        <span class="p">}</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-20"></a>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-24"></a>        <span class="p">}</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
-<a name="rest_code_bca3888a2e514f1cb046ad3c75e86c9c-26"></a>    <span class="p">}</span>
+<pre class="code javascript"><a name="rest_code_5847d71a730643d292150e8bf0284902-1"></a>    <span class="kd">function</span> <span class="nx">quickMedian</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-2"></a>        <span class="kd">var</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-3"></a>            <span class="nx">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">N</span><span class="p">,</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-4"></a>            <span class="nx">middle</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">N</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-5"></a>            <span class="nx">idxs</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-6"></a>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-7"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">end</span> <span class="o">-</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-8"></a>            <span class="nx">idxs</span> <span class="o">=</span> <span class="nx">qsort2Partition</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-9"></a>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-10"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span> <span class="o">&gt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-11"></a>                <span class="c1">// search left</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-12"></a>                <span class="nx">end</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-13"></a>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-14"></a>                <span class="nx">start</span> <span class="o">=</span> <span class="nx">idxs</span><span class="p">.</span><span class="nx">c</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-15"></a>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-16"></a>                <span class="c1">// We have contained the element!</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-17"></a>                <span class="k">break</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-18"></a>            <span class="p">}</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-19"></a>        <span class="p">}</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-20"></a>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-21"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-22"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">middle</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">||</span> <span class="nx">middle</span> <span class="o">&gt;</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-23"></a>            <span class="k">throw</span> <span class="s1">'bug... partitioning failed'</span><span class="p">;</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-24"></a>        <span class="p">}</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-25"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">middle</span><span class="p">];</span>
+<a name="rest_code_5847d71a730643d292150e8bf0284902-26"></a>    <span class="p">}</span>
 </pre>
 <p>This function can be generalized to find a different value than the
 center value, or even to find several percentiles at once.</p>
@@ -513,44 +513,44 @@ JavaScript was too slow for.  Sorting was one of those cases.</p>
 to <code class="docutils literal">Array.sort</code>. Here is the unscientific comparison.</p>
 <p>Using <a class="reference external" href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.8162">Engineering a Sort Function</a> as a reference, along with
 textbooks, etc, I wrote the following:</p>
-<pre class="code javascript"><a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-1"></a><span class="kd">function</span> <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-2"></a>    <span class="nx">start</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-3"></a>    <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">;}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-4"></a>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-5"></a>    <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-6"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-7"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-8"></a>    <span class="p">}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-9"></a>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-10"></a>    <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-11"></a>        <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-12"></a>        <span class="c1">// pidx = Math.floor(Math.random() * (end - start)) + start,</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-13"></a>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-14"></a>    <span class="kr">const</span> <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-15"></a>                                <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-16"></a>                                <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-17"></a>    <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-18"></a>        <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-19"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-20"></a>            <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-21"></a>        <span class="p">}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-22"></a>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-23"></a>        <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-24"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-25"></a>            <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-26"></a>        <span class="p">}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-27"></a>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-28"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-29"></a>            <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-30"></a>            <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-31"></a>        <span class="p">}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-32"></a>    <span class="p">}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-33"></a>    <span class="k">if</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="s1">'invariant'</span><span class="p">;</span> <span class="p">}</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-34"></a>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-35"></a>    <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-36"></a>    <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-37"></a>    <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
-<a name="rest_code_4353ce0180dc43bbabd66fefccc0c51a-38"></a><span class="p">}</span>
+<pre class="code javascript"><a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-1"></a><span class="kd">function</span> <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-2"></a>    <span class="nx">start</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-3"></a>    <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">;}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-4"></a>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-5"></a>    <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-6"></a>        <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-7"></a>        <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-8"></a>    <span class="p">}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-9"></a>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-10"></a>    <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-11"></a>        <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-12"></a>        <span class="c1">// pidx = Math.floor(Math.random() * (end - start)) + start,</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-13"></a>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-14"></a>    <span class="kr">const</span> <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-15"></a>                                <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-16"></a>                                <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-17"></a>    <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-18"></a>        <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-19"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-20"></a>            <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-21"></a>        <span class="p">}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-22"></a>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-23"></a>        <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-24"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-25"></a>            <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-26"></a>        <span class="p">}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-27"></a>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-28"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-29"></a>            <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-30"></a>            <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-31"></a>        <span class="p">}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-32"></a>    <span class="p">}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-33"></a>    <span class="k">if</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="s1">'invariant'</span><span class="p">;</span> <span class="p">}</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-34"></a>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-35"></a>    <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-36"></a>    <span class="nx">qsort1</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-37"></a>    <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<a name="rest_code_da4a55ebf7594a1392ca9610a5d8a1dc-38"></a><span class="p">}</span>
 </pre>
 <p>This method:</p>
 <ul class="simple">
@@ -569,77 +569,77 @@ pivot value in that case is more like a pointer copy.</p>
 the array.  This version of quicksort does not handle that well.</p>
 <p>The next version uses the fat partitioning described in the paper to
 group all of the values equal to the pivot.</p>
-<pre class="code javascript"><a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-1"></a><span class="kd">function</span> <span class="nx">qsort2</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-2"></a>    <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-3"></a>    <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-4"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-5"></a>    <span class="c1">// The actual sort body.</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-6"></a>    <span class="kd">function</span> <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-7"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span> <span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-8"></a>            <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-9"></a>            <span class="k">return</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-10"></a>        <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-11"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-12"></a>        <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-13"></a>            <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">,</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-14"></a>            <span class="nx">u</span> <span class="o">=</span> <span class="nx">i</span><span class="p">,</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-15"></a>            <span class="nx">v</span> <span class="o">=</span> <span class="nx">j</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-16"></a>        <span class="kr">const</span> <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-17"></a>                                    <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-18"></a>                                    <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-19"></a>        <span class="c1">// Reorder the values, and maintain the indices so we have</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-20"></a>        <span class="c1">// the following:</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-21"></a>        <span class="c1">//</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-22"></a>        <span class="c1">// begin (inclusive)  |  end (exclusive)  |   description</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-23"></a>        <span class="c1">// start              |  u                |   == pivot</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-24"></a>        <span class="c1">// u                  |  i                |    &lt; pivot</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-25"></a>        <span class="c1">// i                  |  v                |    &gt; pivot</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-26"></a>        <span class="c1">// v                  |  end              |    = pivot</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-27"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-28"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-29"></a>            <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-30"></a>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-31"></a>                <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-32"></a>            <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-33"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-34"></a>            <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-35"></a>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-36"></a>                <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-37"></a>            <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-38"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-39"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-40"></a>                <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-41"></a>                <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-42"></a>                <span class="cm">/* jshint ignore:start */</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-43"></a>                <span class="c1">// We are ignoring the !.  Just trying to stick</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-44"></a>                <span class="c1">// with &lt; for now...</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-45"></a>                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">))</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-46"></a>                    <span class="nx">u</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-47"></a>                    <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-48"></a>                    <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-49"></a>                <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-50"></a>                <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]))</span> <span class="p">{</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-51"></a>                    <span class="nx">v</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-52"></a>                    <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-53"></a>                    <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-54"></a>                <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-55"></a>                <span class="cm">/* jshint ignore:end */</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-56"></a>            <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-57"></a>        <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-58"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-59"></a>        <span class="c1">// if(xs[i] &lt; pivot) { throw 'invariant'; }</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-60"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-61"></a>        <span class="c1">// Now, 'flip' the sides around to bring the values equal</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-62"></a>        <span class="c1">// to the pivot to the middle.</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-63"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-64"></a>        <span class="nx">j</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-65"></a>        <span class="nx">i</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-66"></a>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-67"></a>        <span class="c1">// xs[i] &gt;= pivot.</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-68"></a>        <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-69"></a>        <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-70"></a>    <span class="p">}</span>
-<a name="rest_code_52bb4f2757dd480a8af64ad9174918cb-71"></a><span class="p">}</span>
+<pre class="code javascript"><a name="rest_code_73be6f6f76c94f35828a20a259baefef-1"></a><span class="kd">function</span> <span class="nx">qsort2</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-2"></a>    <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-3"></a>    <span class="k">return</span> <span class="nx">xs</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-4"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-5"></a>    <span class="c1">// The actual sort body.</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-6"></a>    <span class="kd">function</span> <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-7"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">end</span> <span class="o">&lt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">INSERT_SORT_THRESHOLD</span> <span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-8"></a>            <span class="nx">isort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-9"></a>            <span class="k">return</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-10"></a>        <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-11"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-12"></a>        <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-13"></a>            <span class="nx">j</span> <span class="o">=</span> <span class="nx">end</span><span class="p">,</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-14"></a>            <span class="nx">u</span> <span class="o">=</span> <span class="nx">i</span><span class="p">,</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-15"></a>            <span class="nx">v</span> <span class="o">=</span> <span class="nx">j</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-16"></a>        <span class="kr">const</span> <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">medianOfThree</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">start</span><span class="p">],</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-17"></a>                                    <span class="nx">xs</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-18"></a>                                    <span class="nx">xs</span><span class="p">[</span><span class="nx">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-19"></a>        <span class="c1">// Reorder the values, and maintain the indices so we have</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-20"></a>        <span class="c1">// the following:</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-21"></a>        <span class="c1">//</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-22"></a>        <span class="c1">// begin (inclusive)  |  end (exclusive)  |   description</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-23"></a>        <span class="c1">// start              |  u                |   == pivot</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-24"></a>        <span class="c1">// u                  |  i                |    &lt; pivot</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-25"></a>        <span class="c1">// i                  |  v                |    &gt; pivot</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-26"></a>        <span class="c1">// v                  |  end              |    = pivot</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-27"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-28"></a>        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-29"></a>            <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-30"></a>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-31"></a>                <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-32"></a>            <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-33"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-34"></a>            <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-35"></a>            <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-36"></a>                <span class="nx">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-37"></a>            <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-38"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-39"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-40"></a>                <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-41"></a>                <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-42"></a>                <span class="cm">/* jshint ignore:start */</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-43"></a>                <span class="c1">// We are ignoring the !.  Just trying to stick</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-44"></a>                <span class="c1">// with &lt; for now...</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-45"></a>                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">))</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-46"></a>                    <span class="nx">u</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-47"></a>                    <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-48"></a>                    <span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">u</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-49"></a>                <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-50"></a>                <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="nx">pivot</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]))</span> <span class="p">{</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-51"></a>                    <span class="nx">v</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-52"></a>                    <span class="kr">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-53"></a>                    <span class="nx">xs</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">];</span> <span class="nx">xs</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span> <span class="o">=</span> <span class="nx">t</span><span class="p">;</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-54"></a>                <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-55"></a>                <span class="cm">/* jshint ignore:end */</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-56"></a>            <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-57"></a>        <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-58"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-59"></a>        <span class="c1">// if(xs[i] &lt; pivot) { throw 'invariant'; }</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-60"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-61"></a>        <span class="c1">// Now, 'flip' the sides around to bring the values equal</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-62"></a>        <span class="c1">// to the pivot to the middle.</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-63"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-64"></a>        <span class="nx">j</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-65"></a>        <span class="nx">i</span> <span class="o">=</span> <span class="nx">vecswap</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-66"></a>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-67"></a>        <span class="c1">// xs[i] &gt;= pivot.</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-68"></a>        <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-69"></a>        <span class="nx">sort</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-70"></a>    <span class="p">}</span>
+<a name="rest_code_73be6f6f76c94f35828a20a259baefef-71"></a><span class="p">}</span>
 </pre>
 <p>Lines 45 – 52 swap values equal to the pivot to the outer part of the
 array.  At the end of the partition the pivot values are brought back
@@ -772,109 +772,109 @@ halved the time in Firefox, making it comparable to C and Emscripten.
 <p>Ok, time for some more prime sieving.  This time, we are going to
 try JavaScript, Python, and C.</p>
 <p>First, the Python code</p>
-<pre class="code python"><a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-1"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-2"></a>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-3"></a><span class="k">def</span> <span class="nf">sieve1</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-4"></a>    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-5"></a>    <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-6"></a>    <span class="c1"># values[4::2] = 0</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-7"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-8"></a>        <span class="n">i2</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">i</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-9"></a>        <span class="k">if</span> <span class="n">i2</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-10"></a>            <span class="k">break</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-11"></a>        <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-12"></a>            <span class="n">values</span><span class="p">[</span><span class="n">i2</span><span class="p">::</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-13"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
-<a name="rest_code_31cf0ac3182f495db84478f243cf1a7f-14"></a>    <span class="k">return</span> <span class="n">result</span>
+<pre class="code python"><a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-1"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-2"></a>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-3"></a><span class="k">def</span> <span class="nf">sieve1</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-4"></a>    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-5"></a>    <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-6"></a>    <span class="c1"># values[4::2] = 0</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-7"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-8"></a>        <span class="n">i2</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">i</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-9"></a>        <span class="k">if</span> <span class="n">i2</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-10"></a>            <span class="k">break</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-11"></a>        <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-12"></a>            <span class="n">values</span><span class="p">[</span><span class="n">i2</span><span class="p">::</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-13"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_5dc6dbc8cda9489fb385646b4b52c2e7-14"></a>    <span class="k">return</span> <span class="n">result</span>
 </pre>
 <p>This is the normal sieve.  The inner loop is in <a class="reference external" href="http://www.numpy.org/">NumPy</a>, and running</p>
 <pre class="literal-block">%timeit ps = primes_np.sieve1(15485864)</pre>
 <p>Gives me a list of first million primes in about 425 ms on my laptop.</p>
 <p>Next, C.</p>
-<pre class="code c"><a name="rest_code_474fd6e710194d929940ccc3a96799f2-1"></a><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-3"></a><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-4"></a>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-5"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-6"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">15485864</span><span class="p">;</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-7"></a>  <span class="kt">clock_t</span> <span class="n">start</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-8"></a>  <span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-9"></a>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-10"></a>  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-11"></a>  <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-12"></a>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-13"></a>  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-14"></a>    <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-15"></a>    <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-16"></a>    <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-17"></a>      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-18"></a>        <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-19"></a>      <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-20"></a>    <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-21"></a>  <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-22"></a>  <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-23"></a>  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-24"></a>    <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span> <span class="o">++</span><span class="n">count</span><span class="p">;</span> <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-25"></a>  <span class="p">}</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-26"></a>  <span class="kt">clock_t</span> <span class="n">end</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-27"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"found %d primes less than %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-28"></a>  <span class="kt">double</span> <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">CLOCKS_PER_SEC</span><span class="p">;</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-29"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"took %f seconds</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">duration</span><span class="p">);</span>
-<a name="rest_code_474fd6e710194d929940ccc3a96799f2-30"></a><span class="p">}</span>
+<pre class="code c"><a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-1"></a><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-3"></a><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-4"></a>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-5"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-6"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">15485864</span><span class="p">;</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-7"></a>  <span class="kt">clock_t</span> <span class="n">start</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-8"></a>  <span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-9"></a>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-10"></a>  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-11"></a>  <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-12"></a>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-13"></a>  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-14"></a>    <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-15"></a>    <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-16"></a>    <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-17"></a>      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-18"></a>        <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-19"></a>      <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-20"></a>    <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-21"></a>  <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-22"></a>  <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-23"></a>  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-24"></a>    <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span> <span class="o">++</span><span class="n">count</span><span class="p">;</span> <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-25"></a>  <span class="p">}</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-26"></a>  <span class="kt">clock_t</span> <span class="n">end</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-27"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"found %d primes less than %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-28"></a>  <span class="kt">double</span> <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">CLOCKS_PER_SEC</span><span class="p">;</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-29"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"took %f seconds</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">duration</span><span class="p">);</span>
+<a name="rest_code_8d87cbfdd6cf48349079e9e48c54a976-30"></a><span class="p">}</span>
 </pre>
 <p>This code took about 280 ms. (<code class="docutils literal">clang <span class="pre">-O3</span></code>)</p>
 <p>Finally, the JavaScript version.</p>
 <!-- This injects the code into the text -->
-<pre class="code js"><a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-1"></a><span class="kr">const</span> <span class="nx">create_array</span> <span class="o">=</span> <span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-2"></a>    <span class="c1">// Create an array of values as the result of calling fcn[i] for 0</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-3"></a>    <span class="c1">// &lt;= i &lt; n</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-4"></a>    <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">Int8Array</span> <span class="o">===</span> <span class="s1">'function'</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-5"></a>        <span class="k">return</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-6"></a>            <span class="k">return</span> <span class="k">new</span> <span class="nx">Int8Array</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-7"></a>        <span class="p">};</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-8"></a>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-9"></a>        <span class="k">return</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-10"></a>            <span class="k">return</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-11"></a>        <span class="p">};</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-12"></a>    <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-13"></a><span class="p">})();</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-14"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-15"></a><span class="kr">const</span> <span class="nx">array_init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fcn</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-16"></a>    <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">create_array</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-17"></a>    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-18"></a>        <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fcn</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-19"></a>    <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-20"></a>    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-21"></a><span class="p">};</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-22"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-23"></a><span class="c1">// Simple sieve.</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-24"></a><span class="kr">const</span> <span class="nx">sieve1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-25"></a>    <span class="c1">// alert("version 2");</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-26"></a>    <span class="kr">const</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">array_init</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-27"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-28"></a>    <span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-29"></a>    <span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-30"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-31"></a>    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-32"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-33"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-34"></a>            <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-35"></a>                <span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-36"></a>            <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-37"></a>        <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-38"></a>    <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-39"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-40"></a>    <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-41"></a>    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-42"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-43"></a>            <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">j</span><span class="p">);</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-44"></a>        <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-45"></a>    <span class="p">}</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-46"></a>    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-47"></a><span class="p">};</span>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-48"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-49"></a>
-<a name="rest_code_f64eaca694d947d3a73b3e03051c78ce-50"></a><span class="kr">export</span> <span class="p">{</span><span class="nx">sieve1</span><span class="p">};</span>
+<pre class="code js"><a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-1"></a><span class="kr">const</span> <span class="nx">create_array</span> <span class="o">=</span> <span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-2"></a>    <span class="c1">// Create an array of values as the result of calling fcn[i] for 0</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-3"></a>    <span class="c1">// &lt;= i &lt; n</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-4"></a>    <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">Int8Array</span> <span class="o">===</span> <span class="s1">'function'</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-5"></a>        <span class="k">return</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-6"></a>            <span class="k">return</span> <span class="k">new</span> <span class="nx">Int8Array</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-7"></a>        <span class="p">};</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-8"></a>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-9"></a>        <span class="k">return</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-10"></a>            <span class="k">return</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-11"></a>        <span class="p">};</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-12"></a>    <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-13"></a><span class="p">})();</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-14"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-15"></a><span class="kr">const</span> <span class="nx">array_init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fcn</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-16"></a>    <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">create_array</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-17"></a>    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-18"></a>        <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fcn</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-19"></a>    <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-20"></a>    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-21"></a><span class="p">};</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-22"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-23"></a><span class="c1">// Simple sieve.</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-24"></a><span class="kr">const</span> <span class="nx">sieve1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-25"></a>    <span class="c1">// alert("version 2");</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-26"></a>    <span class="kr">const</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">array_init</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-27"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-28"></a>    <span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-29"></a>    <span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-30"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-31"></a>    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-32"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-33"></a>            <span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-34"></a>            <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-35"></a>                <span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-36"></a>            <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-37"></a>        <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-38"></a>    <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-39"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-40"></a>    <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-41"></a>    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-42"></a>        <span class="k">if</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-43"></a>            <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">j</span><span class="p">);</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-44"></a>        <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-45"></a>    <span class="p">}</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-46"></a>    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-47"></a><span class="p">};</span>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-48"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-49"></a>
+<a name="rest_code_6bd200c6bcdf4869b48fa19bf0b9bea9-50"></a><span class="kr">export</span> <span class="p">{</span><span class="nx">sieve1</span><span class="p">};</span>
 </pre>
 <p>This takes around 650 ms on the same computer.</p>
 <p>None of these examples were tweaked or tested rigorously …</p>
@@ -916,7 +916,7 @@ window.addEventListener('load', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script><!--End of body content--><footer id="footer">
-            Contents © 2019
+            Contents © 2020
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 

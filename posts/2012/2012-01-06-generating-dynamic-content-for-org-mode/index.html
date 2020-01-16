@@ -115,18 +115,18 @@ block.</p>
 <p>The update function is below.  The function looks up the files in the
 path, and then for each file it looks up the title in the file, and
 finally generates a link that org will understand.</p>
-<pre class="code scm"><a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-1"></a><span class="p">(</span><span class="nf">defun</span> <span class="nv">org-dblock-write:my-get-posts</span> <span class="p">(</span><span class="nf">params</span><span class="p">)</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-2"></a>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">path</span> <span class="p">(</span><span class="nf">plist-get</span> <span class="nv">params</span> <span class="nv">:path</span><span class="p">)))</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-3"></a>    <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">files</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-4"></a>           <span class="p">(</span><span class="nf">mapcar</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">f</span><span class="p">)</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-5"></a>                     <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">file-name-as-directory</span> <span class="nv">path</span><span class="p">)</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-6"></a>                             <span class="nv">f</span><span class="p">))</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-7"></a>                   <span class="p">(</span><span class="nf">directory-files</span> <span class="nv">path</span> <span class="nv">nil</span> <span class="s">"\.*org"</span><span class="p">))))</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-8"></a>      <span class="p">(</span><span class="nf">setq</span> <span class="nv">files</span> <span class="p">(</span><span class="nf">nreverse</span> <span class="nv">files</span><span class="p">))</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-9"></a>      <span class="p">(</span><span class="nf">dolist</span> <span class="p">(</span><span class="nf">file</span> <span class="nv">files</span><span class="p">)</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-10"></a>        <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">title</span> <span class="p">(</span><span class="nf">org-publish-find-title</span> <span class="nv">file</span><span class="p">)))</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-11"></a>          <span class="p">(</span><span class="nf">insert</span> <span class="p">(</span><span class="nf">format</span> <span class="s">" - [[file:%s][%s]]"</span> <span class="nv">file</span> <span class="nv">title</span><span class="p">))</span>
-<a name="rest_code_b5e5d34dd29745428b0c1aacb6e007c8-12"></a>          <span class="p">(</span><span class="nf">newline</span><span class="p">))))))</span>
+<pre class="code scm"><a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-1"></a><span class="p">(</span><span class="nf">defun</span> <span class="nv">org-dblock-write:my-get-posts</span> <span class="p">(</span><span class="nf">params</span><span class="p">)</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-2"></a>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">path</span> <span class="p">(</span><span class="nf">plist-get</span> <span class="nv">params</span> <span class="nv">:path</span><span class="p">)))</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-3"></a>    <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">files</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-4"></a>           <span class="p">(</span><span class="nf">mapcar</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">f</span><span class="p">)</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-5"></a>                     <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">file-name-as-directory</span> <span class="nv">path</span><span class="p">)</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-6"></a>                             <span class="nv">f</span><span class="p">))</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-7"></a>                   <span class="p">(</span><span class="nf">directory-files</span> <span class="nv">path</span> <span class="nv">nil</span> <span class="s">"\.*org"</span><span class="p">))))</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-8"></a>      <span class="p">(</span><span class="nf">setq</span> <span class="nv">files</span> <span class="p">(</span><span class="nf">nreverse</span> <span class="nv">files</span><span class="p">))</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-9"></a>      <span class="p">(</span><span class="nf">dolist</span> <span class="p">(</span><span class="nf">file</span> <span class="nv">files</span><span class="p">)</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-10"></a>        <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">title</span> <span class="p">(</span><span class="nf">org-publish-find-title</span> <span class="nv">file</span><span class="p">)))</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-11"></a>          <span class="p">(</span><span class="nf">insert</span> <span class="p">(</span><span class="nf">format</span> <span class="s">" - [[file:%s][%s]]"</span> <span class="nv">file</span> <span class="nv">title</span><span class="p">))</span>
+<a name="rest_code_45f6606d46cf414ba5a2cd633bb907eb-12"></a>          <span class="p">(</span><span class="nf">newline</span><span class="p">))))))</span>
 </pre>
 <p>Here is what the results look like for the example above:</p>
 <pre class="literal-block">#+begin_example
@@ -151,7 +151,7 @@ the home page.</p>
                 <a href="../2012-01-07-sieve-of-eratosthenes/" rel="next" title="Sieve of Eratosthenes">Next post</a>
             </li>
         </ul></nav></aside></article><!--End of body content--><footer id="footer">
-            Contents © 2019
+            Contents © 2020
 <a href="mailto:dmj111@gmail.com">Dave Jones</a> - Powered by
 <a href="http://getnikola.com" rel="nofollow">Nikola</a>
 
